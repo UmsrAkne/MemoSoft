@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoSoft", "MemoSoft\MemoSoft.csproj", "{DAA888BD-5024-46AB-9AFC-4597514A4323}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DAA888BD-5024-46AB-9AFC-4597514A4323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA888BD-5024-46AB-9AFC-4597514A4323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA888BD-5024-46AB-9AFC-4597514A4323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA888BD-5024-46AB-9AFC-4597514A4323}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {718416BF-3EE4-4345-A010-D546895C699C}
+	EndGlobalSection
+EndGlobal
