@@ -23,5 +23,22 @@ namespace MemoSoft
         public MainWindow() {
             InitializeComponent();
         }
+
+        private void App_Activated(object sender, EventArgs e) {
+            Keyboard.Focus(this.textBox);
+        }
+
+        private void keyDownEventHandler(object sender, KeyEventArgs e) {
+            System.Diagnostics.Debug.WriteLine("test");
+            if((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None){
+                if(e.Key == Key.Q) {
+                    exitApplication();
+                }
+            }
+        }
+
+        private void exitApplication() {
+            Application.Current.Shutdown();
+        }
     }
 }

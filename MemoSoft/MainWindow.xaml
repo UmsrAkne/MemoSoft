@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoSoft"
         mc:Ignorable="d"
+        Activated="App_Activated"
+        KeyDown="keyDownEventHandler"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <TextBox x:Name="textBox"
+                 Margin="0"
+                 AcceptsReturn="True"
+                 FontSize="12pt"
+                 Foreground="Gray"
+                 Opacity="0.8"
+                 />
     </Grid>
 </Window>
