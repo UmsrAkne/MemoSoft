@@ -8,7 +8,15 @@
         Activated="App_Activated"
         KeyDown="keyDownEventHandler"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <StackPanel Orientation="Vertical">
+
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Save"/>
+                <MenuItem Header="Quit"/>
+            </MenuItem>
+        </Menu>
+
         <TextBox x:Name="textBox"
                  Margin="0"
                  AcceptsReturn="True"
@@ -16,5 +24,5 @@
                  Foreground="Gray"
                  Opacity="0.8"
                  />
-    </Grid>
+    </StackPanel>
 </Window>
