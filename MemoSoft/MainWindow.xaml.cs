@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MemoSoft.Models;
 
 namespace MemoSoft
 {
@@ -20,6 +21,8 @@ namespace MemoSoft
     /// </summary>
     public partial class MainWindow : Window
     {
+        private AppFunctions appFunctions = new AppFunctions();
+
         public MainWindow() {
             InitializeComponent();
         }
@@ -32,13 +35,9 @@ namespace MemoSoft
             System.Diagnostics.Debug.WriteLine("test");
             if((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None){
                 if(e.Key == Key.Q) {
-                    exitApplication();
+                    appFunctions.exitApplication();
                 }
             }
-        }
-
-        private void exitApplication() {
-            Application.Current.Shutdown();
         }
     }
 }
