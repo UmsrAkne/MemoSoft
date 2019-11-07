@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MemoSoft.Models;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace MemoSoft
 {
@@ -45,21 +46,11 @@ namespace MemoSoft
     }
 
 
-
-    public class MainWindowViewModel : INotifyPropertyChanged{
+    public class MainWindowViewModel : INotifyPropertyChangedBase{
         private string inputString;
         public string InputString {
             get { return inputString; }
-            set {
-                inputString = value;
-                System.Diagnostics.Debug.WriteLine(inputString);
-                OnPropertyChanged("InputString");
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName) {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 
+            set { if (SetProperty(ref this.inputString, value)) ; }
         }
     }
 }
