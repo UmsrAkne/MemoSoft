@@ -23,6 +23,7 @@
                  FontSize="12pt"
                  Foreground="Gray"
                  Opacity="0.8"
+                 Text="{Binding InputString,Mode=TwoWay}"
                  />
     </StackPanel>
 </Window>

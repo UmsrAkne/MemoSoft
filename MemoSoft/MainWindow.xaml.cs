@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MemoSoft.Models;
+using System.ComponentModel;
 
 namespace MemoSoft
 {
@@ -22,9 +23,12 @@ namespace MemoSoft
     public partial class MainWindow : Window
     {
         private AppFunctions appFunctions = new AppFunctions();
+        private MainWindowViewModel mainWindowViewModel;
 
         public MainWindow() {
             InitializeComponent();
+            this.mainWindowViewModel = new MainWindowViewModel();
+            this.DataContext = mainWindowViewModel;
         }
 
         private void App_Activated(object sender, EventArgs e) {
@@ -32,12 +36,30 @@ namespace MemoSoft
         }
 
         private void keyDownEventHandler(object sender, KeyEventArgs e) {
-            System.Diagnostics.Debug.WriteLine("test");
             if((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None){
                 if(e.Key == Key.Q) {
                     appFunctions.exitApplication();
                 }
             }
+        }
+    }
+
+
+
+    public class MainWindowViewModel : INotifyPropertyChanged{
+        private string inputString;
+        public string InputString {
+            get { return inputString; }
+            set {
+                inputString = value;
+                System.Diagnostics.Debug.WriteLine(inputString);
+                OnPropertyChanged("InputString");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName) {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 
         }
     }
 }
