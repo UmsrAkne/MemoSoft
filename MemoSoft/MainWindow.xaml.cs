@@ -35,22 +35,20 @@ namespace MemoSoft
         private void App_Activated(object sender, EventArgs e) {
             Keyboard.Focus(this.textBox);
         }
-
-        private void keyDownEventHandler(object sender, KeyEventArgs e) {
-            if((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None){
-                if(e.Key == Key.Q) {
-                    appFunctions.exitApplication();
-                }
-            }
-        }
     }
 
 
     public class MainWindowViewModel : INotifyPropertyChangedBase{
         private string inputString;
+        private keyboardCommands keyCommands = new keyboardCommands();
+
         public string InputString {
             get { return inputString; }
             set { if (SetProperty(ref this.inputString, value)) ; }
+        }
+
+        public keyboardCommands KeyCommands {
+            get { return this.keyCommands; }
         }
     }
 }

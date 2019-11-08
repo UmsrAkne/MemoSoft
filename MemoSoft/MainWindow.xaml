@@ -6,10 +6,12 @@
         xmlns:local="clr-namespace:MemoSoft"
         mc:Ignorable="d"
         Activated="App_Activated"
-        KeyDown="keyDownEventHandler"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel Orientation="Vertical">
 
+        <StackPanel.InputBindings>
+            <KeyBinding Gesture ="Ctrl+S" Command="{Binding KeyCommands.SaveFile}" />
+        </StackPanel.InputBindings>
         <Menu VerticalAlignment="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Save"/>
