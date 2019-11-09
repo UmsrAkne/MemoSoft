@@ -10,7 +10,7 @@
     <StackPanel Orientation="Vertical">
 
         <StackPanel.InputBindings>
-            <KeyBinding Gesture ="Ctrl+S" Command="{Binding KeyCommands.SaveFile}" />
+            <KeyBinding Gesture ="Ctrl+S" Command="{Binding KeyCommands.SaveFileCommand}" />
         </StackPanel.InputBindings>
         <Menu VerticalAlignment="Top">
             <MenuItem Header="File">
@@ -25,7 +25,7 @@
                  FontSize="12pt"
                  Foreground="Gray"
                  Opacity="0.8"
-                 Text="{Binding InputString,Mode=TwoWay}"
+                 Text="{Binding InputString,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                  />
     </StackPanel>
 </Window>

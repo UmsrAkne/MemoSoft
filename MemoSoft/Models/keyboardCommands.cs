@@ -9,18 +9,25 @@ namespace MemoSoft.Models
 {
     public class keyboardCommands {
 
-        public DelegateCommand saveFile = new DelegateCommand(
-            () => { System.Diagnostics.Debug.WriteLine("saveFile"); },
-            () => { return true; }
-            );
         private MainWindowViewModel mainWindowViewModel;
         public MainWindowViewModel MainWindowViewModel {
             private get { return MainWindowViewModel; }
             set { mainWindowViewModel = mainWindowViewModel ?? value; }
         }
 
-        public ICommand SaveFile {
-            get { return this.saveFile; }
-        } 
+        private TextSaver textSaver = new TextSaver();
+
+        private DelegateCommand saveFileCommand;
+        public DelegateCommand SaveFileCommand {
+            get {
+                return saveFileCommand ?? (saveFileCommand = new DelegateCommand(
+                    () => {
+                        this.textSaver.Text = mainWindowViewModel.InputString;
+                        this.textSaver.saveText();
+                    },
+                    () => { return true; })
+                    );
+            }
+        }
     }
 }
