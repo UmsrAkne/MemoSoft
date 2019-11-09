@@ -29,7 +29,6 @@ namespace MemoSoft
         public MainWindow() {
             InitializeComponent();
             this.mainWindowViewModel = new MainWindowViewModel();
-            this.DataContext = mainWindowViewModel;
         }
 
         private void App_Activated(object sender, EventArgs e) {
