@@ -13,6 +13,11 @@ namespace MemoSoft.Models
             () => { System.Diagnostics.Debug.WriteLine("saveFile"); },
             () => { return true; }
             );
+        private MainWindowViewModel mainWindowViewModel;
+        public MainWindowViewModel MainWindowViewModel {
+            private get { return MainWindowViewModel; }
+            set { mainWindowViewModel = mainWindowViewModel ?? value; }
+        }
 
         public ICommand SaveFile {
             get { return this.saveFile; }

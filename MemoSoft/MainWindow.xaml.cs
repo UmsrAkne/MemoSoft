@@ -42,6 +42,10 @@ namespace MemoSoft
         private string inputString;
         private keyboardCommands keyCommands = new keyboardCommands();
 
+        public MainWindowViewModel() {
+            this.keyCommands.MainWindowViewModel = this;
+        }
+
         public string InputString {
             get { return inputString; }
             set { if (SetProperty(ref this.inputString, value)) ; }
