@@ -49,7 +49,7 @@ namespace MemoSoft
                 sql += " values (";
 
                 for (int i = 0; i < values.Length; i++) {
-                    if (i == values.Length - 1) sql += values[i] + ");";
+                    if (i == values.Length - 1) sql += "'" + values[i] + "'" + ");";
                     else sql += values[i] + ", ";
                 }
                 var command = new SQLiteCommand(sql, connection);
