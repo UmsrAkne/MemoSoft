@@ -11,7 +11,7 @@ namespace MemoSoft.Models
 
         private MainWindowViewModel mainWindowViewModel;
         public MainWindowViewModel MainWindowViewModel {
-            private get { return MainWindowViewModel; }
+            private get { return mainWindowViewModel; }
             set { mainWindowViewModel = mainWindowViewModel ?? value; }
         }
 
