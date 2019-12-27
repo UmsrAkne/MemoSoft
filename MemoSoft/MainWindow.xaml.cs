@@ -47,7 +47,7 @@ namespace MemoSoft
 
         public string InputString {
             get { return inputString; }
-            set { if (SetProperty(ref this.inputString, value)) ; }
+            set { SetProperty(ref this.inputString, value); }
         }
 
         public keyboardCommands KeyCommands {
