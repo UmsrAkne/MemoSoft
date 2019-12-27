@@ -24,6 +24,7 @@ namespace MemoSoft.Models
                     () => {
                         this.textSaver.Text = mainWindowViewModel.InputString;
                         this.textSaver.saveText();
+                        MainWindowViewModel.InputString = "";
                     },
                     () => { return true; })
                     );
