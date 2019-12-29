@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace MemoSoft.Models
 {
-    class Comment
+    public class Comment
     {
         private String text = "";
-
         public String Text {
             get { return text; }
             set { text = value; }
