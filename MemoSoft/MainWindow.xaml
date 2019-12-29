@@ -28,19 +28,19 @@
                  Margin="0"
                  AcceptsReturn="True"
                  FontSize="12pt"
+                 Padding="3"
                  Foreground="Gray"
                  Opacity="0.8"
                  Text="{Binding InputString,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                  />
 
-        <ListBox HorizontalContentAlignment="Stretch">
+        <ListBox HorizontalContentAlignment="Stretch" >
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -48,14 +48,14 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Column="0"
-                                   Grid.Row="0"
+                                   Grid.Row="1"
+                                   FontSize="12pt"
                                    VerticalAlignment="Stretch"
                                    HorizontalAlignment="Stretch" 
                                    Text="{Binding}"
                                    Background="WhiteSmoke">
                         </TextBlock>
                     </Grid>
-
 
                 </DataTemplate>
             </ListBox.ItemTemplate> 
