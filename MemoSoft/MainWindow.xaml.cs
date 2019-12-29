@@ -41,9 +41,12 @@ namespace MemoSoft
     public class MainWindowViewModel : INotifyPropertyChangedBase{
         private string inputString;
         private keyboardCommands keyCommands = new keyboardCommands();
+        private TextLoader textLoader = new TextLoader();
 
         public MainWindowViewModel() {
             this.keyCommands.MainWindowViewModel = this;
+            textLoader.loadInNewOrder();
+            PostedComments = textLoader.CommentList;
         }
 
         public string InputString {
