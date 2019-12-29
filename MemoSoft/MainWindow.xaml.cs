@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MemoSoft.Models;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace MemoSoft
 {
@@ -48,6 +49,12 @@ namespace MemoSoft
         public string InputString {
             get { return inputString; }
             set { SetProperty(ref this.inputString, value); }
+        }
+
+        private ObservableCollection<Comment> postedComments;
+        public ObservableCollection<Comment> PostedComments {
+            get { return postedComments; }
+            private set { postedComments = value; }
         }
 
         public keyboardCommands KeyCommands {

@@ -34,7 +34,8 @@
                  Text="{Binding InputString,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                  />
 
-        <ListBox HorizontalContentAlignment="Stretch" >
+        <ListBox HorizontalContentAlignment="Stretch" 
+                 ItemsSource="{Binding PostedComments}">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -52,7 +53,7 @@
                                    FontSize="12pt"
                                    VerticalAlignment="Stretch"
                                    HorizontalAlignment="Stretch" 
-                                   Text="{Binding}"
+                                   Text="{Binding Text}"
                                    Background="WhiteSmoke">
                         </TextBlock>
                     </Grid>
