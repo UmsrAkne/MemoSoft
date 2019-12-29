@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Models\AppFunctions.cs" />
     <Compile Include="Models\keyboardCommands.cs" />
+    <Compile Include="Models\TextLoader.cs" />
     <Compile Include="Models\TextSaver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
