@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SQLite;
+using System.Globalization;
+using MemoSoft.Models;
 
 namespace MemoSoft
 {
@@ -16,6 +18,12 @@ namespace MemoSoft
         public static readonly String DATABASE_COLUMN_NAME_TEXT = "text";
 
         private String dbFileName;
+
+        private List<Comment> commentList;
+        public List<Comment> CommentList {
+            get { return this.commentList; }
+            private set { commentList = value; }
+        }
 
         public DatabaseHelper(string dbFileName) {
             this.dbFileName = dbFileName;
@@ -59,6 +67,30 @@ namespace MemoSoft
                 }
                 var command = new SQLiteCommand(sql, connection);
                 command.ExecuteNonQuery();
+            }
+        }
+
+        public void select() {
+            using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite")) {
+                connection.Open();
+                string sql = "select * from " + DATABASE_TABLE_NAME;
+
+                SQLiteCommand com = new SQLiteCommand(sql, connection);
+                SQLiteDataReader sdr = com.ExecuteReader();
+                CommentList = new List<Comment>();
+
+                while (sdr.Read() == true) {
+                    var comment = new Comment();
+                    comment.Text = (String)sdr[DATABASE_COLUMN_NAME_TEXT];
+                    DateTime resultD;
+
+                    if(
+                        DateTime.TryParseExact(sdr[DATABASE_COLUMN_NAME_DATE].ToString(), "yyyyMMddHHmmssff", null,
+                        DateTimeStyles.AllowWhiteSpaces, out resultD)) {
+                        comment.Date = resultD;
+                    }
+                    CommentList.Add(comment);
+                }
             }
         }
     }
