@@ -10,6 +10,11 @@ namespace MemoSoft
 {
     public class DatabaseHelper
     {
+        public static readonly String DATABASE_NAME = "Diarydb";
+        public static readonly String DATABASE_TABLE_NAME = "diary";
+        public static readonly String DATABASE_COLUMN_NAME_DATE = "date";
+        public static readonly String DATABASE_COLUMN_NAME_TEXT = "text";
+
         private String dbFileName;
 
         public DatabaseHelper(string dbFileName) {
