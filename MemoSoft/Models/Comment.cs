@@ -14,5 +14,11 @@ namespace MemoSoft.Models
             get { return text; }
             set { text = value; }
         }
+
+        private DateTime date = DateTime.MinValue;
+        public DateTime Date {
+            get { return date; }
+            set { date = value; }
+        }
     }
 }
