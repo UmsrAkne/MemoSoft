@@ -14,17 +14,12 @@ namespace MemoSoft.Models
     {
         private DatabaseHelper dbHelper;
 
-        private readonly String DATABASE_NAME = "Diarydb";
-        private readonly String DATABASE_TABLE_NAME = "diary";
-        private readonly String DATABASE_COLUMN_NAME_DATE = "date";
-        private readonly String DATABASE_COLUMN_NAME_TEXT = "text";
-
         public TextSaver() {
-            this.dbHelper = new DatabaseHelper(DATABASE_NAME);
+            this.dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME);
             this.dbHelper.createDatabase();
 
-            this.dbHelper.createTable(DATABASE_TABLE_NAME,
-                new String[] { DATABASE_COLUMN_NAME_DATE, DATABASE_COLUMN_NAME_TEXT }
+            this.dbHelper.createTable(DatabaseHelper.DATABASE_TABLE_NAME,
+                new String[] { DatabaseHelper.DATABASE_COLUMN_NAME_DATE, DatabaseHelper.DATABASE_COLUMN_NAME_TEXT }
                 );
         }
 
@@ -32,8 +27,8 @@ namespace MemoSoft.Models
 
         public void saveText() {
             dbHelper.insertData(
-                DATABASE_TABLE_NAME,
-                new String[] { DATABASE_COLUMN_NAME_DATE, DATABASE_COLUMN_NAME_TEXT },
+                DatabaseHelper.DATABASE_TABLE_NAME,
+                new String[] { DatabaseHelper.DATABASE_COLUMN_NAME_DATE, DatabaseHelper.DATABASE_COLUMN_NAME_TEXT },
                 new String[] {DateTime.Now.ToString("yyyyMMddHHmmssff"), Text });
         }
     }

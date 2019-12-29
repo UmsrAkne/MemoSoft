@@ -28,9 +28,89 @@
                  Margin="0"
                  AcceptsReturn="True"
                  FontSize="12pt"
+                 Padding="3"
                  Foreground="Gray"
                  Opacity="0.8"
                  Text="{Binding InputString,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                  />
+
+        <ListBox HorizontalContentAlignment="Stretch" 
+                 ItemsSource="{Binding PostedComments}">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0"
+                                   Grid.Row="1"
+                                   FontSize="12pt"
+                                   VerticalAlignment="Stretch"
+                                   HorizontalAlignment="Stretch" 
+                                   Text="{Binding Text}"
+                                   Background="WhiteSmoke">
+                        </TextBlock>
+                    </Grid>
+
+                </DataTemplate>
+            </ListBox.ItemTemplate> 
+        </ListBox>
+
     </StackPanel>
+
+    <Window.Resources>
+        <Style x:Key="{x:Type ListBox}"
+               TargetType="ListBox">
+          <Setter Property="SnapsToDevicePixels" Value="true" />
+          <Setter Property="OverridesDefaultStyle" Value="true" />
+          <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+          <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+          <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="ListBox">
+                <Border Name="Border"
+                        BorderThickness="1"
+                        CornerRadius="2"
+                        Background="White"
+                        >
+                  <ScrollViewer Margin="0"
+                                Focusable="false">
+                    <StackPanel Margin="1"
+                                IsItemsHost="True" />
+                  </ScrollViewer>
+                </Border>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+
+        <Style x:Key="{x:Type ListBoxItem}"
+               TargetType="ListBoxItem">
+          <Setter Property="SnapsToDevicePixels"
+                  Value="true" />
+          <Setter Property="OverridesDefaultStyle"
+                  Value="true" />
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="ListBoxItem">
+                <Border x:Name="Border"
+                        Padding="1"
+                        SnapsToDevicePixels="true"
+                        Background="Transparent"
+                        >
+                  <ContentPresenter />
+                </Border>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+    </Window.Resources> 
+    
 </Window>

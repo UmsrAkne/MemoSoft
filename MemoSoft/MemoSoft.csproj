@@ -68,6 +68,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DatabaseHelper.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="INotifyPropertyChangedBase.cs" />
@@ -79,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Models\AppFunctions.cs" />
     <Compile Include="Models\keyboardCommands.cs" />
+    <Compile Include="Models\TextLoader.cs" />
     <Compile Include="Models\TextSaver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

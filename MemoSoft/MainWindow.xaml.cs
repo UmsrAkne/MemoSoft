@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MemoSoft.Models;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace MemoSoft
 {
@@ -40,14 +41,23 @@ namespace MemoSoft
     public class MainWindowViewModel : INotifyPropertyChangedBase{
         private string inputString;
         private keyboardCommands keyCommands = new keyboardCommands();
+        private TextLoader textLoader = new TextLoader();
 
         public MainWindowViewModel() {
             this.keyCommands.MainWindowViewModel = this;
+            textLoader.loadInNewOrder();
+            PostedComments = textLoader.CommentList;
         }
 
         public string InputString {
             get { return inputString; }
             set { SetProperty(ref this.inputString, value); }
+        }
+
+        private ObservableCollection<Comment> postedComments;
+        public ObservableCollection<Comment> PostedComments {
+            get { return postedComments; }
+            private set { postedComments = value; }
         }
 
         public keyboardCommands KeyCommands {
