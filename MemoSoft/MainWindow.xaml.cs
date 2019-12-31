@@ -45,7 +45,7 @@ namespace MemoSoft
 
         public MainWindowViewModel() {
             this.keyCommands.MainWindowViewModel = this;
-            textLoader.loadInNewOrder();
+            textLoader.loadInNewOrder(20);
             PostedComments = textLoader.CommentList;
         }
 
