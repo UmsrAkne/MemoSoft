@@ -10,14 +10,24 @@
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
-    <StackPanel Orientation="Vertical">
 
-        <StackPanel.InputBindings>
-            <KeyBinding Gesture ="Ctrl+S" Command="{Binding KeyCommands.SaveFileCommand}" />
-            <KeyBinding Gesture="Ctrl+Enter" Command="{Binding KeyCommands.SaveFileCommand}" />
+        <Grid>
+            <Grid.InputBindings>
+                <KeyBinding Gesture ="Ctrl+S" Command="{Binding KeyCommands.SaveFileCommand}" />
+                <KeyBinding Gesture="Ctrl+Enter" Command="{Binding KeyCommands.SaveFileCommand}" />
+            </Grid.InputBindings>
 
-        </StackPanel.InputBindings>
-        <Menu VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+        <Menu VerticalAlignment="Top" Grid.Row="0">
             <MenuItem Header="File">
                 <MenuItem Header="Save"/>
                 <MenuItem Header="Quit"/>
@@ -25,44 +35,47 @@
         </Menu>
 
         <TextBox x:Name="textBox"
-                 Margin="0"
-                 AcceptsReturn="True"
-                 FontSize="12pt"
-                 Padding="3"
-                 Foreground="Gray"
-                 Opacity="0.8"
-                 Text="{Binding InputString,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                 />
+             Margin="0"
+             AcceptsReturn="True"
+             FontSize="12pt"
+             Padding="3"
+             Foreground="Gray"
+             Opacity="0.8"
+             Text="{Binding InputString,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+             Grid.Row="1"
+             />
 
-        <ListBox HorizontalContentAlignment="Stretch" 
-                 ItemsSource="{Binding PostedComments}">
+        <ScrollViewer Grid.Row="2">
+            <StackPanel>
+                <ListBox HorizontalContentAlignment="Stretch" 
+                         ItemsSource="{Binding PostedComments}">
 
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Column="0"
-                                   Grid.Row="1"
-                                   FontSize="12pt"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalAlignment="Stretch" 
-                                   Text="{Binding Text}"
-                                   Background="WhiteSmoke">
-                        </TextBlock>
-                    </Grid>
-
-                </DataTemplate>
-            </ListBox.ItemTemplate> 
-        </ListBox>
-
-    </StackPanel>
+                                <TextBlock Grid.Column="0"
+                                           Grid.Row="1"
+                                           FontSize="12pt"
+                                           VerticalAlignment="Stretch"
+                                           HorizontalAlignment="Stretch" 
+                                           Text="{Binding Text}"
+                                           Background="WhiteSmoke">
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate> 
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 
     <Window.Resources>
         <Style x:Key="{x:Type ListBox}"
