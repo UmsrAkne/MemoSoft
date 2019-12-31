@@ -93,5 +93,31 @@ namespace MemoSoft
                 }
             }
         }
+
+        public void getLastUpdateRow() {
+            using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite")) {
+                connection.Open();
+
+                string sql = "select * from diary where date = (select max(date) from diary)";
+                SQLiteCommand com = new SQLiteCommand(sql, connection);
+                SQLiteDataReader sdr = com.ExecuteReader();
+
+                CommentList = new List<Comment>();
+                var comment = new Comment();
+
+                if(sdr.Read()) {
+                    comment.Text = (String)sdr[DATABASE_COLUMN_NAME_TEXT];
+                    DateTime resultD;
+
+                    if(DateTime.TryParseExact(sdr[DATABASE_COLUMN_NAME_DATE].ToString(),"yyyyMMddHHmmssff",null,
+                        DateTimeStyles.AllowWhiteSpaces, out resultD)) {
+                        comment.Date = resultD;
+                    }
+
+                    CommentList.Add(comment);
+                }
+
+            }
+        }
     }
 }
