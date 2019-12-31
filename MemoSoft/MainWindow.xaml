@@ -17,9 +17,6 @@
                 <KeyBinding Gesture="Ctrl+Enter" Command="{Binding KeyCommands.SaveFileCommand}" />
             </Grid.InputBindings>
 
-                <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -47,28 +44,33 @@
 
         <ScrollViewer Grid.Row="2">
             <StackPanel>
-                <ListBox HorizontalContentAlignment="Stretch" 
+                <ListBox HorizontalContentAlignment="Stretch"
                          ItemsSource="{Binding PostedComments}">
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Width="{Binding Width,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
 
                                 <TextBlock Grid.Column="0"
-                                           Grid.Row="1"
+                                           Background="AliceBlue"
                                            FontSize="12pt"
-                                           VerticalAlignment="Stretch"
-                                           HorizontalAlignment="Stretch" 
+                                           Margin="0,0,10,0"
+                                           Padding="5,0,5,0"
+                                           Text="{Binding Date}"
+                                           />
+
+
+                                <TextBlock Grid.Column="1"
+                                           FontSize="12pt"
                                            Text="{Binding Text}"
-                                           Background="WhiteSmoke">
-                                </TextBlock>
+                                           Background="WhiteSmoke"
+                                           TextWrapping="Wrap"
+                                           />
+
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate> 
