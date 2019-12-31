@@ -34,5 +34,11 @@ namespace MemoSoft.Models
             }
         }
 
+        public void loadLastComment() {
+            dbHelper.getLastUpdateRow();
+            commentList = new ObservableCollection<Comment>();
+            commentList.Add(dbHelper.CommentList[0]);
+        }
+
     }
 }

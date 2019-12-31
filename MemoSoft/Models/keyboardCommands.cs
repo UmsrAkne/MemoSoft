@@ -16,6 +16,7 @@ namespace MemoSoft.Models
         }
 
         private TextSaver textSaver = new TextSaver();
+        private TextLoader textLoader = new TextLoader();
 
         private DelegateCommand saveFileCommand;
         public DelegateCommand SaveFileCommand {
@@ -25,6 +26,9 @@ namespace MemoSoft.Models
                         this.textSaver.Text = mainWindowViewModel.InputString;
                         this.textSaver.saveText();
                         MainWindowViewModel.InputString = "";
+                        textLoader.loadLastComment();
+                        MainWindowViewModel.PostedComments.Insert(0, textLoader.CommentList[0]);
+                        MainWindowViewModel.PostedComments.RemoveAt(MainWindowViewModel.PostedComments.Count - 1);
                     },
                     () => { return true; })
                     );
