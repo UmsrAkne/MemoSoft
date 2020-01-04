@@ -19,5 +19,9 @@ namespace MemoSoft.Models
             get { return date; }
             set { date = value; }
         }
+
+        public String DateString {
+            get { return date.ToString("yyyy/MM/dd hh:mm:ss.ff"); }
+        }
     }
 }
