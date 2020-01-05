@@ -116,6 +116,8 @@ namespace MemoSoft
 
                     CommentList.Add(comment);
                 }
+
+                sdr.Close();
             }
         }
     }
