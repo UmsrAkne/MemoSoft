@@ -79,6 +79,7 @@
                                                Padding="5,3,5,3"
                                                Text="{Binding Text}"
                                                TextWrapping="Wrap"
+                                               Margin="0,0,40,0"
                                                />
 
                                 </Grid>
@@ -95,7 +96,6 @@
                TargetType="ListBox">
           <Setter Property="SnapsToDevicePixels" Value="true" />
           <Setter Property="OverridesDefaultStyle" Value="true" />
-          <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
           <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
           <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
           <Setter Property="Template">
