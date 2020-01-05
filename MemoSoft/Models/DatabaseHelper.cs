@@ -116,7 +116,6 @@ namespace MemoSoft
 
                     CommentList.Add(comment);
                 }
-
             }
         }
     }

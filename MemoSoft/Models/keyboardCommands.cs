@@ -28,7 +28,10 @@ namespace MemoSoft.Models
                         MainWindowViewModel.InputString = "";
                         textLoader.loadLastComment();
                         MainWindowViewModel.PostedComments.Insert(0, textLoader.CommentList[0]);
-                        MainWindowViewModel.PostedComments.RemoveAt(MainWindowViewModel.PostedComments.Count - 1);
+
+                        if(MainWindowViewModel.PostedComments.Count > 20) {
+                            MainWindowViewModel.PostedComments.RemoveAt(MainWindowViewModel.PostedComments.Count - 1);
+                        }
                     },
                     () => { return true; })
                     );
