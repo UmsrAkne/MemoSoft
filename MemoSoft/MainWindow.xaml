@@ -11,7 +11,7 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
 
-        <Grid Name="parentGrid" Opacity="0.7">
+        <Grid Name="parentGrid" Opacity="0.8">
             <Grid.InputBindings>
                 <KeyBinding Gesture ="Ctrl+S" Command="{Binding KeyCommands.SaveFileCommand}" />
                 <KeyBinding Gesture="Ctrl+Enter" Command="{Binding KeyCommands.SaveFileCommand}" />
@@ -35,7 +35,7 @@
              AcceptsReturn="True"
              FontSize="12pt"
              Padding="3"
-             Foreground="Gray"
+             Foreground="Black"
              Opacity="0.8"
              Text="{Binding InputString,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
              Grid.Row="1"
