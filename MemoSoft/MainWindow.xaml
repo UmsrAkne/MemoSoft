@@ -11,7 +11,7 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
 
-        <Grid Opacity="0.7">
+        <Grid Name="parentGrid" Opacity="0.7">
             <Grid.InputBindings>
                 <KeyBinding Gesture ="Ctrl+S" Command="{Binding KeyCommands.SaveFileCommand}" />
                 <KeyBinding Gesture="Ctrl+Enter" Command="{Binding KeyCommands.SaveFileCommand}" />
@@ -22,7 +22,6 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
 
         <Menu VerticalAlignment="Top" Grid.Row="0">
             <MenuItem Header="File">
@@ -60,7 +59,7 @@
                                         <GradientStop Color="Snow" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Border.Background>
-                                <Grid Width="{Binding Width,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" >
+                                <Grid Width="{Binding ElementName=parentGrid, Path=Width}" >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition/>
@@ -79,9 +78,7 @@
                                                Padding="5,3,5,3"
                                                Text="{Binding Text}"
                                                TextWrapping="Wrap"
-                                               Margin="0,0,40,0"
                                                />
-
                                 </Grid>
                             </Border>
                         </DataTemplate>
