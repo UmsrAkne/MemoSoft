@@ -48,9 +48,8 @@
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="LightCyan"
+                            <Border BorderBrush="#bbDDFF"
                                     CornerRadius="4"
-                                    Margin="3"
                                     BorderThickness="1,1,1,1"
                                     >
                                 <Border.Background>
@@ -105,8 +104,7 @@
                         >
                   <ScrollViewer Margin="0"
                                 Focusable="false">
-                    <StackPanel Margin="1"
-                                IsItemsHost="True" />
+                    <StackPanel IsItemsHost="True" />
                   </ScrollViewer>
                 </Border>
               </ControlTemplate>
