@@ -16,7 +16,7 @@ namespace MemoSoft.Models
             private set { this.commentList = value; }
         }
 
-        private DatabaseHelper dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME);
+        private DatabaseHelper dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME_EACH_PC);
 
         /// <summary>
         /// 既存のテキストを新着順に読み込みます。

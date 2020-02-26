@@ -15,7 +15,7 @@ namespace MemoSoft.Models
         private DatabaseHelper dbHelper;
 
         public TextSaver() {
-            this.dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME);
+            this.dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME_EACH_PC);
             this.dbHelper.createDatabase();
 
             this.dbHelper.createTable(DatabaseHelper.DATABASE_TABLE_NAME,
