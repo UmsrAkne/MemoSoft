@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,22 +7,14 @@ using System.Threading.Tasks;
 
 namespace MemoSoft.Models
 {
-    public class Comment
-    {
-        private String text = "";
-        public String Text {
-            get { return text; }
-            set { text = value; }
-        }
+    public class Comment : BindableBase {
+        public int ID { get; set; }
 
-        private DateTime date = DateTime.MinValue;
-        public DateTime Date {
-            get { return date; }
-            set { date = value; }
-        }
+        public DateTime CreationDateTime { get; set; }
 
-        public String DateString {
-            get { return date.ToString("yyyy/MM/dd hh:mm:ss.ff"); }
-        }
+        public String TextContent { get => textContent; set => SetProperty(ref textContent, value); }
+        private String textContent = "";
+
+        public String CreationDateShortString { get => CreationDateTime.ToString("MM/dd HH:mm"); }
     }
 }
