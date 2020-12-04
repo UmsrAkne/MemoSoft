@@ -4,18 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoSoft"
+        xmlns:vms="clr-namespace:MemoSoft.ViewModels"
         mc:Ignorable="d"
         Activated="App_Activated"
         Title="MainWindow" Height="450" Width="800">
     <Window.DataContext>
-        <local:MainWindowViewModel/>
+        <vms:MainWindowViewModel/>
     </Window.DataContext>
 
         <Grid Name="parentGrid" Opacity="0.8">
-            <Grid.InputBindings>
-                <KeyBinding Gesture ="Ctrl+S" Command="{Binding KeyCommands.SaveFileCommand}" />
-                <KeyBinding Gesture="Ctrl+Enter" Command="{Binding KeyCommands.SaveFileCommand}" />
-            </Grid.InputBindings>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
