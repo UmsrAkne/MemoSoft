@@ -82,13 +82,13 @@ namespace MemoSoft
 
                 while (sdr.Read() == true) {
                     var comment = new Comment();
-                    comment.Text = (String)sdr[DATABASE_COLUMN_NAME_TEXT];
+                    comment.TextContent = (String)sdr[DATABASE_COLUMN_NAME_TEXT];
                     DateTime resultD;
 
                     if(
                         DateTime.TryParseExact(sdr[DATABASE_COLUMN_NAME_DATE].ToString(), "yyyyMMddHHmmssff", null,
                         DateTimeStyles.AllowWhiteSpaces, out resultD)) {
-                        comment.Date = resultD;
+                        comment.CreationDateTime = resultD;
                     }
                     CommentList.Add(comment);
                 }
@@ -107,12 +107,12 @@ namespace MemoSoft
                 var comment = new Comment();
 
                 if(sdr.Read()) {
-                    comment.Text = (String)sdr[DATABASE_COLUMN_NAME_TEXT];
+                    comment.TextContent = (String)sdr[DATABASE_COLUMN_NAME_TEXT];
                     DateTime resultD;
 
                     if(DateTime.TryParseExact(sdr[DATABASE_COLUMN_NAME_DATE].ToString(),"yyyyMMddHHmmssff",null,
                         DateTimeStyles.AllowWhiteSpaces, out resultD)) {
-                        comment.Date = resultD;
+                        comment.CreationDateTime = resultD;
                     }
 
                     CommentList.Add(comment);
