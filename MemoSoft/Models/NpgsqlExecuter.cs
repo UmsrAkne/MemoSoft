@@ -63,5 +63,6 @@ namespace MemoSoft.Models {
 
         private NpgsqlConnectionStringBuilder ConnectionBuilder { get; set; }
         private NpgsqlConnection Connection { get => new NpgsqlConnection(ConnectionBuilder.ConnectionString); }
+
     }
 }

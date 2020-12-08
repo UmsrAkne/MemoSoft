@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace MemoSoft.ViewModels {
     class MainWindowViewModel : BindableBase {
-        public PostgreSQLDBHelper PostgreSQLDatabaseHelper { get; private set; }
+        public PostgreSQLDBHelper PostgreSQLDatabaseHelper { get; private set; } = new PostgreSQLDBHelper();
     }
 }

@@ -41,7 +41,7 @@
         <ScrollViewer Grid.Row="2">
             <StackPanel>
                 <ListBox HorizontalContentAlignment="Stretch"
-                         ItemsSource="{Binding PostedComments}">
+                         ItemsSource="{Binding PostgreSQLDatabaseHelper.Comments}">
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -55,6 +55,7 @@
                                         <GradientStop Color="Snow" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Border.Background>
+
                                 <Grid Width="{Binding ElementName=parentGrid, Path=Width}" >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -62,17 +63,15 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"
-                                               FontSize="12pt"
+                                               FontSize="11pt"
                                                Margin="0,0,10,0"
-                                               Padding="5,3,5,3"
-                                               Text="{Binding DateString}"
+                                               Text="{Binding CreationDateShortString}"
                                                />
 
 
                                     <TextBlock Grid.Column="1"
-                                               FontSize="12pt"
-                                               Padding="5,3,5,3"
-                                               Text="{Binding Text}"
+                                               FontSize="11pt"
+                                               Text="{Binding TextContent}"
                                                TextWrapping="Wrap"
                                                />
                                 </Grid>
