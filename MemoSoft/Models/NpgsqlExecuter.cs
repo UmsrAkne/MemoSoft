@@ -1,5 +1,5 @@
-﻿using Npgsql;
-using System;
+﻿using System;
+using Npgsql;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -33,9 +33,9 @@ namespace MemoSoft.Models {
         }
 
         public void executeNonQuery(string sql, List<NpgsqlParameter> parameters) {
-            using (var conn = new NpgsqlConnection()) {
+            using (var conn = Connection) {
                 conn.Open();
-                var command = new NpgsqlCommand(sql, new NpgsqlConnection());
+                var command = new NpgsqlCommand(sql, conn);
                 parameters.ForEach(p => command.Parameters.Add(p));
                 command.ExecuteNonQuery();
             }
@@ -62,6 +62,6 @@ namespace MemoSoft.Models {
         }
 
         private NpgsqlConnectionStringBuilder ConnectionBuilder { get; set; }
-        private NpgsqlConnection Connection { get; set; }
+        private NpgsqlConnection Connection { get => new NpgsqlConnection(ConnectionBuilder.ConnectionString); }
     }
 }
