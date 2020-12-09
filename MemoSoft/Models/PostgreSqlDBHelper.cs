@@ -11,6 +11,7 @@ namespace MemoSoft.Models {
     class PostgreSQLDBHelper : BindableBase{
         // フィールド
         private List<Comment> comments = new List<Comment>();
+        private String enteringComment = "";
         private DelegateCommand<String> insertCommentCommand;
 
         // コンストラクタ
@@ -26,6 +27,11 @@ namespace MemoSoft.Models {
             private set => SetProperty(ref comments, value);
         }
 
+        public String EnteringComment {
+            get => enteringComment;
+            set => SetProperty(ref enteringComment, value);
+        }
+
         public DelegateCommand<String> InsertCommentCommand {
             get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) => {
                 insertComment(new Comment() {
@@ -34,6 +40,7 @@ namespace MemoSoft.Models {
                 });
 
                 loadComments();
+                EnteringComment = "";
             }));
         }
 

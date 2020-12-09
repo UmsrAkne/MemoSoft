@@ -34,7 +34,7 @@
              Padding="3"
              Foreground="Black"
              Opacity="0.8"
-             Text="{Binding InputString,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+             Text="{Binding PostgreSQLDatabaseHelper.EnteringComment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
              Grid.Row="1"
          >
             <TextBox.InputBindings>
@@ -42,6 +42,7 @@
                             Command="{Binding PostgreSQLDatabaseHelper.InsertCommentCommand}"
                             CommandParameter="{Binding Text, ElementName=textBox}"
                 />
+
             </TextBox.InputBindings>
         </TextBox>
 
