@@ -135,7 +135,6 @@
     </Compile>
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DatabaseHelper.cs" />
-    <Compile Include="DelegateCommand.cs" />
     <Compile Include="INotifyPropertyChangedBase.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
