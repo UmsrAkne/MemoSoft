@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Npgsql;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace MemoSoft.Models {
 
         private NpgsqlExecuter Executer { get; } = new NpgsqlExecuter();
 
+        private string CommentTableName => "comments";
+
         public void loadComments() {
             var sql = $"SELECT * FROM comments ORDER BY {nameof(Comment.CreationDateTime)} DESC;";
             var commentHashTables = Executer.select(sql , new List<Npgsql.NpgsqlParameter>());
@@ -35,6 +38,14 @@ namespace MemoSoft.Models {
             });
 
             Comments = commentList;
+        }
+        /// <summary>
+        /// id列の最大値を取得します。
+        /// </summary>
+        /// <returns></returns>
+        private int getMaxID() {
+            var sql = $"SELECT MAX ({nameof(Comment.ID)}) FROM {CommentTableName};";
+            return (int)Executer.select(sql, new List<NpgsqlParameter>())[0]["max"];
         }
     }
 }
