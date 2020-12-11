@@ -51,6 +51,13 @@
                 <ListBox HorizontalContentAlignment="Stretch"
                          ItemsSource="{Binding PostgreSQLDatabaseHelper.Comments}">
 
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}" >
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="#bbDDFF"
