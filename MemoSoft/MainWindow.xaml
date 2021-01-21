@@ -46,18 +46,111 @@
 
             </TextBox.InputBindings>
         </TextBox>
+
+        <ListView Grid.Row="2"
+                  ItemsSource="{Binding PostgreSQLDatabaseHelper.Comments}"
+                  >
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="LightGray"
+                            BorderThickness="0,1,0,0"
+                            Margin="0,2,0,2"
+                            >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding CreationDateShortString}"
+                                       Grid.Column="0"
+                                       />
+
+                            <Border Width="1" 
+                                    Background="Black"
+                                    Grid.Column="1"
+                                    Margin="0,1,0,0"
+                                    />
+
+                            <TextBlock Text="{Binding TextContent}"
+                                       Grid.Column="2"
+                                       />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
         
     </Grid>
 
     <Window.Resources>
 
-        <Style x:Key="{x:Type ListBoxItem}"
-               TargetType="ListBoxItem">
-          <Setter Property="SnapsToDevicePixels"
-                  Value="true" />
-          <Setter Property="OverridesDefaultStyle"
-                  Value="true" />
+        <Style x:Key="{x:Type ListViewItem}"
+       TargetType="ListViewItem">
+
+            <Setter Property="SnapsToDevicePixels"
+          Value="true" />
+            <Setter Property="OverridesDefaultStyle"
+          Value="true" />
+
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Grid>
+                            <ContentPresenter HorizontalAlignment="Stretch"
+                                              />
+
+                            <Border x:Name="Border"
+                                    Padding="2"
+                                    SnapsToDevicePixels="true"
+                                    Background="Transparent"
+                                    BorderBrush="Black"
+                                    Margin="0,6"
+                                    >
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="MouseOver" />
+                                        <VisualState x:Name="Disabled" />
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="SelectionStates">
+                                        <VisualState x:Name="Unselected" />
+                                        <VisualState x:Name="Selected">
+                                            <Storyboard>
+                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                    Storyboard.TargetProperty="(Panel.Background).
+                        (SolidColorBrush.Color)">
+                                                    <EasingColorKeyFrame KeyTime="0"
+                                             Value="Red" />
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="SelectedUnfocused">
+                                            <Storyboard>
+                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                    Storyboard.TargetProperty="(Panel.Background).
+                        (SolidColorBrush.Color)">
+                                                    <EasingColorKeyFrame KeyTime="0"
+                                             Value="Red" />
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+
+
     </Window.Resources> 
     
 </Window>
