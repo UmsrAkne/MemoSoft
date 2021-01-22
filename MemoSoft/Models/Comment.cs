@@ -16,6 +16,12 @@ namespace MemoSoft.Models
         public String TextContent { get => textContent; set => SetProperty(ref textContent, value); }
         private String textContent = "";
 
+        /// <summary>
+        /// このコメントをビューに入力して表示した際、このコメントにあたる行の背景色に色を付けるかどうかを表します。
+        /// 要するに表示時の見た目を整えるためのプロパティです。
+        /// </summary>
+        public bool LinePaint { get; set; }
+
         public String CreationDateShortString { get => CreationDateTime.ToString("MM/dd HH:mm"); }
 
         /// <summary>

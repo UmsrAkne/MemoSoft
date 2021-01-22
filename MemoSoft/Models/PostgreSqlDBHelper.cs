@@ -56,8 +56,20 @@ namespace MemoSoft.Models {
 
             var commentList = new List<Comment>();
 
+            int lastElementCreationDate = 0;
+            bool linePaint = false;
+
             commentHashTables.ForEach(h => {
-                commentList.Add(Comment.toComment(h));
+                var c = Comment.toComment(h);
+
+                // 同じ日付のコメントには同じ背景色をつけるため、日付毎で linePaint の値が入れ替わるようにする。
+                if(lastElementCreationDate != c.CreationDateTime.Day) {
+                    linePaint = !linePaint;
+                    lastElementCreationDate = c.CreationDateTime.Day;
+                }
+
+                c.LinePaint = linePaint;
+                commentList.Add(c);
             });
 
             Comments = commentList;
