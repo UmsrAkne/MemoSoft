@@ -12,7 +12,7 @@
         <vms:MainWindowViewModel/>
     </Window.DataContext>
 
-        <Grid Name="parentGrid" Opacity="0.8">
+        <Grid Name="parentGrid">
 
 
             <Grid.RowDefinitions>
@@ -20,6 +20,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
+
+        <Image Source="res/bg.png"
+               Grid.Row="0"
+               Grid.RowSpan="3"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom"
+               Stretch="None"
+         />
 
         <Menu VerticalAlignment="Top" Grid.Row="0">
             <MenuItem Header="File">
@@ -49,6 +57,7 @@
 
         <ListView Grid.Row="2"
                   ItemsSource="{Binding PostgreSQLDatabaseHelper.Comments}"
+                  Opacity="0.8"
                   >
 
             <ListView.ItemTemplate>
@@ -97,7 +106,8 @@
             </ListView.ItemTemplate>
             
         </ListView>
-        
+
+
     </Grid>
 
     <Window.Resources>
@@ -162,7 +172,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
 
     </Window.Resources> 
     
