@@ -16,7 +16,11 @@ namespace MemoSoft.Models {
 
         // コンストラクタ
         public PostgreSQLDBHelper() {
-            loadComments();
+            try {
+                loadComments();
+            }catch(TimeoutException e) {
+                System.Diagnostics.Debug.WriteLine("DBへの接続失敗");
+            }
         }
 
         // -------------------------------------------------- 
