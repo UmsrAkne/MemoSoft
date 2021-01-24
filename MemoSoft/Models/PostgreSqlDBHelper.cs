@@ -18,8 +18,8 @@ namespace MemoSoft.Models {
         public PostgreSQLDBHelper() {
             try {
                 loadComments();
-            }catch(TimeoutException e) {
-                System.Diagnostics.Debug.WriteLine("DBへの接続失敗");
+            }catch(TimeoutException) {
+                SystemMessage = "DBへの接続に失敗しました";
             }
         }
 
@@ -48,8 +48,14 @@ namespace MemoSoft.Models {
             }));
         }
 
+        public String SystemMessage {
+            get => systemMessage;
+            set => SetProperty(ref systemMessage, value);
+        }
+
         private NpgsqlExecuter Executer { get; } = new NpgsqlExecuter();
         private string CommentTableName => "comments";
+        private string systemMessage = "";
 
         // -------------------------------------------------- 
         // メソッド
