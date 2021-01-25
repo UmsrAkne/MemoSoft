@@ -13,6 +13,7 @@ namespace MemoSoft.Models {
         private List<Comment> comments = new List<Comment>();
         private String enteringComment = "";
         private DelegateCommand<String> insertCommentCommand;
+        private DelegateCommand reloadCommand;
 
         // コンストラクタ
         public PostgreSQLDBHelper() {
@@ -45,6 +46,17 @@ namespace MemoSoft.Models {
 
                 loadComments();
                 EnteringComment = "";
+            }));
+        }
+
+        public DelegateCommand ReloadCommand {
+            get => reloadCommand ?? (reloadCommand = new DelegateCommand(() => {
+                try {
+                    loadComments();
+                    SystemMessage = $"{DateTime.Now.ToString() } コメントをリロードしました ";
+                }catch(TimeoutException) {
+                    SystemMessage = "DBへの接続に失敗しました";
+                }
             }));
         }
 
