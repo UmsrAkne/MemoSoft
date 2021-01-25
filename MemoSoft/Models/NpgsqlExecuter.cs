@@ -24,11 +24,12 @@ namespace MemoSoft.Models {
             }
 
             ConnectionBuilder = new NpgsqlConnectionStringBuilder() {
-                Host = readText(basePath + "hostName.txt" ),
+                Host = readText(basePath + "hostName.txt"),
                 Username = readText(basePath + "user.txt"),
                 Password = readText(basePath + "pass.txt"),
                 Port = int.Parse(readText(basePath + "port.txt")),
-                Database = "postgres"
+                Database = "postgres",
+                Timeout = 5
             };
         }
 
