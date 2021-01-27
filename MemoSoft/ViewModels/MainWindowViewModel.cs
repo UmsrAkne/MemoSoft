@@ -9,5 +9,6 @@ using System.Threading.Tasks;
 namespace MemoSoft.ViewModels {
     class MainWindowViewModel : BindableBase {
         public PostgreSQLDBHelper PostgreSQLDatabaseHelper { get; private set; } = new PostgreSQLDBHelper();
+        public UIColors UIColors { get; private set; } = new UIColors();
     }
 }

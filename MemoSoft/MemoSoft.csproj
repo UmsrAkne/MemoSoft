@@ -124,6 +124,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\NpgsqlExecuter.cs" />
     <Compile Include="Models\PostgreSQLDBHelper.cs" />
+    <Compile Include="Models\UIColors.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

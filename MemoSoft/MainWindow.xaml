@@ -34,8 +34,12 @@
                Stretch="None"
          />
 
-        <Menu VerticalAlignment="Top" Grid.Row="0">
-            <MenuItem Header="File">
+        <Menu VerticalAlignment="Top" Grid.Row="0"
+              Background="{Binding UIColors.BackgroundBrush}"
+              Foreground="{Binding UIColors.ForegroundBrush}"
+              >
+            <MenuItem Header="File"
+                      >
                 <MenuItem Header="Save"/>
                 <MenuItem Header="Quit"/>
             </MenuItem>
