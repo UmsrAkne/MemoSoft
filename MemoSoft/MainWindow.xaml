@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MemoSoft"
         xmlns:vms="clr-namespace:MemoSoft.ViewModels"
+        xmlns:models="clr-namespace:MemoSoft.Models"
         mc:Ignorable="d"
         Activated="App_Activated"
         Title="MainWindow" Height="450" Width="800">
@@ -34,10 +35,33 @@
                Stretch="None"
          />
 
-        <Menu VerticalAlignment="Top" Grid.Row="0">
-            <MenuItem Header="File">
+        <Menu VerticalAlignment="Top" Grid.Row="0"
+              Background="{Binding UIColors.BackgroundBrush}"
+              Foreground="{Binding UIColors.ForegroundBrush}"
+              >
+            <MenuItem Header="File"
+                      >
                 <MenuItem Header="Save"/>
                 <MenuItem Header="Quit"/>
+            </MenuItem>
+
+            <MenuItem Header="Theme">
+                <MenuItem Header="Ligth"
+                          Command="{Binding ChangeThemeCommand}"
+                          >
+                    <MenuItem.CommandParameter>
+                        <models:ColorTheme> Light </models:ColorTheme>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
+
+                <MenuItem Header="Dark"
+                          Command="{Binding ChangeThemeCommand}"
+                          >
+                    <MenuItem.CommandParameter>
+                        <models:ColorTheme> Dark </models:ColorTheme>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
+
             </MenuItem>
         </Menu>
 
@@ -46,7 +70,8 @@
              AcceptsReturn="True"
              FontSize="12pt"
              Padding="3"
-             Foreground="Black"
+             Foreground="{Binding UIColors.ForegroundBrush}"
+             Background="{Binding UIColors.BackgroundBrush}"
              Opacity="0.8"
              Text="{Binding PostgreSQLDatabaseHelper.EnteringComment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
              Grid.Row="1"
@@ -63,12 +88,14 @@
         <ListView Grid.Row="2"
                   ItemsSource="{Binding PostgreSQLDatabaseHelper.Comments}"
                   Opacity="0.8"
+                  Background="{Binding UIColors.BackgroundBrush}"
+                  Name="mainListView"
                   >
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="LightGray"
-                            BorderThickness="0,1"
+                    <Border BorderBrush="{Binding ElementName=mainListView, Path=DataContext.UIColors.DarkBackgroundBrush}"
+                            BorderThickness="0,0.5"
                             Padding="3"
                             >
 
@@ -76,7 +103,9 @@
                             <Style TargetType="Border">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding LinePaint}" Value="true">
-                                        <Setter Property="Background" Value="PowderBlue"/>
+                                        <Setter Property="Background" 
+                                         Value="{Binding ElementName=mainListView, Path=DataContext.UIColors.DarkBackgroundBrush}"
+                                        />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -90,6 +119,8 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="{Binding CreationDateShortString}"
+                                       Foreground="{Binding ElementName=mainListView, Path=DataContext.UIColors.ForegroundBrush}"
+                                       Background="Transparent"
                                        FontSize="14"
                                        Grid.Column="0"
                                        />
@@ -101,6 +132,8 @@
                                     />
 
                             <TextBlock Text="{Binding TextContent}"
+                                       Foreground="{Binding ElementName=mainListView, Path=DataContext.UIColors.ForegroundBrush}"
+                                       Background="Transparent"
                                        FontSize="14"
                                        Grid.Column="2"
                                        Margin="6,0,0,0"
@@ -112,7 +145,11 @@
             
         </ListView>
 
-        <StatusBar Grid.Row="3" >
+        <StatusBar Grid.Row="3"
+                   Background="{Binding UIColors.BackgroundBrush}"
+                   Foreground="{Binding UIColors.ForegroundBrush}"
+                   >
+
             <TextBlock Text="{Binding PostgreSQLDatabaseHelper.SystemMessage}" />
         </StatusBar>
 
