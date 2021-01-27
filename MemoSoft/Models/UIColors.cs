@@ -18,6 +18,12 @@ namespace MemoSoft.Models {
             set => SetProperty(ref backgroundBrush, value);
         }
 
+        private SolidColorBrush darkBackgroundBrush;
+        public SolidColorBrush DarkBackgroundBrush {
+            get => darkBackgroundBrush;
+            set => SetProperty(ref darkBackgroundBrush, value);
+        }
+
         private SolidColorBrush foregroundBrush;
         public SolidColorBrush ForegroundBrush {
             get => foregroundBrush;
@@ -27,10 +33,12 @@ namespace MemoSoft.Models {
         public void changeTheme(ColorTheme theme) {
             if(theme == ColorTheme.Light) {
                 BackgroundBrush = new SolidColorBrush(Colors.White);
+                DarkBackgroundBrush = new SolidColorBrush(Colors.LightGray);
                 ForegroundBrush = new SolidColorBrush(Colors.Black);
             }
             else {
-                BackgroundBrush = new SolidColorBrush(Colors.Black);
+                BackgroundBrush = new SolidColorBrush(Color.FromRgb(33,33,33));
+                DarkBackgroundBrush = new SolidColorBrush(Colors.Black);
                 ForegroundBrush = new SolidColorBrush(Colors.White);
             }
         }
