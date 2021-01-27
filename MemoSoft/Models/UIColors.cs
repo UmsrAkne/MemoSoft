@@ -43,6 +43,7 @@ namespace MemoSoft.Models {
             }
         }
 
-        public enum ColorTheme { Light,Dark };
     }
+
+    public enum ColorTheme { Light,Dark };
 }
