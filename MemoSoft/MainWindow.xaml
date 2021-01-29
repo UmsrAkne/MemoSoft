@@ -8,7 +8,7 @@
         xmlns:models="clr-namespace:MemoSoft.Models"
         mc:Ignorable="d"
         Activated="App_Activated"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MemoSoft" Height="450" Width="800">
     <Window.DataContext>
         <vms:MainWindowViewModel/>
     </Window.DataContext>
@@ -39,15 +39,21 @@
               Background="{Binding UIColors.BackgroundBrush}"
               Foreground="{Binding UIColors.ForegroundBrush}"
               >
+
             <MenuItem Header="File"
                       >
-                <MenuItem Header="Save"/>
-                <MenuItem Header="Quit"/>
+                <MenuItem Header="Save"
+                          Foreground="Black"
+                          />
+                <MenuItem Header="Quit"
+                          Foreground="Black"
+                          />
             </MenuItem>
 
             <MenuItem Header="Theme">
                 <MenuItem Header="Ligth"
                           Command="{Binding ChangeThemeCommand}"
+                          Foreground="Black"
                           >
                     <MenuItem.CommandParameter>
                         <models:ColorTheme> Light </models:ColorTheme>
@@ -56,6 +62,7 @@
 
                 <MenuItem Header="Dark"
                           Command="{Binding ChangeThemeCommand}"
+                          Foreground="Black"
                           >
                     <MenuItem.CommandParameter>
                         <models:ColorTheme> Dark </models:ColorTheme>
