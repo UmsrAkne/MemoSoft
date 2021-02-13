@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MemoSoft.Models {
-    class PostgreSQLDBHelper : BindableBase{
+    class PostgreSQLDBHelper : BindableBase , IDBHelper{
         // フィールド
         private List<Comment> comments = new List<Comment>();
         private String enteringComment = "";
