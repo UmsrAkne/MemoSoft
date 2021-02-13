@@ -10,9 +10,6 @@ using System.Threading.Tasks;
 namespace MemoSoft.Models {
     class PostgreSQLDBHelper : BindableBase , IDBHelper{
         // フィールド
-        private List<Comment> comments = new List<Comment>();
-        private String enteringComment = "";
-        private DelegateCommand<String> insertCommentCommand;
         private DelegateCommand reloadCommand;
 
         // コンストラクタ
@@ -26,28 +23,6 @@ namespace MemoSoft.Models {
 
         // -------------------------------------------------- 
         // プロパティ
-
-        public List<Comment> Comments {
-            get => comments;
-            private set => SetProperty(ref comments, value);
-        }
-
-        public String EnteringComment {
-            get => enteringComment;
-            set => SetProperty(ref enteringComment, value);
-        }
-
-        public DelegateCommand<String> InsertCommentCommand {
-            get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) => {
-                insertComment(new Comment() {
-                    TextContent = text,
-                    CreationDateTime = DateTime.Now
-                });
-
-                loadComments();
-                EnteringComment = "";
-            }));
-        }
 
         public DelegateCommand ReloadCommand {
             get => reloadCommand ?? (reloadCommand = new DelegateCommand(() => {
@@ -72,7 +47,7 @@ namespace MemoSoft.Models {
         // -------------------------------------------------- 
         // メソッド
 
-        public void loadComments() {
+        public List<Comment> loadComments() {
             var sql = $"SELECT * FROM comments ORDER BY {nameof(Comment.CreationDateTime)} DESC;";
             var commentHashTables = Executer.select(sql , new List<Npgsql.NpgsqlParameter>());
 
@@ -94,7 +69,7 @@ namespace MemoSoft.Models {
                 commentList.Add(c);
             });
 
-            Comments = commentList;
+            return commentList;
         }
 
         public void insertComment(Comment comment) {
@@ -122,7 +97,6 @@ namespace MemoSoft.Models {
                 $");"
                 ,ps
             );
-
         }
 
         /// <summary>

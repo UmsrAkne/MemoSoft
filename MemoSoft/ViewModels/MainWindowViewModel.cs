@@ -12,6 +12,44 @@ namespace MemoSoft.ViewModels {
         public PostgreSQLDBHelper PostgreSQLDatabaseHelper { get; private set; } = new PostgreSQLDBHelper();
         public UIColors UIColors { get; private set; } = new UIColors();
 
+        public MainWindowViewModel() {
+            Comments = PostgreSQLDatabaseHelper.loadComments();
+        }
+
+        public List<Comment> Comments {
+            #region
+            get => comments;
+            private set => SetProperty(ref comments, value);
+        }
+
+        private List<Comment> comments = new List<Comment>();
+        #endregion
+
+        public String EnteringComment {
+            #region
+            get => enteringComment;
+            set => SetProperty(ref enteringComment, value);
+        }
+
+        private String enteringComment = "";
+        #endregion
+
+        public DelegateCommand<String> InsertCommentCommand {
+            #region
+            get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) => {
+                PostgreSQLDatabaseHelper.insertComment(new Comment() {
+                    TextContent = text,
+                    CreationDateTime = DateTime.Now
+                });
+
+                Comments = PostgreSQLDatabaseHelper.loadComments();
+                EnteringComment = "";
+            }));
+        }
+
+        private DelegateCommand<String> insertCommentCommand;
+        #endregion
+
         public DelegateCommand<object> ChangeThemeCommand {
             #region
             get => changeThemeCommand ?? (changeThemeCommand = new DelegateCommand<object>((object theme) => {

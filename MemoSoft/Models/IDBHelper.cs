@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MemoSoft.Models {
     interface IDBHelper {
-        void loadComments();
+        List<Comment> loadComments();
         void insertComment(Comment comment);
     }
 }
