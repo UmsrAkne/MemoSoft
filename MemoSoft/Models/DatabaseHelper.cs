@@ -19,6 +19,7 @@ namespace MemoSoft
         public static readonly String DATABASE_COLUMN_NAME_TEXT = "text";
 
         private String dbFileName;
+        private String DataSourceSyntax => $"Data Source={dbFileName}.sqlite";
 
         private List<Comment> commentList;
         public List<Comment> CommentList {
@@ -28,6 +29,17 @@ namespace MemoSoft
 
         public DatabaseHelper(string dbFileName) {
             this.dbFileName = dbFileName;
+
+            // テーブルの作成。IF NOT EXISTS を入れてあるので、テーブルが存在しない初回のみ実行する。
+            using (var con = new SQLiteConnection(DataSourceSyntax)) {
+                con.Open();
+                var sql = $"CREATE TABLE IF NOT EXISTS {DATABASE_TABLE_NAME} (" +
+                          $"{nameof(Comment.ID)} INTEGER PRIMARY KEY," +
+                          $"{nameof(Comment.CreationDateTime)} TEXT NOT NULL," +
+                          $"{nameof(Comment.TextContent)} TEXT NOT NULL);";
+
+                new SQLiteCommand(sql, con).ExecuteNonQuery();
+            }
         }
 
         public void createDatabase() {
@@ -82,11 +94,11 @@ namespace MemoSoft
 
                 while (sdr.Read() == true) {
                     var comment = new Comment();
-                    comment.TextContent = (String)sdr[DATABASE_COLUMN_NAME_TEXT];
+                    comment.TextContent = (String)sdr[nameof(Comment.TextContent)];
                     DateTime resultD;
 
                     if(
-                        DateTime.TryParseExact(sdr[DATABASE_COLUMN_NAME_DATE].ToString(), "yyyyMMddHHmmssff", null,
+                        DateTime.TryParseExact(sdr[nameof(Comment.CreationDateTime)].ToString(), "yyyyMMddHHmmssff", null,
                         DateTimeStyles.AllowWhiteSpaces, out resultD)) {
                         comment.CreationDateTime = resultD;
                     }
@@ -129,6 +141,10 @@ namespace MemoSoft
 
         public void insertComment(Comment comment) {
             var nextID = 0;
+            if(getRecordCount() != 0) {
+                nextID = getMAXID() + 1;
+            }
+
             var tableName = DATABASE_TABLE_NAME;
             var sql = $"INSERT INTO {tableName} (" +
                       $"{nameof(Comment.ID)}, " +
@@ -137,9 +153,52 @@ namespace MemoSoft
                       $"VALUES (" +
                       $"{nextID}," +
                       $"'{comment.CreationDateTime}', " +
-                      $":{nameof(comment.TextContent)} " +
+                      $"'{comment.TextContent}'" +
                       $");";
 
+            using (var con = new SQLiteConnection(DataSourceSyntax)) {
+                con.Open();
+                var command = new SQLiteCommand(sql, con);
+                command.ExecuteNonQuery();
+            }
         }
+
+        private int getMAXID() {
+            using (var con = new SQLiteConnection(DataSourceSyntax)) {
+                con.Open();
+                var sql = $"SELECT MAX({nameof(Comment.ID)}) FROM {DATABASE_TABLE_NAME};";
+                var command = new SQLiteCommand(sql, con);
+                SQLiteDataReader sdr = command.ExecuteReader();
+
+                var count = 0;
+
+                if (sdr.Read()) {
+                    count = (int)sdr["MAX"];
+                }
+
+                sdr.Close();
+                return count;
+            }
+        }
+
+        private int getRecordCount() {
+            using (var con = new SQLiteConnection(DataSourceSyntax)) {
+                con.Open();
+                var sql = $"SELECT COUNT(*) FROM {DATABASE_TABLE_NAME};";
+                var command = new SQLiteCommand(sql, con);
+                SQLiteDataReader sdr = command.ExecuteReader();
+
+                var count = 0;
+
+                if (sdr.Read()) {
+                    var v = sdr.GetValue(0);
+                }
+
+                sdr.Close();
+                return count;
+            }
+        }
+
+        public bool Connected { get; private set; }
     }
 }

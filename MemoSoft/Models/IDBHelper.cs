@@ -8,5 +8,6 @@ namespace MemoSoft.Models {
     interface IDBHelper {
         List<Comment> loadComments();
         void insertComment(Comment comment);
+        bool Connected { get; }
     }
 }

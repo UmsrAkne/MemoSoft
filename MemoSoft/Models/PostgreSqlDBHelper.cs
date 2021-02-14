@@ -16,6 +16,7 @@ namespace MemoSoft.Models {
         public PostgreSQLDBHelper() {
             try {
                 loadComments();
+                Connected = true;
             }catch(TimeoutException) {
                 SystemMessage = "DBへの接続に失敗しました";
             }
@@ -107,5 +108,7 @@ namespace MemoSoft.Models {
             var sql = $"SELECT MAX ({nameof(Comment.ID)}) FROM {CommentTableName};";
             return (int)Executer.select(sql, new List<NpgsqlParameter>())[0]["max"];
         }
+
+        public bool Connected { get; private set; }
     }
 }

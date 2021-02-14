@@ -13,6 +13,13 @@ namespace MemoSoft.ViewModels {
         public UIColors UIColors { get; private set; } = new UIColors();
 
         public MainWindowViewModel() {
+            DBHelper = new PostgreSQLDBHelper();
+
+            // PostgreSQL の方がつながっていなければオフラインの sqlite に切り替え。
+            if (!DBHelper.Connected) {
+                DBHelper = new DatabaseHelper("Diarydb");
+            }
+
             LoadCommand.Execute();
         }
 
