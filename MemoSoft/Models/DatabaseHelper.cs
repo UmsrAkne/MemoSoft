@@ -10,7 +10,7 @@ using MemoSoft.Models;
 
 namespace MemoSoft
 {
-    public class DatabaseHelper
+    public class DatabaseHelper : IDBHelper
     {
         public static readonly String DATABASE_NAME_EACH_PC =
             Environment.MachineName + "_" + Environment.UserName;
@@ -120,6 +120,26 @@ namespace MemoSoft
 
                 sdr.Close();
             }
+        }
+
+        public List<Comment> loadComments() {
+            select();
+            return CommentList;
+        }
+
+        public void insertComment(Comment comment) {
+            var nextID = 0;
+            var tableName = DATABASE_TABLE_NAME;
+            var sql = $"INSERT INTO {tableName} (" +
+                      $"{nameof(Comment.ID)}, " +
+                      $"{nameof(Comment.CreationDateTime)}," +
+                      $"{nameof(Comment.TextContent)} )" +
+                      $"VALUES (" +
+                      $"{nextID}," +
+                      $"'{comment.CreationDateTime}', " +
+                      $":{nameof(comment.TextContent)} " +
+                      $");";
+
         }
     }
 }
