@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace MemoSoft.ViewModels {
     class MainWindowViewModel : BindableBase {
-        public PostgreSQLDBHelper PostgreSQLDatabaseHelper { get; private set; } = new PostgreSQLDBHelper();
+        public IDBHelper DBHelper { get; private set; } = new PostgreSQLDBHelper();
         public UIColors UIColors { get; private set; } = new UIColors();
 
         public MainWindowViewModel() {
-            Comments = PostgreSQLDatabaseHelper.loadComments();
+            LoadCommand.Execute();
         }
 
         public List<Comment> Comments {
@@ -37,12 +37,12 @@ namespace MemoSoft.ViewModels {
         public DelegateCommand<String> InsertCommentCommand {
             #region
             get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) => {
-                PostgreSQLDatabaseHelper.insertComment(new Comment() {
+                DBHelper.insertComment(new Comment() {
                     TextContent = text,
                     CreationDateTime = DateTime.Now
                 });
 
-                Comments = PostgreSQLDatabaseHelper.loadComments();
+                Comments = DBHelper.loadComments();
                 EnteringComment = "";
             }));
         }
@@ -62,5 +62,16 @@ namespace MemoSoft.ViewModels {
         }
         private DelegateCommand<object> changeThemeCommand;
         #endregion
+
+
+        public DelegateCommand LoadCommand {
+            #region
+            get => loadCommand ?? (loadCommand = new DelegateCommand(() => {
+                Comments = DBHelper.loadComments();
+            }));
+        }
+        private DelegateCommand loadCommand;
+        #endregion
+
     }
 }
