@@ -10,4 +10,6 @@ namespace MemoSoft.Models {
         void insertComment(Comment comment);
         bool Connected { get; }
     }
+
+    public enum DBType { Local,Remote }
 }
