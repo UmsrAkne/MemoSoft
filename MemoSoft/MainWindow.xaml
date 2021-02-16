@@ -80,12 +80,12 @@
              Foreground="{Binding UIColors.ForegroundBrush}"
              Background="{Binding UIColors.BackgroundBrush}"
              Opacity="0.8"
-             Text="{Binding PostgreSQLDatabaseHelper.EnteringComment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+             Text="{Binding EnteringComment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
              Grid.Row="1"
          >
             <TextBox.InputBindings>
                 <KeyBinding Key="Return" Modifiers="Ctrl" 
-                            Command="{Binding PostgreSQLDatabaseHelper.InsertCommentCommand}"
+                            Command="{Binding InsertCommentCommand}"
                             CommandParameter="{Binding Text, ElementName=textBox}"
                 />
 
@@ -93,7 +93,7 @@
         </TextBox>
 
         <ListView Grid.Row="2"
-                  ItemsSource="{Binding PostgreSQLDatabaseHelper.Comments}"
+                  ItemsSource="{Binding Comments}"
                   Opacity="0.8"
                   Background="{Binding UIColors.BackgroundBrush}"
                   Name="mainListView"

@@ -9,8 +9,53 @@ using System.Threading.Tasks;
 
 namespace MemoSoft.ViewModels {
     class MainWindowViewModel : BindableBase {
-        public PostgreSQLDBHelper PostgreSQLDatabaseHelper { get; private set; } = new PostgreSQLDBHelper();
+        public IDBHelper DBHelper { get; private set; } = new PostgreSQLDBHelper();
         public UIColors UIColors { get; private set; } = new UIColors();
+
+        public MainWindowViewModel() {
+            DBHelper = new PostgreSQLDBHelper();
+
+            // PostgreSQL の方がつながっていなければオフラインの sqlite に切り替え。
+            if (!DBHelper.Connected) {
+                DBHelper = new DatabaseHelper("Diarydb");
+            }
+
+            LoadCommand.Execute();
+        }
+
+        public List<Comment> Comments {
+            #region
+            get => comments;
+            private set => SetProperty(ref comments, value);
+        }
+
+        private List<Comment> comments = new List<Comment>();
+        #endregion
+
+        public String EnteringComment {
+            #region
+            get => enteringComment;
+            set => SetProperty(ref enteringComment, value);
+        }
+
+        private String enteringComment = "";
+        #endregion
+
+        public DelegateCommand<String> InsertCommentCommand {
+            #region
+            get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) => {
+                DBHelper.insertComment(new Comment() {
+                    TextContent = text,
+                    CreationDateTime = DateTime.Now
+                });
+
+                Comments = DBHelper.loadComments();
+                EnteringComment = "";
+            }));
+        }
+
+        private DelegateCommand<String> insertCommentCommand;
+        #endregion
 
         public DelegateCommand<object> ChangeThemeCommand {
             #region
@@ -24,5 +69,16 @@ namespace MemoSoft.ViewModels {
         }
         private DelegateCommand<object> changeThemeCommand;
         #endregion
+
+
+        public DelegateCommand LoadCommand {
+            #region
+            get => loadCommand ?? (loadCommand = new DelegateCommand(() => {
+                Comments = DBHelper.loadComments();
+            }));
+        }
+        private DelegateCommand loadCommand;
+        #endregion
+
     }
 }
