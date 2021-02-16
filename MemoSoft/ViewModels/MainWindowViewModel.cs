@@ -9,7 +9,13 @@ using System.Threading.Tasks;
 
 namespace MemoSoft.ViewModels {
     class MainWindowViewModel : BindableBase {
-        public IDBHelper DBHelper { get; private set; } = new PostgreSQLDBHelper();
+
+        public IDBHelper DBHelper {
+            get => dbHelper;
+            private set => SetProperty(ref dbHelper, value);
+        }
+        private IDBHelper dbHelper;
+
         public UIColors UIColors { get; private set; } = new UIColors();
 
         public MainWindowViewModel() {
@@ -78,6 +84,27 @@ namespace MemoSoft.ViewModels {
             }));
         }
         private DelegateCommand loadCommand;
+        #endregion
+
+
+        public DelegateCommand<object> SwitchDBCommand {
+            #region
+            get => switchDBCommand ?? (switchDBCommand = new DelegateCommand<object>((object dbType) => {
+
+                DBType type = (DBType)dbType;
+
+                if(type == DBType.Local) {
+                    DBHelper = new DatabaseHelper("Diarydb");
+                }else if(type == DBType.Remote) {
+                    IDBHelper helper = new PostgreSQLDBHelper();
+                    DBHelper = (helper.Connected) ? helper : new DatabaseHelper("Diarydb");
+                }
+
+                Comments = DBHelper.loadComments();
+
+            }));
+        }
+        private DelegateCommand<object> switchDBCommand;
         #endregion
 
     }
