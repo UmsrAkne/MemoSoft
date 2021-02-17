@@ -187,7 +187,7 @@
                    Foreground="{Binding UIColors.ForegroundBrush}"
                    >
 
-            <TextBlock Text="{Binding PostgreSQLDatabaseHelper.SystemMessage}" />
+            <TextBlock Text="{Binding SystemMessage}" />
         </StatusBar>
 
 

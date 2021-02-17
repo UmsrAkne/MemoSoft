@@ -47,6 +47,13 @@ namespace MemoSoft.ViewModels {
         private String enteringComment = "";
         #endregion
 
+        public String SystemMessage {
+            get => systemMessage;
+            set => SetProperty(ref systemMessage, value);
+        }
+
+        private String systemMessage = "system message";
+
         public DelegateCommand<String> InsertCommentCommand {
             #region
             get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) => {
@@ -81,6 +88,7 @@ namespace MemoSoft.ViewModels {
             #region
             get => loadCommand ?? (loadCommand = new DelegateCommand(() => {
                 Comments = DBHelper.loadComments();
+                SystemMessage = DBHelper.SystemMessage;
             }));
         }
         private DelegateCommand loadCommand;
