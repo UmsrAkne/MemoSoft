@@ -127,7 +127,15 @@
                   Opacity="0.8"
                   Background="{Binding UIColors.BackgroundBrush}"
                   Name="mainListView"
+                  HorizontalContentAlignment="Stretch"
                   >
+
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </ListView.Resources>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
