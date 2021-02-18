@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:MemoSoft"
         xmlns:vms="clr-namespace:MemoSoft.ViewModels"
         xmlns:models="clr-namespace:MemoSoft.Models"
@@ -35,42 +36,71 @@
                Stretch="None"
          />
 
-        <Menu VerticalAlignment="Top" Grid.Row="0"
-              Background="{Binding UIColors.BackgroundBrush}"
-              Foreground="{Binding UIColors.ForegroundBrush}"
-              >
+        <StackPanel Grid.Row="0">
+            <Menu VerticalAlignment="Top"
+                  Background="{Binding UIColors.BackgroundBrush}"
+                  Foreground="{Binding UIColors.ForegroundBrush}"
+                  >
 
-            <MenuItem Header="File"
-                      >
-                <MenuItem Header="Save"
-                          Foreground="Black"
-                          />
-                <MenuItem Header="Quit"
-                          Foreground="Black"
-                          />
-            </MenuItem>
-
-            <MenuItem Header="Theme">
-                <MenuItem Header="Ligth"
-                          Command="{Binding ChangeThemeCommand}"
-                          Foreground="Black"
+                <MenuItem Header="File"
                           >
-                    <MenuItem.CommandParameter>
-                        <models:ColorTheme> Light </models:ColorTheme>
-                    </MenuItem.CommandParameter>
+                    <MenuItem Header="Save"
+                              Foreground="Black"
+                              />
+                    <MenuItem Header="Quit"
+                              Foreground="Black"
+                              />
                 </MenuItem>
 
-                <MenuItem Header="Dark"
-                          Command="{Binding ChangeThemeCommand}"
-                          Foreground="Black"
-                          >
-                    <MenuItem.CommandParameter>
-                        <models:ColorTheme> Dark </models:ColorTheme>
-                    </MenuItem.CommandParameter>
-                </MenuItem>
+                <MenuItem Header="Theme">
+                    <MenuItem Header="Ligth"
+                              Command="{Binding ChangeThemeCommand}"
+                              Foreground="Black"
+                              >
+                        <MenuItem.CommandParameter>
+                            <models:ColorTheme> Light </models:ColorTheme>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
 
-            </MenuItem>
-        </Menu>
+                    <MenuItem Header="Dark"
+                              Command="{Binding ChangeThemeCommand}"
+                              Foreground="Black"
+                              >
+                        <MenuItem.CommandParameter>
+                            <models:ColorTheme> Dark </models:ColorTheme>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                </MenuItem>
+            </Menu>
+
+        <ComboBox SelectedIndex="1"
+                  x:Name="dbTypeSelectionComboBox"
+                  >
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SwitchDBCommand}" 
+                                           CommandParameter="{Binding ElementName=dbTypeSelectionComboBox, Path=SelectedItem.Content}"
+                                           />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+                <ComboBoxItem>
+                    <ComboBoxItem.Content>
+                        <models:DBType> Local </models:DBType>
+                    </ComboBoxItem.Content>
+                </ComboBoxItem>
+
+                <ComboBoxItem>
+                    <ComboBoxItem.Content>
+                        <models:DBType> Remote </models:DBType>
+                    </ComboBoxItem.Content>
+                </ComboBoxItem>
+
+        </ComboBox>
+
+        </StackPanel>
 
         <TextBox x:Name="textBox"
              Margin="0"
@@ -97,7 +127,15 @@
                   Opacity="0.8"
                   Background="{Binding UIColors.BackgroundBrush}"
                   Name="mainListView"
+                  HorizontalContentAlignment="Stretch"
                   >
+
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </ListView.Resources>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -157,7 +195,7 @@
                    Foreground="{Binding UIColors.ForegroundBrush}"
                    >
 
-            <TextBlock Text="{Binding PostgreSQLDatabaseHelper.SystemMessage}" />
+            <TextBlock Text="{Binding SystemMessage}" />
         </StatusBar>
 
 

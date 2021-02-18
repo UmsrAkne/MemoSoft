@@ -200,5 +200,8 @@ namespace MemoSoft
         }
 
         public bool Connected { get; private set; }
+
+        public string SystemMessage { get; set; }
+
     }
 }

@@ -9,5 +9,8 @@ namespace MemoSoft.Models {
         List<Comment> loadComments();
         void insertComment(Comment comment);
         bool Connected { get; }
+        string SystemMessage { get; }
     }
+
+    public enum DBType { Local,Remote }
 }
