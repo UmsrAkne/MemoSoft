@@ -74,7 +74,7 @@
                 </MenuItem>
             </Menu>
 
-        <ComboBox SelectedIndex="0"
+        <ComboBox SelectedIndex="1"
                   x:Name="dbTypeSelectionComboBox"
                   >
 

@@ -24,6 +24,7 @@ namespace MemoSoft.ViewModels {
             // PostgreSQL の方がつながっていなければオフラインの sqlite に切り替え。
             if (!DBHelper.Connected) {
                 DBHelper = new DatabaseHelper("Diarydb");
+                SwitchDBCommand.Execute(DBType.Local);
             }
 
             LoadCommand.Execute();
