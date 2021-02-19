@@ -36,6 +36,8 @@ namespace MemoSoft
                 var sql = $"CREATE TABLE IF NOT EXISTS {DATABASE_TABLE_NAME} (" +
                           $"{nameof(Comment.ID)} INTEGER PRIMARY KEY," +
                           $"{nameof(Comment.CreationDateTime)} TEXT NOT NULL," +
+                          $"{nameof(Comment.Uploaded)} BOOLEAN NOT NULL," +
+                          $"{nameof(Comment.RemoteID)} INTEGER NOT NULL," +
                           $"{nameof(Comment.TextContent)} TEXT NOT NULL);";
 
                 new SQLiteCommand(sql, con).ExecuteNonQuery();
@@ -149,11 +151,15 @@ namespace MemoSoft
             var sql = $"INSERT INTO {tableName} (" +
                       $"{nameof(Comment.ID)}, " +
                       $"{nameof(Comment.CreationDateTime)}," +
-                      $"{nameof(Comment.TextContent)} )" +
+                      $"{nameof(Comment.TextContent)}, " +
+                      $"{nameof(Comment.RemoteID)}," +
+                      $"{nameof(Comment.Uploaded)} )" +
                       $"VALUES (" +
                       $"{nextID}," +
                       $"'{comment.CreationDateTime}', " +
-                      $"'{comment.TextContent}'" +
+                      $"'{comment.TextContent}', " +
+                      $"{comment.RemoteID}," +
+                      $"'{comment.Uploaded}'" +
                       $");";
 
             using (var con = new SQLiteConnection(DataSourceSyntax)) {
