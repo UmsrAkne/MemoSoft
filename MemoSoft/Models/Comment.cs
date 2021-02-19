@@ -25,6 +25,18 @@ namespace MemoSoft.Models
         public String CreationDateShortString { get => CreationDateTime.ToString("MM/dd HH:mm"); }
 
         /// <summary>
+        /// RemoteDB に格納されているコメントのIDです。デフォルトは -1 です。
+        /// RemoteDB の select で生成された場合はそのままのIDが入ります。
+        /// </summary>
+        public int RemoteID { get; set; } = -1 ;
+
+        /// <summary>
+        /// このコメントオブジェクトが RemoteDB にアップロード済みかどうかを示します。
+        /// RemoteDB の select で生成されてコメントオブジェクトの場合は常に true となります。
+        /// </summary>
+        public bool Uploaded { get; set; }
+
+        /// <summary>
         /// コメントオブジェクトの情報が入ったハッシュテーブルオブジェクトから情報を抜き出し、コメントオブジェクトを生成します。
         /// </summary>
         /// <param name="h"></param>

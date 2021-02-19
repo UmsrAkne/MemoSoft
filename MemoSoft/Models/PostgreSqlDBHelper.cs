@@ -67,6 +67,8 @@ namespace MemoSoft.Models {
                 }
 
                 c.LinePaint = linePaint;
+                c.Uploaded = true;
+                c.RemoteID = c.ID;
                 commentList.Add(c);
             });
 
