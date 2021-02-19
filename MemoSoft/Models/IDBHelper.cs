@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MemoSoft.Models {
-    interface IDBHelper {
+    public interface IDBHelper {
         List<Comment> loadComments();
         void insertComment(Comment comment);
         bool Connected { get; }

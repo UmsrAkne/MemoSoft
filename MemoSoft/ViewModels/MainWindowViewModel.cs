@@ -16,6 +16,7 @@ namespace MemoSoft.ViewModels {
         }
         private IDBHelper dbHelper;
 
+        private DBSynchronizer DBSynchronizer{get; set;}
         public UIColors UIColors { get; private set; } = new UIColors();
 
         public MainWindowViewModel() {
