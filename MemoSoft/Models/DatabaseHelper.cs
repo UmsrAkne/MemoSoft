@@ -169,6 +169,24 @@ namespace MemoSoft
             }
         }
 
+        public int getMaxRemoteID() {
+            using (var con = new SQLiteConnection(DataSourceSyntax)) {
+                con.Open();
+                var sql = $"SELECT MAX({nameof(Comment.RemoteID)}) FROM {DATABASE_TABLE_NAME};";
+                var command = new SQLiteCommand(sql, con);
+                SQLiteDataReader sdr = command.ExecuteReader();
+
+                var count = 0;
+
+                if (sdr.Read()) {
+                    count = (int)sdr["MAX"];
+                }
+
+                sdr.Close();
+                return count;
+            }
+        }
+
         private int getMAXID() {
             using (var con = new SQLiteConnection(DataSourceSyntax)) {
                 con.Open();
