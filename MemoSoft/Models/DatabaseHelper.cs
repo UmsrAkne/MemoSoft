@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Globalization;
 using MemoSoft.Models;
+using System.Collections;
 
 namespace MemoSoft
 {
@@ -221,6 +222,11 @@ namespace MemoSoft
                 sdr.Close();
                 return count;
             }
+        }
+
+        public List<Hashtable> select(string sql) {
+            var hashs = new List<Hashtable>();
+            return hashs;
         }
 
         public bool Connected { get; private set; }

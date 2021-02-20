@@ -2,6 +2,7 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -109,6 +110,10 @@ namespace MemoSoft.Models {
         private int getMaxID() {
             var sql = $"SELECT MAX ({nameof(Comment.ID)}) FROM {CommentTableName};";
             return (int)Executer.select(sql, new List<NpgsqlParameter>())[0]["max"];
+        }
+
+        public List<Hashtable> select(string sql) {
+            return Executer.select(sql, new List<NpgsqlParameter>());
         }
 
         public bool Connected { get; private set; }
