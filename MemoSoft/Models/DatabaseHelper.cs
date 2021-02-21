@@ -192,40 +192,15 @@ namespace MemoSoft
             }
         }
 
-        private int getMAXID() {
-            using (var con = new SQLiteConnection(DataSourceSyntax)) {
-                con.Open();
-                var sql = $"SELECT MAX({nameof(Comment.ID)}) as ID FROM {DATABASE_TABLE_NAME};";
-                var command = new SQLiteCommand(sql, con);
-                SQLiteDataReader sdr = command.ExecuteReader();
-
-                var count = 0;
-
-                if (sdr.Read()) {
-                    count = (int)sdr["MAX"];
-                }
-
-                sdr.Close();
-                return count;
-            }
+        private long getMAXID() {
+            var sql = $"SELECT MAX({nameof(Comment.ID)}) AS MAX FROM {DATABASE_TABLE_NAME};)";
+            return (long)select(sql).First()["MAX"];
         }
 
-        private int getRecordCount() {
-            using (var con = new SQLiteConnection(DataSourceSyntax)) {
-                con.Open();
-                var sql = $"SELECT COUNT(*) AS COUNT FROM {DATABASE_TABLE_NAME};";
-                var command = new SQLiteCommand(sql, con);
-                SQLiteDataReader sdr = command.ExecuteReader();
-
-                var count = 0;
-
-                if (sdr.Read()) {
-                    count = (int)sdr["COUNT"];
-                }
-
-                sdr.Close();
-                return count;
-            }
+        private long getRecordCount() {
+            var sql = $"SELECT COUNT(*) AS COUNT FROM {DATABASE_TABLE_NAME};";
+            var h = select(sql).First();
+            return (long)select(sql).First()["COUNT"];
         }
 
         public void executeNonQuery(string sql) {
