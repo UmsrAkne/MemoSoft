@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MemoSoft.Models {
-    class PostgreSQLDBHelper : BindableBase , IDBHelper{
+    public class PostgreSQLDBHelper : BindableBase , IDBHelper{
         // フィールド
         private DelegateCommand reloadCommand;
 

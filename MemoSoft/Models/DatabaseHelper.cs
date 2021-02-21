@@ -173,14 +173,16 @@ namespace MemoSoft
         public int getMaxRemoteID() {
             using (var con = new SQLiteConnection(DataSourceSyntax)) {
                 con.Open();
-                var sql = $"SELECT MAX({nameof(Comment.RemoteID)}) FROM {DATABASE_TABLE_NAME};";
+                var sql = $"SELECT MAX({nameof(Comment.RemoteID)}) as MAX FROM {DATABASE_TABLE_NAME};";
                 var command = new SQLiteCommand(sql, con);
                 SQLiteDataReader sdr = command.ExecuteReader();
 
                 var count = 0;
 
-                if (sdr.Read()) {
-                    count = (int)sdr["MAX"];
+                if(getRecordCount() > 0) {
+                    if (sdr.Read()) {
+                        count = (int)sdr["MAX"];
+                    }
                 }
 
                 sdr.Close();
@@ -191,7 +193,7 @@ namespace MemoSoft
         private int getMAXID() {
             using (var con = new SQLiteConnection(DataSourceSyntax)) {
                 con.Open();
-                var sql = $"SELECT MAX({nameof(Comment.ID)}) FROM {DATABASE_TABLE_NAME};";
+                var sql = $"SELECT MAX({nameof(Comment.ID)}) as ID FROM {DATABASE_TABLE_NAME};";
                 var command = new SQLiteCommand(sql, con);
                 SQLiteDataReader sdr = command.ExecuteReader();
 
@@ -209,14 +211,14 @@ namespace MemoSoft
         private int getRecordCount() {
             using (var con = new SQLiteConnection(DataSourceSyntax)) {
                 con.Open();
-                var sql = $"SELECT COUNT(*) FROM {DATABASE_TABLE_NAME};";
+                var sql = $"SELECT COUNT(*) AS COUNT FROM {DATABASE_TABLE_NAME};";
                 var command = new SQLiteCommand(sql, con);
                 SQLiteDataReader sdr = command.ExecuteReader();
 
                 var count = 0;
 
                 if (sdr.Read()) {
-                    var v = sdr.GetValue(0);
+                    count = (int)sdr["COUNT"];
                 }
 
                 sdr.Close();
