@@ -143,7 +143,8 @@ namespace MemoSoft
         }
 
         public void insertComment(Comment comment) {
-            var nextID = 0;
+            long nextID = 0;
+
             if(getRecordCount() != 0) {
                 nextID = getMAXID() + 1;
             }
@@ -164,12 +165,6 @@ namespace MemoSoft
                       $");";
 
             executeNonQuery(sql);
-
-            using (var con = new SQLiteConnection(DataSourceSyntax)) {
-                con.Open();
-                var command = new SQLiteCommand(sql, con);
-                command.ExecuteNonQuery();
-            }
         }
 
         public int getMaxRemoteID() {
@@ -181,7 +176,7 @@ namespace MemoSoft
 
                 var count = 0;
 
-                if(getRecordCount() > 0) {
+                if (getRecordCount() > 0) {
                     if (sdr.Read()) {
                         count = (int)sdr["MAX"];
                     }

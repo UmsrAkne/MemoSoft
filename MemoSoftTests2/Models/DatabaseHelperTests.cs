@@ -44,5 +44,11 @@ namespace MemoSoft.Tests {
             var hashs = dbHelper.select(sql);
             System.Diagnostics.Debug.WriteLine(hashs);
         }
+
+        [TestMethod()]
+        public void insertCommentTest() {
+            var dbHelper = new DatabaseHelper("testDB");
+            dbHelper.insertComment(new Comment());
+        }
     }
 }
