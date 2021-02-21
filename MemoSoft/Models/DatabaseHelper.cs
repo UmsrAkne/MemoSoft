@@ -163,6 +163,8 @@ namespace MemoSoft
                       $"'{comment.Uploaded}'" +
                       $");";
 
+            executeNonQuery(sql);
+
             using (var con = new SQLiteConnection(DataSourceSyntax)) {
                 con.Open();
                 var command = new SQLiteCommand(sql, con);
@@ -226,9 +228,30 @@ namespace MemoSoft
             }
         }
 
+        public void executeNonQuery(string sql) {
+            using (var con = new SQLiteConnection(DataSourceSyntax)) {
+                con.Open();
+                new SQLiteCommand(sql, con).ExecuteNonQuery();
+            }
+        }
+
         public List<Hashtable> select(string sql) {
-            var hashs = new List<Hashtable>();
-            return hashs;
+            using (var con = new SQLiteConnection(DataSourceSyntax)) {
+                con.Open();
+                SQLiteDataReader sdr = new SQLiteCommand(sql, con).ExecuteReader();
+                var resultList = new List<Hashtable>();
+
+                while (sdr.Read()) {
+                    var hashTable = new Hashtable();
+                    for(var i = 0; i < sdr.FieldCount; i++) {
+                        hashTable[sdr.GetName(i)] = sdr.GetValue(i);
+                    }
+                    resultList.Add(hashTable);
+                }
+
+                sdr.Close();
+                return resultList;
+            }
         }
 
         public bool Connected { get; private set; }
