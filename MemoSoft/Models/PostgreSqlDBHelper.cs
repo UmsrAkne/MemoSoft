@@ -76,9 +76,15 @@ namespace MemoSoft.Models {
             return commentList;
         }
 
+        /// <summary>
+        /// DBにコメントを挿入します。
+        /// 挿入の際、引数に渡された commentオブジェクトの RemoteID を、DB上のIDの値で上書きします。
+        /// </summary>
+        /// <param name="comment"></param>
         public void insertComment(Comment comment) {
 
             int nextID = getMaxID() + 1;
+            comment.RemoteID = nextID;
 
             var ps = new List<NpgsqlParameter>();
 
