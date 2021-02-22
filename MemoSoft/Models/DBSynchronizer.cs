@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MemoSoft.Models {
+﻿namespace MemoSoft.Models {
     public class DBSynchronizer {
 
         private IDBHelper RemoteDB { get; set; }
@@ -26,8 +20,11 @@ namespace MemoSoft.Models {
 
             remoteComments.ForEach(hash => {
                 var comment = Comment.toComment(hash);
+                comment.RemoteID = comment.ID;
+                comment.Uploaded = true;
                 LocalDB.insertComment(comment);
             });
+
         }
     }
 }
