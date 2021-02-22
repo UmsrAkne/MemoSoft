@@ -50,5 +50,17 @@ namespace MemoSoft.Tests {
             var dbHelper = new DatabaseHelper("testDB");
             dbHelper.insertComment(new Comment());
         }
+
+        [TestMethod()]
+        public void updateTest() {
+            var dbHelper = new DatabaseHelper("testDB");
+            var comment = new Comment();
+
+            dbHelper.insertComment(comment);
+
+            comment.CreationDateTime = DateTime.Now;
+            comment.TextContent = "updateTest";
+            dbHelper.update(comment);
+        }
     }
 }

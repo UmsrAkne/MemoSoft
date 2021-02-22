@@ -110,6 +110,19 @@ namespace MemoSoft
             }
         }
 
+        public void update(Comment comment) {
+            var sql = $"UPDATE {DATABASE_TABLE_NAME} " +
+                      $"SET " +
+                      $"{nameof(Comment.Uploaded)} = '{comment.Uploaded}'," +
+                      $"{nameof(Comment.TextContent)} = '{comment.TextContent}'," +
+                      $"{nameof(Comment.CreationDateTime)} = '{comment.CreationDateTime}'," +
+                      $"{nameof(Comment.RemoteID)} = {comment.RemoteID} " +
+                      $"WHERE " +
+                      $"{nameof(Comment.ID)} = {comment.ID}";
+
+            executeNonQuery(sql);
+        }
+
         public void getLastUpdateRow() {
             using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite")) {
                 connection.Open();
