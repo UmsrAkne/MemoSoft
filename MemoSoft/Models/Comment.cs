@@ -43,9 +43,26 @@ namespace MemoSoft.Models
         /// <returns></returns>
         public static Comment toComment(Hashtable h) {
             Comment c = new Comment();
-            c.ID = (int)h[nameof(ID).ToLower()];
-            c.CreationDateTime = (DateTime)h[nameof(CreationDateTime).ToLower()];
-            c.TextContent = (String)h[nameof(TextContent).ToLower()];
+
+            object commentID = (h.ContainsKey(nameof(ID))) ? h[nameof(ID)] : (h[nameof(ID).ToLower()]);
+
+            if(commentID is long) {
+                c.ID = Convert.ToInt32(commentID);
+            }
+            else {
+                c.ID = (int)commentID;
+            }
+
+            object creationDateTimeObject = (h.ContainsKey(nameof(CreationDateTime))) ? h[nameof(CreationDateTime)] : h[nameof(CreationDateTime).ToLower()];
+
+            if(creationDateTimeObject is DateTime) {
+                c.CreationDateTime = (DateTime)creationDateTimeObject;
+            }
+            else {
+                c.CreationDateTime = DateTime.Parse((string)creationDateTimeObject);
+            }
+
+            c.TextContent = (h.ContainsKey(nameof(TextContent))) ? (String)h[nameof(TextContent)] :(String)h[nameof(TextContent).ToLower()];
             return c;
         }
     }
