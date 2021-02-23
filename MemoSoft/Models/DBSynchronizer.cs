@@ -26,5 +26,25 @@
             });
 
         }
+
+        public void upload() {
+            // コメントをアップする処理の前にリモートのコメントを取得する。
+            // これを行わないと、後々整合性が取れなくなる。
+            download();
+
+            DatabaseHelper localDBHelper = (DatabaseHelper)LocalDB;
+            var sql = $"SELECT * FROM {DatabaseHelper.DATABASE_TABLE_NAME} WHERE {nameof(Comment.RemoteID)} < 0 AND {nameof(Comment.Uploaded)} = 'False'";
+            var uploadComments = localDBHelper.select(sql);
+
+            uploadComments.ForEach(hash => {
+                var comment = Comment.toComment(hash);
+                RemoteDB.insertComment(comment);
+
+                comment.Uploaded = true;
+
+                // RemoteID, Uploaded が書き換わるのでそれをローカルDBに反映する。
+                localDBHelper.update(comment);
+            });
+        }
     }
 }
