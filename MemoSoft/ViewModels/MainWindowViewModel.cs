@@ -117,5 +117,22 @@ namespace MemoSoft.ViewModels {
         private DelegateCommand<object> switchDBCommand;
         #endregion
 
+
+        public DelegateCommand SyncCommand {
+            #region
+            get => syncCommand ?? (syncCommand = new DelegateCommand(() => {
+                var remoteDB = new PostgreSQLDBHelper();
+                var localDB = new DatabaseHelper("Diarydb");
+
+                if(remoteDB.Connected && localDB.Connected) {
+                    DBSynchronizer = new DBSynchronizer(remoteDB, localDB);
+                    DBSynchronizer.upload();
+                }
+            }));
+        }
+        private DelegateCommand syncCommand;
+        #endregion
+
+
     }
 }

@@ -52,6 +52,13 @@
                               />
                 </MenuItem>
 
+                <MenuItem Header="Database"> 
+                    <MenuItem Header="Sync"
+                              Foreground="Black"
+                              Command="{Binding SyncCommand}"
+                              />
+                </MenuItem>
+
                 <MenuItem Header="Theme">
                     <MenuItem Header="Ligth"
                               Command="{Binding ChangeThemeCommand}"

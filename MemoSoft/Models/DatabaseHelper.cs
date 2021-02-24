@@ -226,7 +226,7 @@ namespace MemoSoft
             }
         }
 
-        public bool Connected { get; private set; }
+        public bool Connected { get; private set; } = true;
 
         public string SystemMessage { get; set; }
 
