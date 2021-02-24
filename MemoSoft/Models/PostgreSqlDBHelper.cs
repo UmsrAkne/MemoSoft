@@ -2,13 +2,14 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MemoSoft.Models {
-    class PostgreSQLDBHelper : BindableBase , IDBHelper{
+    public class PostgreSQLDBHelper : BindableBase , IDBHelper{
         // フィールド
         private DelegateCommand reloadCommand;
 
@@ -67,15 +68,23 @@ namespace MemoSoft.Models {
                 }
 
                 c.LinePaint = linePaint;
+                c.Uploaded = true;
+                c.RemoteID = c.ID;
                 commentList.Add(c);
             });
 
             return commentList;
         }
 
+        /// <summary>
+        /// DBにコメントを挿入します。
+        /// 挿入の際、引数に渡された commentオブジェクトの RemoteID を、DB上のIDの値で上書きします。
+        /// </summary>
+        /// <param name="comment"></param>
         public void insertComment(Comment comment) {
 
             int nextID = getMaxID() + 1;
+            comment.RemoteID = nextID;
 
             var ps = new List<NpgsqlParameter>();
 
@@ -107,6 +116,10 @@ namespace MemoSoft.Models {
         private int getMaxID() {
             var sql = $"SELECT MAX ({nameof(Comment.ID)}) FROM {CommentTableName};";
             return (int)Executer.select(sql, new List<NpgsqlParameter>())[0]["max"];
+        }
+
+        public List<Hashtable> select(string sql) {
+            return Executer.select(sql, new List<NpgsqlParameter>());
         }
 
         public bool Connected { get; private set; }

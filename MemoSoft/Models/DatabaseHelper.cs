@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Globalization;
 using MemoSoft.Models;
+using System.Collections;
 
 namespace MemoSoft
 {
@@ -36,6 +37,8 @@ namespace MemoSoft
                 var sql = $"CREATE TABLE IF NOT EXISTS {DATABASE_TABLE_NAME} (" +
                           $"{nameof(Comment.ID)} INTEGER PRIMARY KEY," +
                           $"{nameof(Comment.CreationDateTime)} TEXT NOT NULL," +
+                          $"{nameof(Comment.Uploaded)} BOOLEAN NOT NULL," +
+                          $"{nameof(Comment.RemoteID)} INTEGER NOT NULL," +
                           $"{nameof(Comment.TextContent)} TEXT NOT NULL);";
 
                 new SQLiteCommand(sql, con).ExecuteNonQuery();
@@ -107,6 +110,19 @@ namespace MemoSoft
             }
         }
 
+        public void update(Comment comment) {
+            var sql = $"UPDATE {DATABASE_TABLE_NAME} " +
+                      $"SET " +
+                      $"{nameof(Comment.Uploaded)} = '{comment.Uploaded}'," +
+                      $"{nameof(Comment.TextContent)} = '{comment.TextContent}'," +
+                      $"{nameof(Comment.CreationDateTime)} = '{comment.CreationDateTime}'," +
+                      $"{nameof(Comment.RemoteID)} = {comment.RemoteID} " +
+                      $"WHERE " +
+                      $"{nameof(Comment.ID)} = {comment.ID}";
+
+            executeNonQuery(sql);
+        }
+
         public void getLastUpdateRow() {
             using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite")) {
                 connection.Open();
@@ -140,7 +156,8 @@ namespace MemoSoft
         }
 
         public void insertComment(Comment comment) {
-            var nextID = 0;
+            long nextID = 0;
+
             if(getRecordCount() != 0) {
                 nextID = getMAXID() + 1;
             }
@@ -149,57 +166,67 @@ namespace MemoSoft
             var sql = $"INSERT INTO {tableName} (" +
                       $"{nameof(Comment.ID)}, " +
                       $"{nameof(Comment.CreationDateTime)}," +
-                      $"{nameof(Comment.TextContent)} )" +
+                      $"{nameof(Comment.TextContent)}, " +
+                      $"{nameof(Comment.RemoteID)}," +
+                      $"{nameof(Comment.Uploaded)} )" +
                       $"VALUES (" +
                       $"{nextID}," +
                       $"'{comment.CreationDateTime}', " +
-                      $"'{comment.TextContent}'" +
+                      $"'{comment.TextContent}', " +
+                      $"{comment.RemoteID}," +
+                      $"'{comment.Uploaded}'" +
                       $");";
 
+            executeNonQuery(sql);
+        }
+
+        public long getMaxRemoteID() {
+            if(getRecordCount() == 0) {
+                return -1;
+            }
+
+            var sql = $"SELECT MAX({nameof(Comment.RemoteID)}) AS MAX FROM {DATABASE_TABLE_NAME};";
+            return (long)select(sql).First()["MAX"];
+        }
+
+        private long getMAXID() {
+            var sql = $"SELECT MAX({nameof(Comment.ID)}) AS MAX FROM {DATABASE_TABLE_NAME};)";
+            return (long)select(sql).First()["MAX"];
+        }
+
+        private long getRecordCount() {
+            var sql = $"SELECT COUNT(*) AS COUNT FROM {DATABASE_TABLE_NAME};";
+            var h = select(sql).First();
+            return (long)select(sql).First()["COUNT"];
+        }
+
+        public void executeNonQuery(string sql) {
             using (var con = new SQLiteConnection(DataSourceSyntax)) {
                 con.Open();
-                var command = new SQLiteCommand(sql, con);
-                command.ExecuteNonQuery();
+                new SQLiteCommand(sql, con).ExecuteNonQuery();
             }
         }
 
-        private int getMAXID() {
+        public List<Hashtable> select(string sql) {
             using (var con = new SQLiteConnection(DataSourceSyntax)) {
                 con.Open();
-                var sql = $"SELECT MAX({nameof(Comment.ID)}) FROM {DATABASE_TABLE_NAME};";
-                var command = new SQLiteCommand(sql, con);
-                SQLiteDataReader sdr = command.ExecuteReader();
+                SQLiteDataReader sdr = new SQLiteCommand(sql, con).ExecuteReader();
+                var resultList = new List<Hashtable>();
 
-                var count = 0;
-
-                if (sdr.Read()) {
-                    count = (int)sdr["MAX"];
+                while (sdr.Read()) {
+                    var hashTable = new Hashtable();
+                    for(var i = 0; i < sdr.FieldCount; i++) {
+                        hashTable[sdr.GetName(i)] = sdr.GetValue(i);
+                    }
+                    resultList.Add(hashTable);
                 }
 
                 sdr.Close();
-                return count;
+                return resultList;
             }
         }
 
-        private int getRecordCount() {
-            using (var con = new SQLiteConnection(DataSourceSyntax)) {
-                con.Open();
-                var sql = $"SELECT COUNT(*) FROM {DATABASE_TABLE_NAME};";
-                var command = new SQLiteCommand(sql, con);
-                SQLiteDataReader sdr = command.ExecuteReader();
-
-                var count = 0;
-
-                if (sdr.Read()) {
-                    var v = sdr.GetValue(0);
-                }
-
-                sdr.Close();
-                return count;
-            }
-        }
-
-        public bool Connected { get; private set; }
+        public bool Connected { get; private set; } = true;
 
         public string SystemMessage { get; set; }
 
