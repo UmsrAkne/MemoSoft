@@ -151,8 +151,17 @@ namespace MemoSoft
         }
 
         public List<Comment> loadComments() {
-            select();
-            return CommentList;
+            var sql = $"SELECT * FROM {DATABASE_TABLE_NAME} ORDER BY {nameof(Comment.CreationDateTime)} DESC;";
+            var hashs = select(sql);
+
+            var commentList = new List<Comment>();
+
+            hashs.ForEach(h => {
+                var c = Comment.toComment(h);
+                commentList.Add(c);
+            });
+
+            return commentList;
         }
 
         public void insertComment(Comment comment) {
