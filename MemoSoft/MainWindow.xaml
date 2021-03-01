@@ -210,6 +210,14 @@
 
     <Window.Resources>
 
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/views/res/ComboBoxResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <!--
+
         <Style x:Key="{x:Type ListViewItem}"
        TargetType="ListViewItem">
 
@@ -270,6 +278,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        -->
 
     </Window.Resources> 
     
