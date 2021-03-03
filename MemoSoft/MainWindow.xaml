@@ -79,7 +79,11 @@
                 </MenuItem>
             </Menu>
 
-            <ComboBox x:Name="dbTypeSelectionComboBox" SelectedIndex="1">
+            <ComboBox
+                x:Name="dbTypeSelectionComboBox"
+                Background="{Binding UIColors.BackgroundBrush}"
+                Foreground="{Binding UIColors.ForegroundBrush}"
+                SelectedIndex="1">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">

@@ -23,7 +23,6 @@
     <Color x:Key="ControlMouseOverColor">#FF3843C4</Color>
     <Color x:Key="ControlPressedColor">#FF211AA9</Color>
 
-
     <Color x:Key="GlyphColor">#FF444444</Color>
     <Color x:Key="GlyphMouseOver">sc#1, 0.004391443, 0.002428215, 0.242281124</Color>
 
@@ -73,11 +72,8 @@
             <Border
                 Grid.Column="0"
                 Margin="1"
-                CornerRadius="2,0,0,2">
-                <Border.Background>
-                    <SolidColorBrush Color="{DynamicResource ControlLightColor}" />
-                </Border.Background>
-            </Border>
+                Background="{Binding Background, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                CornerRadius="2,0,0,2" />
 
             <Path
                 x:Name="Arrow"
@@ -90,6 +86,7 @@
                 </Path.Fill>
 
             </Path>
+
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="CommonStates">
                     <VisualState x:Name="Normal" />
@@ -120,10 +117,7 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
-        <Border
-            x:Name="PART_ContentHost"
-            Background="{TemplateBinding Background}"
-            Focusable="False" />
+        <Border x:Name="PART_ContentHost" Focusable="False" />
     </ControlTemplate>
 
     <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}">
@@ -253,7 +247,7 @@
                     <Border
                         x:Name="Border"
                         Padding="2"
-                        Background="Transparent"
+                        Background="Black"
                         SnapsToDevicePixels="true">
                         <ContentPresenter />
                         <VisualStateManager.VisualStateGroups>
