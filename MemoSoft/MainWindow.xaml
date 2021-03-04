@@ -1,163 +1,160 @@
-﻿<Window x:Class="MemoSoft.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:local="clr-namespace:MemoSoft"
-        xmlns:vms="clr-namespace:MemoSoft.ViewModels"
-        xmlns:models="clr-namespace:MemoSoft.Models"
-        mc:Ignorable="d"
-        Activated="App_Activated"
-        Title="MemoSoft" Height="450" Width="800">
+﻿<Window
+    x:Class="MemoSoft.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:MemoSoft"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:MemoSoft.Models"
+    xmlns:vms="clr-namespace:MemoSoft.ViewModels"
+    Title="MemoSoft"
+    Width="800"
+    Height="450"
+    Activated="App_Activated"
+    mc:Ignorable="d">
     <Window.DataContext>
-        <vms:MainWindowViewModel/>
+        <vms:MainWindowViewModel />
     </Window.DataContext>
 
     <Window.InputBindings>
         <KeyBinding Key="F5" Command="{Binding PostgreSQLDatabaseHelper.ReloadCommand}" />
     </Window.InputBindings>
 
-        <Grid Name="parentGrid">
+    <Grid Name="parentGrid">
 
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <Image Source="res/bg.png"
-               Grid.Row="0"
-               Grid.RowSpan="3"
-               HorizontalAlignment="Right"
-               VerticalAlignment="Bottom"
-               Stretch="None"
-         />
+        <Image
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Source="res/bg.png"
+            Stretch="None" />
 
         <StackPanel Grid.Row="0">
-            <Menu VerticalAlignment="Top"
-                  Background="{Binding UIColors.BackgroundBrush}"
-                  Foreground="{Binding UIColors.ForegroundBrush}"
-                  >
+            <Menu
+                VerticalAlignment="Top"
+                Background="{Binding UIColors.BackgroundBrush}"
+                Foreground="{Binding UIColors.ForegroundBrush}">
 
-                <MenuItem Header="File"
-                          >
-                    <MenuItem Header="Save"
-                              Foreground="Black"
-                              />
-                    <MenuItem Header="Quit"
-                              Foreground="Black"
-                              />
+                <MenuItem Header="File">
+                    <MenuItem Foreground="Black" Header="Save" />
+                    <MenuItem Foreground="Black" Header="Quit" />
                 </MenuItem>
 
-                <MenuItem Header="Database"> 
-                    <MenuItem Header="Sync"
-                              Foreground="Black"
-                              Command="{Binding SyncCommand}"
-                              />
+                <MenuItem Header="Database">
+                    <MenuItem
+                        Command="{Binding SyncCommand}"
+                        Foreground="Black"
+                        Header="Sync" />
                 </MenuItem>
 
                 <MenuItem Header="Theme">
-                    <MenuItem Header="Ligth"
-                              Command="{Binding ChangeThemeCommand}"
-                              Foreground="Black"
-                              >
+                    <MenuItem
+                        Command="{Binding ChangeThemeCommand}"
+                        Foreground="Black"
+                        Header="Ligth">
                         <MenuItem.CommandParameter>
-                            <models:ColorTheme> Light </models:ColorTheme>
+                            <models:ColorTheme>Light</models:ColorTheme>
                         </MenuItem.CommandParameter>
                     </MenuItem>
 
-                    <MenuItem Header="Dark"
-                              Command="{Binding ChangeThemeCommand}"
-                              Foreground="Black"
-                              >
+                    <MenuItem
+                        Command="{Binding ChangeThemeCommand}"
+                        Foreground="Black"
+                        Header="Dark">
                         <MenuItem.CommandParameter>
-                            <models:ColorTheme> Dark </models:ColorTheme>
+                            <models:ColorTheme>Dark</models:ColorTheme>
                         </MenuItem.CommandParameter>
                     </MenuItem>
 
                 </MenuItem>
             </Menu>
 
-        <ComboBox SelectedIndex="1"
-                  x:Name="dbTypeSelectionComboBox"
-                  >
+            <ComboBox
+                x:Name="dbTypeSelectionComboBox"
+                Background="{Binding UIColors.BackgroundBrush}"
+                Foreground="{Binding UIColors.ForegroundBrush}"
+                SelectedIndex="1">
 
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SwitchDBCommand}" 
-                                           CommandParameter="{Binding ElementName=dbTypeSelectionComboBox, Path=SelectedItem.Content}"
-                                           />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SwitchDBCommand}" CommandParameter="{Binding ElementName=dbTypeSelectionComboBox, Path=SelectedItem.Content}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 
-                <ComboBoxItem>
+                <ComboBoxItem Background="{Binding UIColors.BackgroundBrush}">
                     <ComboBoxItem.Content>
-                        <models:DBType> Local </models:DBType>
+                        <models:DBType>Local</models:DBType>
                     </ComboBoxItem.Content>
                 </ComboBoxItem>
 
-                <ComboBoxItem>
+                <ComboBoxItem Background="{Binding UIColors.BackgroundBrush}">
                     <ComboBoxItem.Content>
-                        <models:DBType> Remote </models:DBType>
+                        <models:DBType>Remote</models:DBType>
                     </ComboBoxItem.Content>
                 </ComboBoxItem>
 
-        </ComboBox>
+            </ComboBox>
 
         </StackPanel>
 
-        <TextBox x:Name="textBox"
-             Margin="0"
-             AcceptsReturn="True"
-             FontSize="12pt"
-             Padding="3"
-             Foreground="{Binding UIColors.ForegroundBrush}"
-             Background="{Binding UIColors.BackgroundBrush}"
-             Opacity="0.8"
-             Text="{Binding EnteringComment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-             Grid.Row="1"
-         >
+        <TextBox
+            x:Name="textBox"
+            Grid.Row="1"
+            Margin="0"
+            Padding="3"
+            AcceptsReturn="True"
+            Background="{Binding UIColors.BackgroundBrush}"
+            FontSize="12pt"
+            Foreground="{Binding UIColors.ForegroundBrush}"
+            Opacity="0.8"
+            Text="{Binding EnteringComment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <TextBox.InputBindings>
-                <KeyBinding Key="Return" Modifiers="Ctrl" 
-                            Command="{Binding InsertCommentCommand}"
-                            CommandParameter="{Binding Text, ElementName=textBox}"
-                />
+                <KeyBinding
+                    Key="Return"
+                    Command="{Binding InsertCommentCommand}"
+                    CommandParameter="{Binding Text, ElementName=textBox}"
+                    Modifiers="Ctrl" />
 
             </TextBox.InputBindings>
         </TextBox>
 
-        <ListView Grid.Row="2"
-                  ItemsSource="{Binding Comments}"
-                  Opacity="0.8"
-                  Background="{Binding UIColors.BackgroundBrush}"
-                  Name="mainListView"
-                  HorizontalContentAlignment="Stretch"
-                  >
+        <ListView
+            Name="mainListView"
+            Grid.Row="2"
+            HorizontalContentAlignment="Stretch"
+            Background="{Binding UIColors.BackgroundBrush}"
+            ItemsSource="{Binding Comments}"
+            Opacity="0.8">
 
             <ListView.Resources>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
                 </Style>
             </ListView.Resources>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="{Binding ElementName=mainListView, Path=DataContext.UIColors.DarkBackgroundBrush}"
-                            BorderThickness="0,0.5"
-                            Padding="3"
-                            >
+                    <Border
+                        Padding="3"
+                        BorderBrush="{Binding ElementName=mainListView, Path=DataContext.UIColors.DarkBackgroundBrush}"
+                        BorderThickness="0,0.5">
 
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding LinePaint}" Value="true">
-                                        <Setter Property="Background" 
-                                         Value="{Binding ElementName=mainListView, Path=DataContext.UIColors.DarkBackgroundBrush}"
-                                        />
+                                        <Setter Property="Background" Value="{Binding ElementName=mainListView, Path=DataContext.UIColors.DarkBackgroundBrush}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -165,42 +162,42 @@
 
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="10" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="{Binding CreationDateShortString}"
-                                       Foreground="{Binding ElementName=mainListView, Path=DataContext.UIColors.ForegroundBrush}"
-                                       Background="Transparent"
-                                       FontSize="14"
-                                       Grid.Column="0"
-                                       />
+                            <TextBlock
+                                Grid.Column="0"
+                                Background="Transparent"
+                                FontSize="14"
+                                Foreground="{Binding ElementName=mainListView, Path=DataContext.UIColors.ForegroundBrush}"
+                                Text="{Binding CreationDateShortString}" />
 
-                            <Border Width="1" 
-                                    Background="Black"
-                                    Grid.Column="1"
-                                    Margin="0,3,0,0"
-                                    />
+                            <Border
+                                Grid.Column="1"
+                                Width="1"
+                                Margin="0,3,0,0"
+                                Background="Black" />
 
-                            <TextBlock Text="{Binding TextContent}"
-                                       Foreground="{Binding ElementName=mainListView, Path=DataContext.UIColors.ForegroundBrush}"
-                                       Background="Transparent"
-                                       FontSize="14"
-                                       Grid.Column="2"
-                                       Margin="6,0,0,0"
-                                       />
+                            <TextBlock
+                                Grid.Column="2"
+                                Margin="6,0,0,0"
+                                Background="Transparent"
+                                FontSize="14"
+                                Foreground="{Binding ElementName=mainListView, Path=DataContext.UIColors.ForegroundBrush}"
+                                Text="{Binding TextContent}" />
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            
+
         </ListView>
 
-        <StatusBar Grid.Row="3"
-                   Background="{Binding UIColors.BackgroundBrush}"
-                   Foreground="{Binding UIColors.ForegroundBrush}"
-                   >
+        <StatusBar
+            Grid.Row="3"
+            Background="{Binding UIColors.BackgroundBrush}"
+            Foreground="{Binding UIColors.ForegroundBrush}">
 
             <TextBlock Text="{Binding SystemMessage}" />
         </StatusBar>
@@ -209,6 +206,14 @@
     </Grid>
 
     <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/views/res/ComboBoxResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <!--
 
         <Style x:Key="{x:Type ListViewItem}"
        TargetType="ListViewItem">
@@ -271,6 +276,8 @@
             </Setter>
         </Style>
 
-    </Window.Resources> 
-    
+        -->
+
+    </Window.Resources>
+
 </Window>
