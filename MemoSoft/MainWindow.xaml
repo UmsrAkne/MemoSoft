@@ -91,13 +91,13 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
-                <ComboBoxItem>
+                <ComboBoxItem Background="{Binding UIColors.BackgroundBrush}">
                     <ComboBoxItem.Content>
                         <models:DBType>Local</models:DBType>
                     </ComboBoxItem.Content>
                 </ComboBoxItem>
 
-                <ComboBoxItem>
+                <ComboBoxItem Background="{Binding UIColors.BackgroundBrush}">
                     <ComboBoxItem.Content>
                         <models:DBType>Remote</models:DBType>
                     </ComboBoxItem.Content>
