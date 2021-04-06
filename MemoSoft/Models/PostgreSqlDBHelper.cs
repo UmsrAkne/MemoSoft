@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,10 @@ namespace MemoSoft.Models {
             try {
                 loadComments();
                 Connected = true;
+                SystemMessage = "DBサーバーへ接続しました";
             }catch(TimeoutException) {
+                SystemMessage = "DBへの接続に失敗しました";
+            } catch (SocketException) {
                 SystemMessage = "DBへの接続に失敗しました";
             }
         }

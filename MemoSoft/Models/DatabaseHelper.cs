@@ -43,6 +43,9 @@ namespace MemoSoft
 
                 new SQLiteCommand(sql, con).ExecuteNonQuery();
             }
+
+            string dt = $"{DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}";
+            SystemMessage = $"{dt} ローカルサーバーに接続しました";
         }
 
         public void createDatabase() {
