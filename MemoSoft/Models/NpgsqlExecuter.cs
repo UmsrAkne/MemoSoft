@@ -15,7 +15,7 @@ namespace MemoSoft.Models {
 
             string basePath = 
                 Environment.GetEnvironmentVariable("HOMEDRIVE") +
-                Environment.GetEnvironmentVariable("HOMEPATH")  + @"\awsrds\" ;
+                Environment.GetEnvironmentVariable("HOMEPATH")  + @"\ec2db\" ;
 
             string readText(string path) {
                 using (var sr = new StreamReader(path)) {
