@@ -134,7 +134,8 @@
             HorizontalContentAlignment="Stretch"
             Background="{Binding UIColors.BackgroundBrush}"
             ItemsSource="{Binding Comments}"
-            Opacity="0.8">
+            Opacity="0.8"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
             <ListView.Resources>
                 <Style TargetType="ListViewItem">
@@ -146,7 +147,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border
-                        Padding="3"
+                        Padding="2"
                         BorderBrush="{Binding ElementName=mainListView, Path=DataContext.UIColors.DarkBackgroundBrush}"
                         BorderThickness="0,0.5">
 
@@ -186,7 +187,8 @@
                                 Background="Transparent"
                                 FontSize="14"
                                 Foreground="{Binding ElementName=mainListView, Path=DataContext.UIColors.ForegroundBrush}"
-                                Text="{Binding TextContent}" />
+                                Text="{Binding TextContent}"
+                                TextWrapping="Wrap" />
                         </Grid>
                     </Border>
                 </DataTemplate>
