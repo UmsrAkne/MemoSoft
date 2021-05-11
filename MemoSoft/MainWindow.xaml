@@ -146,7 +146,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border
-                        Padding="3"
+                        Padding="2"
                         BorderBrush="{Binding ElementName=mainListView, Path=DataContext.UIColors.DarkBackgroundBrush}"
                         BorderThickness="0,0.5">
 
