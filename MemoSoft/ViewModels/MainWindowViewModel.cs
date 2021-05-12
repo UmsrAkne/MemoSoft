@@ -29,6 +29,8 @@ namespace MemoSoft.ViewModels {
             }
 
             LoadCommand.Execute();
+
+            UIColors.changeTheme((ColorTheme)Enum.ToObject(typeof(ColorTheme), Properties.Settings.Default.ColorTheme));
         }
 
         public List<Comment> Comments {
@@ -79,7 +81,10 @@ namespace MemoSoft.ViewModels {
                 // nullable でない型をパラメーターで指定するとエラーになるため。
                 // xaml の方で直接生成してパラメーターに渡すので、null になることも間違った値が入ることもないけど……。
 
-                UIColors.changeTheme((ColorTheme)theme);
+                ColorTheme destTheme = (ColorTheme)theme;
+                UIColors.changeTheme(destTheme);
+                Properties.Settings.Default.ColorTheme = (int)theme;
+                Properties.Settings.Default.Save();
             }));
         }
         private DelegateCommand<object> changeThemeCommand;
