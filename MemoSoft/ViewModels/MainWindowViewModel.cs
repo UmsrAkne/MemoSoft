@@ -31,7 +31,6 @@ namespace MemoSoft.ViewModels {
             LoadCommand.Execute();
 
             UIColors.changeTheme((ColorTheme)Enum.ToObject(typeof(ColorTheme), Properties.Settings.Default.ColorTheme));
-            RecordCount = DBHelper.Count;
         }
 
         public List<Comment> Comments {
@@ -75,6 +74,7 @@ namespace MemoSoft.ViewModels {
                 });
 
                 Comments = DBHelper.loadComments();
+                RecordCount = DBHelper.Count;
                 EnteringComment = "";
             }));
         }
@@ -103,6 +103,7 @@ namespace MemoSoft.ViewModels {
             #region
             get => loadCommand ?? (loadCommand = new DelegateCommand(() => {
                 Comments = DBHelper.loadComments();
+                RecordCount = DBHelper.Count;
                 SystemMessage = DBHelper.SystemMessage;
             }));
         }
