@@ -201,7 +201,16 @@
             Background="{Binding UIColors.BackgroundBrush}"
             Foreground="{Binding UIColors.ForegroundBrush}">
 
-            <TextBlock Text="{Binding SystemMessage}" />
+            <StatusBarItem HorizontalAlignment="Center" DockPanel.Dock="Right">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Total " />
+                    <TextBlock Grid.Column="2" Text="{Binding RecordCount}" />
+                    <TextBlock Text=" Comments." />
+                </StackPanel>
+            </StatusBarItem>
+
+            <TextBlock Grid.Column="0" Text="{Binding SystemMessage}" />
+
         </StatusBar>
 
 

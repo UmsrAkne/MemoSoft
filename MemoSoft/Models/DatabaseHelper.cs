@@ -238,6 +238,8 @@ namespace MemoSoft
             }
         }
 
+        public long Count { get; } = 0;
+
         public bool Connected { get; private set; } = true;
 
         public string SystemMessage { get; set; }

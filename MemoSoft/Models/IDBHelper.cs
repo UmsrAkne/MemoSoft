@@ -12,6 +12,7 @@ namespace MemoSoft.Models {
         List<Hashtable> select(String sql);
         bool Connected { get; }
         string SystemMessage { get; }
+        long Count { get; }
     }
 
     public enum DBType { Local,Remote }

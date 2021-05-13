@@ -58,6 +58,13 @@ namespace MemoSoft.ViewModels {
 
         private String systemMessage = "system message";
 
+        public long RecordCount {
+            get => recordCount;
+            set => SetProperty(ref recordCount, value);
+        }
+
+        private long recordCount;
+
         public DelegateCommand<String> InsertCommentCommand {
             #region
             get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) => {
@@ -67,6 +74,7 @@ namespace MemoSoft.ViewModels {
                 });
 
                 Comments = DBHelper.loadComments();
+                RecordCount = DBHelper.Count;
                 EnteringComment = "";
             }));
         }
@@ -95,6 +103,7 @@ namespace MemoSoft.ViewModels {
             #region
             get => loadCommand ?? (loadCommand = new DelegateCommand(() => {
                 Comments = DBHelper.loadComments();
+                RecordCount = DBHelper.Count;
                 SystemMessage = DBHelper.SystemMessage;
             }));
         }
