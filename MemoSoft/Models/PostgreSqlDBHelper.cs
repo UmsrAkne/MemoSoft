@@ -122,6 +122,13 @@ namespace MemoSoft.Models {
             return (int)Executer.select(sql, new List<NpgsqlParameter>())[0]["max"];
         }
 
+        public long Count {
+            get {
+                var value = select($"SELECT COUNT(*) FROM {CommentTableName};");
+                return (long)(value[0]["COUNT"]);
+            }
+        }
+
         public List<Hashtable> select(string sql) {
             return Executer.select(sql, new List<NpgsqlParameter>());
         }
