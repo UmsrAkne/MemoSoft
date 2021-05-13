@@ -125,7 +125,7 @@ namespace MemoSoft.Models {
         public long Count {
             get {
                 var value = select($"SELECT COUNT(*) FROM {CommentTableName};");
-                return (long)(value[0]["COUNT"]);
+                return (long)(value[0]["count"]);
             }
         }
 

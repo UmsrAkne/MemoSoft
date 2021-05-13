@@ -31,6 +31,7 @@ namespace MemoSoft.ViewModels {
             LoadCommand.Execute();
 
             UIColors.changeTheme((ColorTheme)Enum.ToObject(typeof(ColorTheme), Properties.Settings.Default.ColorTheme));
+            RecordCount = DBHelper.Count;
         }
 
         public List<Comment> Comments {
@@ -57,6 +58,13 @@ namespace MemoSoft.ViewModels {
         }
 
         private String systemMessage = "system message";
+
+        public long RecordCount {
+            get => recordCount;
+            set => SetProperty(ref recordCount, value);
+        }
+
+        private long recordCount;
 
         public DelegateCommand<String> InsertCommentCommand {
             #region
