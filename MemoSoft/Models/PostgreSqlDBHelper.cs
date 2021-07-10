@@ -54,7 +54,7 @@ namespace MemoSoft.Models {
         // メソッド
 
         public List<Comment> loadComments() {
-            var sql = $"SELECT * FROM comments ORDER BY {nameof(Comment.CreationDateTime)} DESC;";
+            var sql = $"SELECT * FROM comments ORDER BY {nameof(Comment.CreationDateTime)} DESC LIMIT 200;";
             var commentHashTables = Executer.select(sql , new List<Npgsql.NpgsqlParameter>());
 
             var commentList = new List<Comment>();
