@@ -1,21 +1,18 @@
-﻿using Prism.Mvvm;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
+    using System;
+    using System.Collections;
+    using Prism.Mvvm;
+
     public class Comment : BindableBase
     {
+        private string textContent = string.Empty;
+
         public int ID { get; set; }
 
         public DateTime CreationDateTime { get; set; }
 
-        public String TextContent { get => textContent; set => SetProperty(ref textContent, value); }
-        private String textContent = "";
+        public string TextContent { get => textContent; set => SetProperty(ref textContent, value); }
 
         /// <summary>
         /// このコメントをビューに入力して表示した際、このコメントにあたる行の背景色に色を付けるかどうかを表します。
@@ -23,7 +20,7 @@ namespace MemoSoft.Models
         /// </summary>
         public bool LinePaint { get; set; }
 
-        public String CreationDateShortString { get => CreationDateTime.ToString("MM/dd HH:mm"); }
+        public string CreationDateShortString { get => CreationDateTime.ToString("MM/dd HH:mm"); }
 
         /// <summary>
         /// RemoteDB に格納されているコメントのIDです。デフォルトは -1 です。
@@ -46,7 +43,7 @@ namespace MemoSoft.Models
         {
             Comment c = new Comment();
 
-            object commentID = (h.ContainsKey(nameof(ID))) ? h[nameof(ID)] : (h[nameof(ID).ToLower()]);
+            object commentID = h.ContainsKey(nameof(ID)) ? h[nameof(ID)] : h[nameof(ID).ToLower()];
 
             if (commentID is long)
             {
@@ -57,7 +54,7 @@ namespace MemoSoft.Models
                 c.ID = (int)commentID;
             }
 
-            object creationDateTimeObject = (h.ContainsKey(nameof(CreationDateTime))) ? h[nameof(CreationDateTime)] : h[nameof(CreationDateTime).ToLower()];
+            object creationDateTimeObject = h.ContainsKey(nameof(CreationDateTime)) ? h[nameof(CreationDateTime)] : h[nameof(CreationDateTime).ToLower()];
 
             if (creationDateTimeObject is DateTime)
             {
@@ -68,7 +65,7 @@ namespace MemoSoft.Models
                 c.CreationDateTime = DateTime.Parse((string)creationDateTimeObject);
             }
 
-            c.TextContent = (h.ContainsKey(nameof(TextContent))) ? (String)h[nameof(TextContent)] : (String)h[nameof(TextContent).ToLower()];
+            c.TextContent = h.ContainsKey(nameof(TextContent)) ? (string)h[nameof(TextContent)] : (string)h[nameof(TextContent).ToLower()];
             return c;
         }
     }

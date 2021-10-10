@@ -1,18 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MemoSoft;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MemoSoft.Models;
-
-namespace MemoSoft.Tests
+﻿namespace MemoSoft.Tests
 {
-    [TestClass()]
+    using System;
+    using MemoSoft;
+    using MemoSoft.Models;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    [TestClass]
     public class DatabaseHelperTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void executeNonQueryTest()
         {
             var dbHelper = new DatabaseHelper("testDB");
@@ -39,7 +35,7 @@ namespace MemoSoft.Tests
             dbHelper.executeNonQuery(sql);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void selectTest()
         {
             var dbHelper = new DatabaseHelper("testDB");
@@ -49,14 +45,14 @@ namespace MemoSoft.Tests
             System.Diagnostics.Debug.WriteLine(hashs);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void insertCommentTest()
         {
             var dbHelper = new DatabaseHelper("testDB");
             dbHelper.insertComment(new Comment());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void updateTest()
         {
             var dbHelper = new DatabaseHelper("testDB");

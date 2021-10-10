@@ -1,17 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MemoSoft.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MemoSoft.Models.Tests
+﻿namespace MemoSoft.Models.Tests
 {
-    [TestClass()]
+    using System;
+    using MemoSoft.Models;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    [TestClass]
     public class DBSynchronizerTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void downloadTest()
         {
             var remoteDB = new PostgreSQLDBHelper();
@@ -21,7 +17,7 @@ namespace MemoSoft.Models.Tests
             synchronizer.download();
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void uploadTest()
         {
             var remoteDB = new PostgreSQLDBHelper();

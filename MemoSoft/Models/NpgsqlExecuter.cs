@@ -1,18 +1,13 @@
-﻿using System;
-using Npgsql;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using Npgsql;
+
     public class NpgsqlExecuter
     {
-
         public NpgsqlExecuter()
         {
 
@@ -38,6 +33,9 @@ namespace MemoSoft.Models
                 Timeout = 5
             };
         }
+
+        private NpgsqlConnectionStringBuilder ConnectionBuilder { get; set; }
+        private NpgsqlConnection Connection { get => new NpgsqlConnection(ConnectionBuilder.ConnectionString); }
 
         public void executeNonQuery(string sql, List<NpgsqlParameter> parameters)
         {
@@ -71,11 +69,7 @@ namespace MemoSoft.Models
                 }
 
                 return resultList;
-            };
+            }
         }
-
-        private NpgsqlConnectionStringBuilder ConnectionBuilder { get; set; }
-        private NpgsqlConnection Connection { get => new NpgsqlConnection(ConnectionBuilder.ConnectionString); }
-
     }
 }

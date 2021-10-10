@@ -1,13 +1,13 @@
-﻿using MemoSoft.Models;
-using MemoSoft.Properties;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Input;
-
-namespace MemoSoft
+﻿namespace MemoSoft
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Windows;
+    using System.Windows.Input;
+    using MemoSoft.Models;
+    using MemoSoft.Properties;
+
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
@@ -23,16 +23,16 @@ namespace MemoSoft
             RecoverWindowBounds();
         }
 
-        private void App_Activated(object sender, EventArgs e)
-        {
-            Keyboard.Focus(this.textBox);
-        }
-
         protected override void OnClosing(CancelEventArgs e)
         {
             // ウィンドウのサイズを保存
             SaveWindowBounds();
             base.OnClosing(e);
+        }
+
+        private void App_Activated(object sender, EventArgs e)
+        {
+            Keyboard.Focus(this.textBox);
         }
 
         /// <summary>
@@ -89,8 +89,9 @@ namespace MemoSoft
     public class MainWindowViewModel : INotifyPropertyChangedBase
     {
         private string inputString;
-        private keyboardCommands keyCommands = new keyboardCommands();
+        private KeyboardCommands keyCommands = new KeyboardCommands();
         private TextLoader textLoader = new TextLoader();
+        private ObservableCollection<Comment> postedComments;
 
         public MainWindowViewModel()
         {
@@ -105,14 +106,13 @@ namespace MemoSoft
             set { SetProperty(ref this.inputString, value); }
         }
 
-        private ObservableCollection<Comment> postedComments;
         public ObservableCollection<Comment> PostedComments
         {
             get { return postedComments; }
             private set { postedComments = value; }
         }
 
-        public keyboardCommands KeyCommands
+        public KeyboardCommands KeyCommands
         {
             get { return this.keyCommands; }
         }

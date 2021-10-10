@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
-    class TextLoader
+    using System.Collections.ObjectModel;
+
+    public class TextLoader
     {
 
         private ObservableCollection<Comment> commentList;
+        private DatabaseHelper dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME_EACH_PC);
+
         public ObservableCollection<Comment> CommentList
         {
             get { return this.commentList; }
             private set { this.commentList = value; }
         }
-
-        private DatabaseHelper dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME_EACH_PC);
 
         /// <summary>
         /// 既存のテキストを新着順に読み込みます。

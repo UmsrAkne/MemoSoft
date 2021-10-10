@@ -1,10 +1,15 @@
-﻿using Prism.Mvvm;
-using System.Windows.Media;
-
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
-    class UIColors : BindableBase
+    using System.Windows.Media;
+    using Prism.Mvvm;
+
+    public enum ColorTheme { Light, Dark }
+
+    public class UIColors : BindableBase
     {
+        private SolidColorBrush backgroundBrush;
+        private SolidColorBrush darkBackgroundBrush;
+        private SolidColorBrush foregroundBrush;
 
         public UIColors()
         {
@@ -16,21 +21,18 @@ namespace MemoSoft.Models
             changeTheme(theme);
         }
 
-        private SolidColorBrush backgroundBrush;
         public SolidColorBrush BackgroundBrush
         {
             get => backgroundBrush;
             set => SetProperty(ref backgroundBrush, value);
         }
 
-        private SolidColorBrush darkBackgroundBrush;
         public SolidColorBrush DarkBackgroundBrush
         {
             get => darkBackgroundBrush;
             set => SetProperty(ref darkBackgroundBrush, value);
         }
 
-        private SolidColorBrush foregroundBrush;
         public SolidColorBrush ForegroundBrush
         {
             get => foregroundBrush;
@@ -52,8 +54,5 @@ namespace MemoSoft.Models
                 ForegroundBrush = new SolidColorBrush(Colors.White);
             }
         }
-
     }
-
-    public enum ColorTheme { Light, Dark };
 }

@@ -3,14 +3,15 @@
     public class DBSynchronizer
     {
 
-        private IDBHelper RemoteDB { get; set; }
-        private IDBHelper LocalDB { get; set; }
-
         public DBSynchronizer(IDBHelper remoteDB, IDBHelper localDB)
         {
             RemoteDB = remoteDB;
             LocalDB = localDB;
         }
+
+        private IDBHelper RemoteDB { get; set; }
+
+        private IDBHelper LocalDB { get; set; }
 
         /// <summary>
         /// Remote DB からデータを取得し、Local DB に入力します。

@@ -1,26 +1,27 @@
-﻿using MemoSoft.Models;
-using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace MemoSoft.ViewModels
 {
-    class MainWindowViewModel : BindableBase
-    {
+    using System;
+    using System.Collections.Generic;
+    using MemoSoft.Models;
+    using Prism.Commands;
+    using Prism.Mvvm;
+    using static MemoSoft.Models.UIColors;
 
-        public IDBHelper DBHelper
-        {
-            get => dbHelper;
-            private set => SetProperty(ref dbHelper, value);
-        }
+    public class MainWindowViewModel : BindableBase
+    {
+        private DelegateCommand syncCommand;
+        private string enteringComment = string.Empty;
         private IDBHelper dbHelper;
 
-        private DBSynchronizer DBSynchronizer { get; set; }
-        public UIColors UIColors { get; private set; } = new UIColors();
+        private string systemMessage = "system message";
+        private List<Comment> comments = new List<Comment>();
+        private DelegateCommand loadCommand;
+        private DelegateCommand<object> changeThemeCommand;
+        private DelegateCommand<object> switchDBCommand;
+        private long recordCount;
+        private DelegateCommand<string> insertCommentCommand;
+
 
         public MainWindowViewModel()
         {
@@ -38,33 +39,33 @@ namespace MemoSoft.ViewModels
             UIColors.changeTheme((ColorTheme)Enum.ToObject(typeof(ColorTheme), Properties.Settings.Default.ColorTheme));
         }
 
+        public IDBHelper DBHelper
+        {
+            get => dbHelper;
+            private set => SetProperty(ref dbHelper, value);
+        }
+
+        public UIColors UIColors { get; private set; } = new UIColors();
+
         public List<Comment> Comments
         {
-            #region
             get => comments;
             private set => SetProperty(ref comments, value);
         }
 
-        private List<Comment> comments = new List<Comment>();
-        #endregion
-
-        public String EnteringComment
+        public string EnteringComment
         {
-            #region
             get => enteringComment;
             set => SetProperty(ref enteringComment, value);
         }
 
-        private String enteringComment = "";
-        #endregion
 
-        public String SystemMessage
+        public string SystemMessage
         {
             get => systemMessage;
             set => SetProperty(ref systemMessage, value);
         }
 
-        private String systemMessage = "system message";
 
         public long RecordCount
         {
@@ -72,12 +73,9 @@ namespace MemoSoft.ViewModels
             set => SetProperty(ref recordCount, value);
         }
 
-        private long recordCount;
-
-        public DelegateCommand<String> InsertCommentCommand
+        public DelegateCommand<string> InsertCommentCommand
         {
-            #region
-            get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) =>
+            get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<string>((text) =>
             {
                 DBHelper.insertComment(new Comment()
                 {
@@ -87,16 +85,12 @@ namespace MemoSoft.ViewModels
 
                 Comments = DBHelper.loadComments();
                 RecordCount = DBHelper.Count;
-                EnteringComment = "";
+                EnteringComment = string.Empty;
             }));
         }
 
-        private DelegateCommand<String> insertCommentCommand;
-        #endregion
-
         public DelegateCommand<object> ChangeThemeCommand
         {
-            #region
             get => changeThemeCommand ?? (changeThemeCommand = new DelegateCommand<object>((object theme) =>
             {
                 // ジェネリクスが object 型になっているが、列挙型は nullable ではないらしく、
@@ -109,13 +103,9 @@ namespace MemoSoft.ViewModels
                 Properties.Settings.Default.Save();
             }));
         }
-        private DelegateCommand<object> changeThemeCommand;
-        #endregion
-
 
         public DelegateCommand LoadCommand
         {
-            #region
             get => loadCommand ?? (loadCommand = new DelegateCommand(() =>
             {
                 Comments = DBHelper.loadComments();
@@ -123,13 +113,9 @@ namespace MemoSoft.ViewModels
                 SystemMessage = DBHelper.SystemMessage;
             }));
         }
-        private DelegateCommand loadCommand;
-        #endregion
-
 
         public DelegateCommand<object> SwitchDBCommand
         {
-            #region
             get => switchDBCommand ?? (switchDBCommand = new DelegateCommand<object>((object dbType) =>
             {
 
@@ -142,20 +128,16 @@ namespace MemoSoft.ViewModels
                 else if (type == DBType.Remote)
                 {
                     IDBHelper helper = new PostgreSQLDBHelper();
-                    DBHelper = (helper.Connected) ? helper : new DatabaseHelper("Diarydb");
+                    DBHelper = helper.Connected ? helper : new DatabaseHelper("Diarydb");
                 }
 
                 Comments = DBHelper.loadComments();
 
             }));
         }
-        private DelegateCommand<object> switchDBCommand;
-        #endregion
-
 
         public DelegateCommand SyncCommand
         {
-            #region
             get => syncCommand ?? (syncCommand = new DelegateCommand(() =>
             {
                 var remoteDB = new PostgreSQLDBHelper();
@@ -168,9 +150,7 @@ namespace MemoSoft.ViewModels
                 }
             }));
         }
-        private DelegateCommand syncCommand;
-        #endregion
 
-
+        private DBSynchronizer DBSynchronizer { get; set; }
     }
 }

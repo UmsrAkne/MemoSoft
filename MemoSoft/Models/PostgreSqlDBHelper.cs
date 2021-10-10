@@ -1,22 +1,18 @@
-﻿using Npgsql;
-using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Net.Sockets;
+    using Npgsql;
+    using Prism.Commands;
+    using Prism.Mvvm;
+
     public class PostgreSQLDBHelper : BindableBase, IDBHelper
     {
-        // フィールド
         private DelegateCommand reloadCommand;
+        private string systemMessage = string.Empty;
 
-        // コンストラクタ
         public PostgreSQLDBHelper()
         {
             try
@@ -35,8 +31,7 @@ namespace MemoSoft.Models
             }
         }
 
-        // -------------------------------------------------- 
-        // プロパティ
+        public bool Connected { get; private set; }
 
         public DelegateCommand ReloadCommand
         {
@@ -54,18 +49,29 @@ namespace MemoSoft.Models
             }));
         }
 
-        public String SystemMessage
+        public string SystemMessage
         {
             get => systemMessage;
             set => SetProperty(ref systemMessage, value);
         }
 
-        private NpgsqlExecuter Executer { get; } = new NpgsqlExecuter();
-        private string CommentTableName => "comments";
-        private string systemMessage = "";
+        public long Count
+        {
+            get
+            {
+                var value = select($"SELECT COUNT(*) FROM {CommentTableName};");
+                return (long)value[0]["count"];
+            }
+        }
 
-        // -------------------------------------------------- 
-        // メソッド
+        private NpgsqlExecuter Executer { get; } = new NpgsqlExecuter();
+
+        private string CommentTableName => "comments";
+
+        public List<Hashtable> select(string sql)
+        {
+            return Executer.select(sql, new List<NpgsqlParameter>());
+        }
 
         public List<Comment> loadComments()
         {
@@ -127,9 +133,8 @@ namespace MemoSoft.Models
                 $"{nextID}," +
                 $"'{comment.CreationDateTime}', " +
                 $":{nameof(comment.TextContent)} " +
-                $");"
-                , ps
-            );
+                $");",
+                ps);
         }
 
         /// <summary>
@@ -141,21 +146,5 @@ namespace MemoSoft.Models
             var sql = $"SELECT MAX ({nameof(Comment.ID)}) FROM {CommentTableName};";
             return (int)Executer.select(sql, new List<NpgsqlParameter>())[0]["max"];
         }
-
-        public long Count
-        {
-            get
-            {
-                var value = select($"SELECT COUNT(*) FROM {CommentTableName};");
-                return (long)(value[0]["count"]);
-            }
-        }
-
-        public List<Hashtable> select(string sql)
-        {
-            return Executer.select(sql, new List<NpgsqlParameter>());
-        }
-
-        public bool Connected { get; private set; }
     }
 }

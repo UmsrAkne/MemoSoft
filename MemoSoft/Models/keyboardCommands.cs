@@ -1,27 +1,20 @@
-﻿using Prism.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
-    public class keyboardCommands
-    {
+    using Prism.Commands;
 
+    public class KeyboardCommands
+    {
+        private TextSaver textSaver = new TextSaver();
+        private TextLoader textLoader = new TextLoader();
         private MainWindowViewModel mainWindowViewModel;
+        private DelegateCommand saveFileCommand;
+
         public MainWindowViewModel MainWindowViewModel
         {
             private get { return mainWindowViewModel; }
             set { mainWindowViewModel = mainWindowViewModel ?? value; }
         }
 
-        private TextSaver textSaver = new TextSaver();
-        private TextLoader textLoader = new TextLoader();
-
-        private DelegateCommand saveFileCommand;
         public DelegateCommand SaveFileCommand
         {
             get
@@ -31,7 +24,7 @@ namespace MemoSoft.Models
                     {
                         this.textSaver.Text = mainWindowViewModel.InputString;
                         this.textSaver.saveText();
-                        MainWindowViewModel.InputString = "";
+                        MainWindowViewModel.InputString = string.Empty;
                         textLoader.loadLastComment();
                         MainWindowViewModel.PostedComments.Insert(0, textLoader.CommentList[0]);
 
@@ -40,8 +33,7 @@ namespace MemoSoft.Models
                             MainWindowViewModel.PostedComments.RemoveAt(MainWindowViewModel.PostedComments.Count - 1);
                         }
                     },
-                    () => { return true; })
-                    );
+                    () => { return true; }));
             }
         }
     }

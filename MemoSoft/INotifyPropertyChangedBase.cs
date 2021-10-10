@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace MemoSoft
+﻿namespace MemoSoft
 {
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
     public abstract class INotifyPropertyChangedBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

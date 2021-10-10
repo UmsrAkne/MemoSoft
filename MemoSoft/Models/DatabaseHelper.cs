@@ -1,33 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using System.Data.SQLite;
-using System.Globalization;
-using MemoSoft.Models;
-using System.Collections;
-
-namespace MemoSoft
+﻿namespace MemoSoft
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data.SQLite;
+    using System.Globalization;
+    using System.Linq;
+    using MemoSoft.Models;
+
     public class DatabaseHelper : IDBHelper
     {
-        public static readonly String DATABASE_NAME_EACH_PC =
-            Environment.MachineName + "_" + Environment.UserName;
-        public static readonly String DATABASE_TABLE_NAME = "diary";
-        public static readonly String DATABASE_COLUMN_NAME_DATE = "date";
-        public static readonly String DATABASE_COLUMN_NAME_TEXT = "text";
+        public static readonly string DATABASE_NAME_EACH_PC = Environment.MachineName + "_" + Environment.UserName;
+        public static readonly string DATABASE_TABLE_NAME = "diary";
+        public static readonly string DATABASE_COLUMN_NAME_DATE = "date";
+        public static readonly string DATABASE_COLUMN_NAME_TEXT = "text";
 
-        private String dbFileName;
-        private String DataSourceSyntax => $"Data Source={dbFileName}.sqlite";
+        private string dbFileName;
 
         private List<Comment> commentList;
-        public List<Comment> CommentList
-        {
-            get { return this.commentList; }
-            private set { commentList = value; }
-        }
 
         public DatabaseHelper(string dbFileName)
         {
@@ -51,6 +41,20 @@ namespace MemoSoft
             SystemMessage = $"{dt} ローカルサーバーに接続しました";
         }
 
+        public long Count { get; } = 0;
+
+        public bool Connected { get; private set; } = true;
+
+        public string SystemMessage { get; set; }
+
+        public List<Comment> CommentList
+        {
+            get { return this.commentList; }
+            private set { commentList = value; }
+        }
+
+        private string DataSourceSyntax => $"Data Source={dbFileName}.sqlite";
+
         public void createDatabase()
         {
             using (var conn = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite"))
@@ -60,7 +64,7 @@ namespace MemoSoft
             }
         }
 
-        public void createTable(String tableName, String[] columnDatas)
+        public void createTable(string tableName, string[] columnDatas)
         {
             using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite"))
             {
@@ -77,7 +81,7 @@ namespace MemoSoft
             }
         }
 
-        public void insertData(String tableName, String[] columnNames, String[] values)
+        public void insertData(string tableName, string[] columnNames, string[] values)
         {
             using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite"))
             {
@@ -115,12 +119,10 @@ namespace MemoSoft
                 while (sdr.Read() == true)
                 {
                     var comment = new Comment();
-                    comment.TextContent = (String)sdr[nameof(Comment.TextContent)];
+                    comment.TextContent = (string)sdr[nameof(Comment.TextContent)];
                     DateTime resultD;
 
-                    if (
-                        DateTime.TryParseExact(sdr[nameof(Comment.CreationDateTime)].ToString(), "yyyyMMddHHmmssff", null,
-                        DateTimeStyles.AllowWhiteSpaces, out resultD))
+                    if (DateTime.TryParseExact(sdr[nameof(Comment.CreationDateTime)].ToString(), "yyyyMMddHHmmssff", null, DateTimeStyles.AllowWhiteSpaces, out resultD))
                     {
                         comment.CreationDateTime = resultD;
                     }
@@ -158,11 +160,10 @@ namespace MemoSoft
 
                 if (sdr.Read())
                 {
-                    comment.TextContent = (String)sdr[DATABASE_COLUMN_NAME_TEXT];
+                    comment.TextContent = (string)sdr[DATABASE_COLUMN_NAME_TEXT];
                     DateTime resultD;
 
-                    if (DateTime.TryParseExact(sdr[DATABASE_COLUMN_NAME_DATE].ToString(), "yyyyMMddHHmmssff", null,
-                        DateTimeStyles.AllowWhiteSpaces, out resultD))
+                    if (DateTime.TryParseExact(sdr[DATABASE_COLUMN_NAME_DATE].ToString(), "yyyyMMddHHmmssff", null, DateTimeStyles.AllowWhiteSpaces, out resultD))
                     {
                         comment.CreationDateTime = resultD;
                     }
@@ -228,19 +229,6 @@ namespace MemoSoft
             return (long)select(sql).First()["MAX"];
         }
 
-        private long getMAXID()
-        {
-            var sql = $"SELECT MAX({nameof(Comment.ID)}) AS MAX FROM {DATABASE_TABLE_NAME};)";
-            return (long)select(sql).First()["MAX"];
-        }
-
-        private long getRecordCount()
-        {
-            var sql = $"SELECT COUNT(*) AS COUNT FROM {DATABASE_TABLE_NAME};";
-            var h = select(sql).First();
-            return (long)select(sql).First()["COUNT"];
-        }
-
         public void executeNonQuery(string sql)
         {
             using (var con = new SQLiteConnection(DataSourceSyntax))
@@ -273,11 +261,17 @@ namespace MemoSoft
             }
         }
 
-        public long Count { get; } = 0;
+        private long getMAXID()
+        {
+            var sql = $"SELECT MAX({nameof(Comment.ID)}) AS MAX FROM {DATABASE_TABLE_NAME};)";
+            return (long)select(sql).First()["MAX"];
+        }
 
-        public bool Connected { get; private set; } = true;
-
-        public string SystemMessage { get; set; }
-
+        private long getRecordCount()
+        {
+            var sql = $"SELECT COUNT(*) AS COUNT FROM {DATABASE_TABLE_NAME};";
+            var h = select(sql).First();
+            return (long)select(sql).First()["COUNT"];
+        }
     }
 }
