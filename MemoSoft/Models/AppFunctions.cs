@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace MemoSoft.Models
 {
-    class AppFunctions{
+    class AppFunctions
+    {
 
-        public void exitApplication() {
+        public void exitApplication()
+        {
             Application.Current.Shutdown();
         }
     }

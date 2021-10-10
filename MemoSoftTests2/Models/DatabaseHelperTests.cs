@@ -7,11 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using MemoSoft.Models;
 
-namespace MemoSoft.Tests {
+namespace MemoSoft.Tests
+{
     [TestClass()]
-    public class DatabaseHelperTests {
+    public class DatabaseHelperTests
+    {
         [TestMethod()]
-        public void executeNonQueryTest() {
+        public void executeNonQueryTest()
+        {
             var dbHelper = new DatabaseHelper("testDB");
 
             var comment = new Comment();
@@ -37,7 +40,8 @@ namespace MemoSoft.Tests {
         }
 
         [TestMethod()]
-        public void selectTest() {
+        public void selectTest()
+        {
             var dbHelper = new DatabaseHelper("testDB");
 
             var sql = $"select count(*) as count from {DatabaseHelper.DATABASE_TABLE_NAME};";
@@ -46,13 +50,15 @@ namespace MemoSoft.Tests {
         }
 
         [TestMethod()]
-        public void insertCommentTest() {
+        public void insertCommentTest()
+        {
             var dbHelper = new DatabaseHelper("testDB");
             dbHelper.insertComment(new Comment());
         }
 
         [TestMethod()]
-        public void updateTest() {
+        public void updateTest()
+        {
             var dbHelper = new DatabaseHelper("testDB");
             var comment = new Comment();
 

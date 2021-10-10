@@ -6,11 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MemoSoft.Models.Tests {
+namespace MemoSoft.Models.Tests
+{
     [TestClass()]
-    public class DBSynchronizerTests {
+    public class DBSynchronizerTests
+    {
         [TestMethod()]
-        public void downloadTest() {
+        public void downloadTest()
+        {
             var remoteDB = new PostgreSQLDBHelper();
             var localDB = new DatabaseHelper(DatabaseHelper.DATABASE_NAME_EACH_PC);
 
@@ -19,7 +22,8 @@ namespace MemoSoft.Models.Tests {
         }
 
         [TestMethod()]
-        public void uploadTest() {
+        public void uploadTest()
+        {
             var remoteDB = new PostgreSQLDBHelper();
             var localDB = new DatabaseHelper(DatabaseHelper.DATABASE_NAME_EACH_PC);
             var testComment = new Comment();

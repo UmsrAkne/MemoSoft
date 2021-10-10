@@ -14,7 +14,8 @@ namespace MemoSoft.Models
     {
         private DatabaseHelper dbHelper;
 
-        public TextSaver() {
+        public TextSaver()
+        {
             this.dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME_EACH_PC);
             this.dbHelper.createDatabase();
 
@@ -25,11 +26,12 @@ namespace MemoSoft.Models
 
         public string Text { get; set; }
 
-        public void saveText() {
+        public void saveText()
+        {
             dbHelper.insertData(
                 DatabaseHelper.DATABASE_TABLE_NAME,
                 new String[] { DatabaseHelper.DATABASE_COLUMN_NAME_DATE, DatabaseHelper.DATABASE_COLUMN_NAME_TEXT },
-                new String[] {DateTime.Now.ToString("yyyyMMddHHmmssff"), Text });
+                new String[] { DateTime.Now.ToString("yyyyMMddHHmmssff"), Text });
         }
     }
 }

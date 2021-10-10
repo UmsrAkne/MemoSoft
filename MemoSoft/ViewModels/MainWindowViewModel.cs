@@ -7,23 +7,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MemoSoft.ViewModels {
-    class MainWindowViewModel : BindableBase {
+namespace MemoSoft.ViewModels
+{
+    class MainWindowViewModel : BindableBase
+    {
 
-        public IDBHelper DBHelper {
+        public IDBHelper DBHelper
+        {
             get => dbHelper;
             private set => SetProperty(ref dbHelper, value);
         }
         private IDBHelper dbHelper;
 
-        private DBSynchronizer DBSynchronizer{get; set;}
+        private DBSynchronizer DBSynchronizer { get; set; }
         public UIColors UIColors { get; private set; } = new UIColors();
 
-        public MainWindowViewModel() {
+        public MainWindowViewModel()
+        {
             DBHelper = new PostgreSQLDBHelper();
 
             // PostgreSQL の方がつながっていなければオフラインの sqlite に切り替え。
-            if (!DBHelper.Connected) {
+            if (!DBHelper.Connected)
+            {
                 DBHelper = new DatabaseHelper("Diarydb");
                 SwitchDBCommand.Execute(DBType.Local);
             }
@@ -33,7 +38,8 @@ namespace MemoSoft.ViewModels {
             UIColors.changeTheme((ColorTheme)Enum.ToObject(typeof(ColorTheme), Properties.Settings.Default.ColorTheme));
         }
 
-        public List<Comment> Comments {
+        public List<Comment> Comments
+        {
             #region
             get => comments;
             private set => SetProperty(ref comments, value);
@@ -42,7 +48,8 @@ namespace MemoSoft.ViewModels {
         private List<Comment> comments = new List<Comment>();
         #endregion
 
-        public String EnteringComment {
+        public String EnteringComment
+        {
             #region
             get => enteringComment;
             set => SetProperty(ref enteringComment, value);
@@ -51,24 +58,29 @@ namespace MemoSoft.ViewModels {
         private String enteringComment = "";
         #endregion
 
-        public String SystemMessage {
+        public String SystemMessage
+        {
             get => systemMessage;
             set => SetProperty(ref systemMessage, value);
         }
 
         private String systemMessage = "system message";
 
-        public long RecordCount {
+        public long RecordCount
+        {
             get => recordCount;
             set => SetProperty(ref recordCount, value);
         }
 
         private long recordCount;
 
-        public DelegateCommand<String> InsertCommentCommand {
+        public DelegateCommand<String> InsertCommentCommand
+        {
             #region
-            get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) => {
-                DBHelper.insertComment(new Comment() {
+            get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) =>
+            {
+                DBHelper.insertComment(new Comment()
+                {
                     TextContent = text,
                     CreationDateTime = DateTime.Now
                 });
@@ -82,9 +94,11 @@ namespace MemoSoft.ViewModels {
         private DelegateCommand<String> insertCommentCommand;
         #endregion
 
-        public DelegateCommand<object> ChangeThemeCommand {
+        public DelegateCommand<object> ChangeThemeCommand
+        {
             #region
-            get => changeThemeCommand ?? (changeThemeCommand = new DelegateCommand<object>((object theme) => {
+            get => changeThemeCommand ?? (changeThemeCommand = new DelegateCommand<object>((object theme) =>
+            {
                 // ジェネリクスが object 型になっているが、列挙型は nullable ではないらしく、
                 // nullable でない型をパラメーターで指定するとエラーになるため。
                 // xaml の方で直接生成してパラメーターに渡すので、null になることも間違った値が入ることもないけど……。
@@ -99,9 +113,11 @@ namespace MemoSoft.ViewModels {
         #endregion
 
 
-        public DelegateCommand LoadCommand {
+        public DelegateCommand LoadCommand
+        {
             #region
-            get => loadCommand ?? (loadCommand = new DelegateCommand(() => {
+            get => loadCommand ?? (loadCommand = new DelegateCommand(() =>
+            {
                 Comments = DBHelper.loadComments();
                 RecordCount = DBHelper.Count;
                 SystemMessage = DBHelper.SystemMessage;
@@ -111,15 +127,20 @@ namespace MemoSoft.ViewModels {
         #endregion
 
 
-        public DelegateCommand<object> SwitchDBCommand {
+        public DelegateCommand<object> SwitchDBCommand
+        {
             #region
-            get => switchDBCommand ?? (switchDBCommand = new DelegateCommand<object>((object dbType) => {
+            get => switchDBCommand ?? (switchDBCommand = new DelegateCommand<object>((object dbType) =>
+            {
 
                 DBType type = (DBType)dbType;
 
-                if(type == DBType.Local) {
+                if (type == DBType.Local)
+                {
                     DBHelper = new DatabaseHelper("Diarydb");
-                }else if(type == DBType.Remote) {
+                }
+                else if (type == DBType.Remote)
+                {
                     IDBHelper helper = new PostgreSQLDBHelper();
                     DBHelper = (helper.Connected) ? helper : new DatabaseHelper("Diarydb");
                 }
@@ -132,13 +153,16 @@ namespace MemoSoft.ViewModels {
         #endregion
 
 
-        public DelegateCommand SyncCommand {
+        public DelegateCommand SyncCommand
+        {
             #region
-            get => syncCommand ?? (syncCommand = new DelegateCommand(() => {
+            get => syncCommand ?? (syncCommand = new DelegateCommand(() =>
+            {
                 var remoteDB = new PostgreSQLDBHelper();
                 var localDB = new DatabaseHelper("Diarydb");
 
-                if(remoteDB.Connected && localDB.Connected) {
+                if (remoteDB.Connected && localDB.Connected)
+                {
                     DBSynchronizer = new DBSynchronizer(remoteDB, localDB);
                     DBSynchronizer.upload();
                 }

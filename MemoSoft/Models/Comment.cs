@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace MemoSoft.Models
 {
-    public class Comment : BindableBase {
+    public class Comment : BindableBase
+    {
         public int ID { get; set; }
 
         public DateTime CreationDateTime { get; set; }
@@ -28,7 +29,7 @@ namespace MemoSoft.Models
         /// RemoteDB に格納されているコメントのIDです。デフォルトは -1 です。
         /// RemoteDB の select で生成された場合はそのままのIDが入ります。
         /// </summary>
-        public int RemoteID { get; set; } = -1 ;
+        public int RemoteID { get; set; } = -1;
 
         /// <summary>
         /// このコメントオブジェクトが RemoteDB にアップロード済みかどうかを示します。
@@ -41,28 +42,33 @@ namespace MemoSoft.Models
         /// </summary>
         /// <param name="h"></param>
         /// <returns></returns>
-        public static Comment toComment(Hashtable h) {
+        public static Comment toComment(Hashtable h)
+        {
             Comment c = new Comment();
 
             object commentID = (h.ContainsKey(nameof(ID))) ? h[nameof(ID)] : (h[nameof(ID).ToLower()]);
 
-            if(commentID is long) {
+            if (commentID is long)
+            {
                 c.ID = Convert.ToInt32(commentID);
             }
-            else {
+            else
+            {
                 c.ID = (int)commentID;
             }
 
             object creationDateTimeObject = (h.ContainsKey(nameof(CreationDateTime))) ? h[nameof(CreationDateTime)] : h[nameof(CreationDateTime).ToLower()];
 
-            if(creationDateTimeObject is DateTime) {
+            if (creationDateTimeObject is DateTime)
+            {
                 c.CreationDateTime = (DateTime)creationDateTimeObject;
             }
-            else {
+            else
+            {
                 c.CreationDateTime = DateTime.Parse((string)creationDateTimeObject);
             }
 
-            c.TextContent = (h.ContainsKey(nameof(TextContent))) ? (String)h[nameof(TextContent)] :(String)h[nameof(TextContent).ToLower()];
+            c.TextContent = (h.ContainsKey(nameof(TextContent))) ? (String)h[nameof(TextContent)] : (String)h[nameof(TextContent).ToLower()];
             return c;
         }
     }

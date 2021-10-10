@@ -8,10 +8,12 @@ using System.Windows.Input;
 
 namespace MemoSoft.Models
 {
-    public class keyboardCommands {
+    public class keyboardCommands
+    {
 
         private MainWindowViewModel mainWindowViewModel;
-        public MainWindowViewModel MainWindowViewModel {
+        public MainWindowViewModel MainWindowViewModel
+        {
             private get { return mainWindowViewModel; }
             set { mainWindowViewModel = mainWindowViewModel ?? value; }
         }
@@ -20,17 +22,21 @@ namespace MemoSoft.Models
         private TextLoader textLoader = new TextLoader();
 
         private DelegateCommand saveFileCommand;
-        public DelegateCommand SaveFileCommand {
-            get {
+        public DelegateCommand SaveFileCommand
+        {
+            get
+            {
                 return saveFileCommand ?? (saveFileCommand = new DelegateCommand(
-                    () => {
+                    () =>
+                    {
                         this.textSaver.Text = mainWindowViewModel.InputString;
                         this.textSaver.saveText();
                         MainWindowViewModel.InputString = "";
                         textLoader.loadLastComment();
                         MainWindowViewModel.PostedComments.Insert(0, textLoader.CommentList[0]);
 
-                        if(MainWindowViewModel.PostedComments.Count > 20) {
+                        if (MainWindowViewModel.PostedComments.Count > 20)
+                        {
                             MainWindowViewModel.PostedComments.RemoveAt(MainWindowViewModel.PostedComments.Count - 1);
                         }
                     },
