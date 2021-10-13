@@ -14,12 +14,10 @@
     public partial class MainWindow : Window
     {
         private AppFunctions appFunctions = new AppFunctions();
-        private MainWindowViewModel mainWindowViewModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.mainWindowViewModel = new MainWindowViewModel();
             RecoverWindowBounds();
         }
 
@@ -87,38 +85,6 @@
                 // ロード後に最大化
                 Loaded += (o, e) => WindowState = WindowState.Maximized;
             }
-        }
-    }
-
-    public class MainWindowViewModel : INotifyPropertyChangedBase
-    {
-        private string inputString;
-        private KeyboardCommands keyCommands = new KeyboardCommands();
-        private TextLoader textLoader = new TextLoader();
-        private ObservableCollection<Comment> postedComments;
-
-        public MainWindowViewModel()
-        {
-            this.keyCommands.MainWindowViewModel = this;
-            textLoader.LoadInNewOrder(20);
-            PostedComments = textLoader.CommentList;
-        }
-
-        public string InputString
-        {
-            get { return inputString; }
-            set { SetProperty(ref this.inputString, value); }
-        }
-
-        public ObservableCollection<Comment> PostedComments
-        {
-            get { return postedComments; }
-            private set { postedComments = value; }
-        }
-
-        public KeyboardCommands KeyCommands
-        {
-            get { return this.keyCommands; }
         }
     }
 }
