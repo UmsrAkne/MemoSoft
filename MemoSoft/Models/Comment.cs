@@ -1,20 +1,18 @@
-﻿using Prism.Mvvm;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
-    public class Comment : BindableBase {
+    using System;
+    using System.Collections;
+    using Prism.Mvvm;
+
+    public class Comment : BindableBase
+    {
+        private string textContent = string.Empty;
+
         public int ID { get; set; }
 
         public DateTime CreationDateTime { get; set; }
 
-        public String TextContent { get => textContent; set => SetProperty(ref textContent, value); }
-        private String textContent = "";
+        public string TextContent { get => textContent; set => SetProperty(ref textContent, value); }
 
         /// <summary>
         /// このコメントをビューに入力して表示した際、このコメントにあたる行の背景色に色を付けるかどうかを表します。
@@ -22,13 +20,13 @@ namespace MemoSoft.Models
         /// </summary>
         public bool LinePaint { get; set; }
 
-        public String CreationDateShortString { get => CreationDateTime.ToString("MM/dd HH:mm"); }
+        public string CreationDateShortString { get => CreationDateTime.ToString("MM/dd HH:mm"); }
 
         /// <summary>
         /// RemoteDB に格納されているコメントのIDです。デフォルトは -1 です。
         /// RemoteDB の select で生成された場合はそのままのIDが入ります。
         /// </summary>
-        public int RemoteID { get; set; } = -1 ;
+        public int RemoteID { get; set; } = -1;
 
         /// <summary>
         /// このコメントオブジェクトが RemoteDB にアップロード済みかどうかを示します。
@@ -41,28 +39,33 @@ namespace MemoSoft.Models
         /// </summary>
         /// <param name="h"></param>
         /// <returns></returns>
-        public static Comment toComment(Hashtable h) {
+        public static Comment ToComment(Hashtable h)
+        {
             Comment c = new Comment();
 
-            object commentID = (h.ContainsKey(nameof(ID))) ? h[nameof(ID)] : (h[nameof(ID).ToLower()]);
+            object commentID = h.ContainsKey(nameof(ID)) ? h[nameof(ID)] : h[nameof(ID).ToLower()];
 
-            if(commentID is long) {
+            if (commentID is long)
+            {
                 c.ID = Convert.ToInt32(commentID);
             }
-            else {
+            else
+            {
                 c.ID = (int)commentID;
             }
 
-            object creationDateTimeObject = (h.ContainsKey(nameof(CreationDateTime))) ? h[nameof(CreationDateTime)] : h[nameof(CreationDateTime).ToLower()];
+            object creationDateTimeObject = h.ContainsKey(nameof(CreationDateTime)) ? h[nameof(CreationDateTime)] : h[nameof(CreationDateTime).ToLower()];
 
-            if(creationDateTimeObject is DateTime) {
+            if (creationDateTimeObject is DateTime)
+            {
                 c.CreationDateTime = (DateTime)creationDateTimeObject;
             }
-            else {
+            else
+            {
                 c.CreationDateTime = DateTime.Parse((string)creationDateTimeObject);
             }
 
-            c.TextContent = (h.ContainsKey(nameof(TextContent))) ? (String)h[nameof(TextContent)] :(String)h[nameof(TextContent).ToLower()];
+            c.TextContent = h.ContainsKey(nameof(TextContent)) ? (string)h[nameof(TextContent)] : (string)h[nameof(TextContent).ToLower()];
             return c;
         }
     }

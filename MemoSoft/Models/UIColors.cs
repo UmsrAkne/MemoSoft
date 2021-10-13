@@ -1,49 +1,61 @@
-﻿using Prism.Mvvm;
-using System.Windows.Media;
+﻿namespace MemoSoft.Models
+{
+    using System.Windows.Media;
+    using Prism.Mvvm;
 
-namespace MemoSoft.Models {
-    class UIColors : BindableBase{
+    public enum ColorTheme
+    {
+        Light, Dark
+    }
 
-        public UIColors() {
-            changeTheme(ColorTheme.Light);
-        }
-
-        public UIColors(ColorTheme theme) {
-            changeTheme(theme);
-        }
-
+    public class UIColors : BindableBase
+    {
         private SolidColorBrush backgroundBrush;
-        public SolidColorBrush BackgroundBrush {
+        private SolidColorBrush darkBackgroundBrush;
+        private SolidColorBrush foregroundBrush;
+
+        public UIColors()
+        {
+            ChangeTheme(ColorTheme.Light);
+        }
+
+        public UIColors(ColorTheme theme)
+        {
+            ChangeTheme(theme);
+        }
+
+        public SolidColorBrush BackgroundBrush
+        {
             get => backgroundBrush;
             set => SetProperty(ref backgroundBrush, value);
         }
 
-        private SolidColorBrush darkBackgroundBrush;
-        public SolidColorBrush DarkBackgroundBrush {
+        public SolidColorBrush DarkBackgroundBrush
+        {
             get => darkBackgroundBrush;
             set => SetProperty(ref darkBackgroundBrush, value);
         }
 
-        private SolidColorBrush foregroundBrush;
-        public SolidColorBrush ForegroundBrush {
+        public SolidColorBrush ForegroundBrush
+        {
             get => foregroundBrush;
             set => SetProperty(ref foregroundBrush, value);
         }
 
-        public void changeTheme(ColorTheme theme) {
-            if(theme == ColorTheme.Light) {
+        public void ChangeTheme(ColorTheme theme)
+        {
+            if (theme == ColorTheme.Light)
+            {
                 BackgroundBrush = new SolidColorBrush(Colors.White);
                 DarkBackgroundBrush = new SolidColorBrush(Colors.LightGray);
                 ForegroundBrush = new SolidColorBrush(Colors.Black);
             }
-            else {
-                BackgroundBrush = new SolidColorBrush(Color.FromRgb(33,33,33));
+            else
+            {
+                BackgroundBrush = new SolidColorBrush(Color.FromRgb(33, 33, 33));
                 DarkBackgroundBrush = new SolidColorBrush(Colors.Black);
                 ForegroundBrush = new SolidColorBrush(Colors.White);
             }
         }
-
     }
-
-    public enum ColorTheme { Light,Dark };
 }

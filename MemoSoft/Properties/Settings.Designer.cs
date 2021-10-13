@@ -8,89 +8,111 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MemoSoft.Properties {
-    
-    
+namespace MemoSoft.Properties
+{
+
+
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
-        public static Settings Default {
-            get {
+
+        public static Settings Default
+        {
+            get
+            {
                 return defaultInstance;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int ColorTheme {
-            get {
+        public int ColorTheme
+        {
+            get
+            {
                 return ((int)(this["ColorTheme"]));
             }
-            set {
+            set
+            {
                 this["ColorTheme"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double WindowWidth {
-            get {
+        public double WindowWidth
+        {
+            get
+            {
                 return ((double)(this["WindowWidth"]));
             }
-            set {
+            set
+            {
                 this["WindowWidth"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double WindowLeft {
-            get {
+        public double WindowLeft
+        {
+            get
+            {
                 return ((double)(this["WindowLeft"]));
             }
-            set {
+            set
+            {
                 this["WindowLeft"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double WindowHeight {
-            get {
+        public double WindowHeight
+        {
+            get
+            {
                 return ((double)(this["WindowHeight"]));
             }
-            set {
+            set
+            {
                 this["WindowHeight"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double WindowTop {
-            get {
+        public double WindowTop
+        {
+            get
+            {
                 return ((double)(this["WindowTop"]));
             }
-            set {
+            set
+            {
                 this["WindowTop"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool WindowMaximized {
-            get {
+        public bool WindowMaximized
+        {
+            get
+            {
                 return ((bool)(this["WindowMaximized"]));
             }
-            set {
+            set
+            {
                 this["WindowMaximized"] = value;
             }
         }

@@ -1,35 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
+    using System;
+
     /// <summary>
     /// このクラスは入力されたテキストを保存します。
     /// テキストの入力には、プロパティを使用してください。
     /// </summary>
-    class TextSaver
+    public class TextSaver
     {
-        private DatabaseHelper dbHelper;
+        private DatabaseHelper dbhelper;
 
-        public TextSaver() {
-            this.dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME_EACH_PC);
-            this.dbHelper.createDatabase();
+        public TextSaver()
+        {
+            dbhelper = new DatabaseHelper(DatabaseHelper.DatabaseNameEachPC);
+            dbhelper.CreateDatabase();
 
-            this.dbHelper.createTable(DatabaseHelper.DATABASE_TABLE_NAME,
-                new String[] { DatabaseHelper.DATABASE_COLUMN_NAME_DATE, DatabaseHelper.DATABASE_COLUMN_NAME_TEXT }
-                );
+            dbhelper.CreateTable(
+                DatabaseHelper.DatabaesTableName,
+                new string[] { DatabaseHelper.DatabaseColumnNameDate, DatabaseHelper.DabataseColumnNameText });
         }
 
         public string Text { get; set; }
 
-        public void saveText() {
-            dbHelper.insertData(
-                DatabaseHelper.DATABASE_TABLE_NAME,
-                new String[] { DatabaseHelper.DATABASE_COLUMN_NAME_DATE, DatabaseHelper.DATABASE_COLUMN_NAME_TEXT },
-                new String[] {DateTime.Now.ToString("yyyyMMddHHmmssff"), Text });
+        public void SaveText()
+        {
+            dbhelper.InsertData(
+                DatabaseHelper.DatabaesTableName,
+                new string[] { DatabaseHelper.DatabaseColumnNameDate, DatabaseHelper.DabataseColumnNameText },
+                new string[] { DateTime.Now.ToString("yyyyMMddHHmmssff"), Text });
         }
     }
 }

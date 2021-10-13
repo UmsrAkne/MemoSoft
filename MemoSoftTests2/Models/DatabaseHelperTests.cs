@@ -1,25 +1,24 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MemoSoft;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MemoSoft.Models;
+﻿namespace MemoSoft.Tests
+{
+    using System;
+    using MemoSoft;
+    using MemoSoft.Models;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MemoSoft.Tests {
-    [TestClass()]
-    public class DatabaseHelperTests {
-        [TestMethod()]
-        public void executeNonQueryTest() {
-            var dbHelper = new DatabaseHelper("testDB");
+    [TestClass]
+    public class DatabaseHelperTests
+    {
+        [TestMethod]
+        public void ExecuteNonQueryTest()
+        {
+            var dbhelper = new DatabaseHelper("testDB");
 
             var comment = new Comment();
             comment.TextContent = "testText";
 
             var nextID = 2;
 
-            var sql = $"INSERT INTO {DatabaseHelper.DATABASE_TABLE_NAME} (" +
+            var sql = $"INSERT INTO {DatabaseHelper.DatabaesTableName} (" +
                       $"{nameof(Comment.ID)}, " +
                       $"{nameof(Comment.CreationDateTime)}," +
                       $"{nameof(Comment.TextContent)}, " +
@@ -33,34 +32,37 @@ namespace MemoSoft.Tests {
                       $"'{comment.Uploaded}'" +
                       $");";
 
-            dbHelper.executeNonQuery(sql);
+            dbhelper.ExecuteNonQuery(sql);
         }
 
-        [TestMethod()]
-        public void selectTest() {
-            var dbHelper = new DatabaseHelper("testDB");
+        [TestMethod]
+        public void SelectTest()
+        {
+            var dbhelper = new DatabaseHelper("testDB");
 
-            var sql = $"select count(*) as count from {DatabaseHelper.DATABASE_TABLE_NAME};";
-            var hashs = dbHelper.select(sql);
+            var sql = $"select count(*) as count from {DatabaseHelper.DatabaesTableName};";
+            var hashs = dbhelper.Select(sql);
             System.Diagnostics.Debug.WriteLine(hashs);
         }
 
-        [TestMethod()]
-        public void insertCommentTest() {
-            var dbHelper = new DatabaseHelper("testDB");
-            dbHelper.insertComment(new Comment());
+        [TestMethod]
+        public void InsertCommentTest()
+        {
+            var dbhelper = new DatabaseHelper("testDB");
+            dbhelper.InsertComment(new Comment());
         }
 
-        [TestMethod()]
-        public void updateTest() {
-            var dbHelper = new DatabaseHelper("testDB");
+        [TestMethod]
+        public void UpdateTest()
+        {
+            var dbhelper = new DatabaseHelper("testDB");
             var comment = new Comment();
 
-            dbHelper.insertComment(comment);
+            dbhelper.InsertComment(comment);
 
             comment.CreationDateTime = DateTime.Now;
             comment.TextContent = "updateTest";
-            dbHelper.update(comment);
+            dbhelper.Update(comment);
         }
     }
 }

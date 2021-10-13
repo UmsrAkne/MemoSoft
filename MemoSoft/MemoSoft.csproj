@@ -159,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AppFunctions.cs" />
-    <Compile Include="Models\keyboardCommands.cs" />
     <Compile Include="Models\TextLoader.cs" />
     <Compile Include="Models\TextSaver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -184,6 +183,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

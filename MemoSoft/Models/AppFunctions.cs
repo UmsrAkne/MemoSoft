@@ -1,15 +1,11 @@
-﻿using System;
-using System.Windows;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
-    class AppFunctions{
+    using System.Windows;
 
-        public void exitApplication() {
+    public class AppFunctions
+    {
+        public void ExitApplication()
+        {
             Application.Current.Shutdown();
         }
     }

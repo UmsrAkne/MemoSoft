@@ -1,152 +1,150 @@
-﻿using MemoSoft.Models;
-using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace MemoSoft.ViewModels
+{
+    using System;
+    using System.Collections.Generic;
+    using MemoSoft.Models;
+    using Prism.Commands;
+    using Prism.Mvvm;
+    using static MemoSoft.Models.UIColors;
 
-namespace MemoSoft.ViewModels {
-    class MainWindowViewModel : BindableBase {
+    public class MainWindowViewModel : BindableBase
+    {
+        private DelegateCommand syncCommand;
+        private string enteringComment = string.Empty;
+        private IDBHelper dbhelper;
 
-        public IDBHelper DBHelper {
-            get => dbHelper;
-            private set => SetProperty(ref dbHelper, value);
-        }
-        private IDBHelper dbHelper;
+        private string systemMessage = "system message";
+        private List<Comment> comments = new List<Comment>();
+        private DelegateCommand loadCommand;
+        private DelegateCommand<object> changeThemeCommand;
+        private DelegateCommand<object> switchDBCommand;
+        private long recordCount;
+        private DelegateCommand<string> insertCommentCommand;
 
-        private DBSynchronizer DBSynchronizer{get; set;}
-        public UIColors UIColors { get; private set; } = new UIColors();
-
-        public MainWindowViewModel() {
+        public MainWindowViewModel()
+        {
             DBHelper = new PostgreSQLDBHelper();
 
             // PostgreSQL の方がつながっていなければオフラインの sqlite に切り替え。
-            if (!DBHelper.Connected) {
+            if (!DBHelper.Connected)
+            {
                 DBHelper = new DatabaseHelper("Diarydb");
                 SwitchDBCommand.Execute(DBType.Local);
             }
 
             LoadCommand.Execute();
 
-            UIColors.changeTheme((ColorTheme)Enum.ToObject(typeof(ColorTheme), Properties.Settings.Default.ColorTheme));
+            UIColors.ChangeTheme((ColorTheme)Enum.ToObject(typeof(ColorTheme), Properties.Settings.Default.ColorTheme));
         }
 
-        public List<Comment> Comments {
-            #region
+        public IDBHelper DBHelper
+        {
+            get => dbhelper;
+            private set => SetProperty(ref dbhelper, value);
+        }
+
+        public UIColors UIColors { get; private set; } = new UIColors();
+
+        public List<Comment> Comments
+        {
             get => comments;
             private set => SetProperty(ref comments, value);
         }
 
-        private List<Comment> comments = new List<Comment>();
-        #endregion
-
-        public String EnteringComment {
-            #region
+        public string EnteringComment
+        {
             get => enteringComment;
             set => SetProperty(ref enteringComment, value);
         }
 
-        private String enteringComment = "";
-        #endregion
-
-        public String SystemMessage {
+        public string SystemMessage
+        {
             get => systemMessage;
             set => SetProperty(ref systemMessage, value);
         }
 
-        private String systemMessage = "system message";
-
-        public long RecordCount {
+        public long RecordCount
+        {
             get => recordCount;
             set => SetProperty(ref recordCount, value);
         }
 
-        private long recordCount;
-
-        public DelegateCommand<String> InsertCommentCommand {
-            #region
-            get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<String>((text) => {
-                DBHelper.insertComment(new Comment() {
+        public DelegateCommand<string> InsertCommentCommand
+        {
+            get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<string>((text) =>
+            {
+                DBHelper.InsertComment(new Comment()
+                {
                     TextContent = text,
                     CreationDateTime = DateTime.Now
                 });
 
-                Comments = DBHelper.loadComments();
+                Comments = DBHelper.LoadComments();
                 RecordCount = DBHelper.Count;
-                EnteringComment = "";
+                EnteringComment = string.Empty;
             }));
         }
 
-        private DelegateCommand<String> insertCommentCommand;
-        #endregion
-
-        public DelegateCommand<object> ChangeThemeCommand {
-            #region
-            get => changeThemeCommand ?? (changeThemeCommand = new DelegateCommand<object>((object theme) => {
-                // ジェネリクスが object 型になっているが、列挙型は nullable ではないらしく、
-                // nullable でない型をパラメーターで指定するとエラーになるため。
-                // xaml の方で直接生成してパラメーターに渡すので、null になることも間違った値が入ることもないけど……。
+        public DelegateCommand<object> ChangeThemeCommand
+        {
+            get => changeThemeCommand ?? (changeThemeCommand = new DelegateCommand<object>((object theme) =>
+            {
+                //// ジェネリクスが object 型になっているが、列挙型は nullable ではないらしく、
+                //// nullable でない型をパラメーターで指定するとエラーになるため。
+                //// xaml の方で直接生成してパラメーターに渡すので、null になることも間違った値が入ることもないけど……。
 
                 ColorTheme destTheme = (ColorTheme)theme;
-                UIColors.changeTheme(destTheme);
+                UIColors.ChangeTheme(destTheme);
                 Properties.Settings.Default.ColorTheme = (int)theme;
                 Properties.Settings.Default.Save();
             }));
         }
-        private DelegateCommand<object> changeThemeCommand;
-        #endregion
 
-
-        public DelegateCommand LoadCommand {
-            #region
-            get => loadCommand ?? (loadCommand = new DelegateCommand(() => {
-                Comments = DBHelper.loadComments();
+        public DelegateCommand LoadCommand
+        {
+            get => loadCommand ?? (loadCommand = new DelegateCommand(() =>
+            {
+                Comments = DBHelper.LoadComments();
                 RecordCount = DBHelper.Count;
                 SystemMessage = DBHelper.SystemMessage;
             }));
         }
-        private DelegateCommand loadCommand;
-        #endregion
 
-
-        public DelegateCommand<object> SwitchDBCommand {
-            #region
-            get => switchDBCommand ?? (switchDBCommand = new DelegateCommand<object>((object dbType) => {
-
+        public DelegateCommand<object> SwitchDBCommand
+        {
+            get => switchDBCommand ?? (switchDBCommand = new DelegateCommand<object>((object dbType) =>
+            {
                 DBType type = (DBType)dbType;
 
-                if(type == DBType.Local) {
+                if (type == DBType.Local)
+                {
                     DBHelper = new DatabaseHelper("Diarydb");
-                }else if(type == DBType.Remote) {
+                }
+                else if (type == DBType.Remote)
+                {
                     IDBHelper helper = new PostgreSQLDBHelper();
-                    DBHelper = (helper.Connected) ? helper : new DatabaseHelper("Diarydb");
+                    DBHelper = helper.Connected ? helper : new DatabaseHelper("Diarydb");
                 }
 
-                Comments = DBHelper.loadComments();
-
+                Comments = DBHelper.LoadComments();
             }));
         }
-        private DelegateCommand<object> switchDBCommand;
-        #endregion
 
-
-        public DelegateCommand SyncCommand {
-            #region
-            get => syncCommand ?? (syncCommand = new DelegateCommand(() => {
+        public DelegateCommand SyncCommand
+        {
+            get => syncCommand ?? (syncCommand = new DelegateCommand(() =>
+            {
                 var remoteDB = new PostgreSQLDBHelper();
                 var localDB = new DatabaseHelper("Diarydb");
 
-                if(remoteDB.Connected && localDB.Connected) {
+                if (remoteDB.Connected && localDB.Connected)
+                {
                     DBSynchronizer = new DBSynchronizer(remoteDB, localDB);
-                    DBSynchronizer.upload();
+                    DBSynchronizer.Upload();
                 }
             }));
         }
-        private DelegateCommand syncCommand;
-        #endregion
 
-
+        private DBSynchronizer DBSynchronizer { get; set; }
     }
 }

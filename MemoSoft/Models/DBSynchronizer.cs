@@ -1,49 +1,55 @@
-﻿namespace MemoSoft.Models {
-    public class DBSynchronizer {
-
-        private IDBHelper RemoteDB { get; set; }
-        private IDBHelper LocalDB { get; set; }
-        
-        public DBSynchronizer(IDBHelper remoteDB, IDBHelper localDB) {
+﻿namespace MemoSoft.Models
+{
+    public class DBSynchronizer
+    {
+        public DBSynchronizer(IDBHelper remoteDB, IDBHelper localDB)
+        {
             RemoteDB = remoteDB;
             LocalDB = localDB;
         }
-        
+
+        private IDBHelper RemoteDB { get; set; }
+
+        private IDBHelper LocalDB { get; set; }
+
         /// <summary>
         /// Remote DB からデータを取得し、Local DB に入力します。
         /// </summary>
-        public void download() {
-            DatabaseHelper dbHelper = (DatabaseHelper)LocalDB;
-            var maxRemoteID = dbHelper.getMaxRemoteID();
+        public void Download()
+        {
+            DatabaseHelper dbhelper = (DatabaseHelper)LocalDB;
+            var maxRemoteID = dbhelper.GetMaxRemoteID();
 
-            var remoteComments = RemoteDB.select($"SELECT * FROM COMMENTS WHERE {nameof(Comment.ID)} > {maxRemoteID};");
+            var remoteComments = RemoteDB.Select($"SELECT * FROM COMMENTS WHERE {nameof(Comment.ID)} > {maxRemoteID};");
 
-            remoteComments.ForEach(hash => {
-                var comment = Comment.toComment(hash);
+            remoteComments.ForEach(hash =>
+            {
+                var comment = Comment.ToComment(hash);
                 comment.RemoteID = comment.ID;
                 comment.Uploaded = true;
-                LocalDB.insertComment(comment);
+                LocalDB.InsertComment(comment);
             });
-
         }
 
-        public void upload() {
+        public void Upload()
+        {
             // コメントをアップする処理の前にリモートのコメントを取得する。
             // これを行わないと、後々整合性が取れなくなる。
-            download();
+            Download();
 
             DatabaseHelper localDBHelper = (DatabaseHelper)LocalDB;
-            var sql = $"SELECT * FROM {DatabaseHelper.DATABASE_TABLE_NAME} WHERE {nameof(Comment.RemoteID)} < 0 AND {nameof(Comment.Uploaded)} = 'False'";
-            var uploadComments = localDBHelper.select(sql);
+            var sql = $"SELECT * FROM {DatabaseHelper.DatabaesTableName} WHERE {nameof(Comment.RemoteID)} < 0 AND {nameof(Comment.Uploaded)} = 'False'";
+            var uploadComments = localDBHelper.Select(sql);
 
-            uploadComments.ForEach(hash => {
-                var comment = Comment.toComment(hash);
-                RemoteDB.insertComment(comment);
+            uploadComments.ForEach(hash =>
+            {
+                var comment = Comment.ToComment(hash);
+                RemoteDB.InsertComment(comment);
 
                 comment.Uploaded = true;
 
                 // RemoteID, Uploaded が書き換わるのでそれをローカルDBに反映する。
-                localDBHelper.update(comment);
+                localDBHelper.Update(comment);
             });
         }
     }
