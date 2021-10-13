@@ -5,7 +5,6 @@
     using MemoSoft.Models;
     using Prism.Commands;
     using Prism.Mvvm;
-    using static MemoSoft.Models.UIColors;
 
     public class MainWindowViewModel : BindableBase
     {
