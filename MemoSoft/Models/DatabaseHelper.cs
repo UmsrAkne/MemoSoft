@@ -10,24 +10,24 @@
 
     public class DatabaseHelper : IDBHelper
     {
-        public static readonly string DATABASE_NAME_EACH_PC = Environment.MachineName + "_" + Environment.UserName;
-        public static readonly string DATABASE_TABLE_NAME = "diary";
-        public static readonly string DATABASE_COLUMN_NAME_DATE = "date";
-        public static readonly string DATABASE_COLUMN_NAME_TEXT = "text";
+        public static readonly string DatabaseNameEachPC = Environment.MachineName + "_" + Environment.UserName;
+        public static readonly string DatabaesTableName = "diary";
+        public static readonly string DatabaseColumnNameDate = "date";
+        public static readonly string DabataseColumnNameText = "text";
 
-        private string dbFileName;
+        private string dbfileName;
 
         private List<Comment> commentList;
 
-        public DatabaseHelper(string dbFileName)
+        public DatabaseHelper(string dbfileName)
         {
-            this.dbFileName = dbFileName;
+            this.dbfileName = dbfileName;
 
             // テーブルの作成。IF NOT EXISTS を入れてあるので、テーブルが存在しない初回のみ実行する。
             using (var con = new SQLiteConnection(DataSourceSyntax))
             {
                 con.Open();
-                var sql = $"CREATE TABLE IF NOT EXISTS {DATABASE_TABLE_NAME} (" +
+                var sql = $"CREATE TABLE IF NOT EXISTS {DatabaesTableName} (" +
                           $"{nameof(Comment.ID)} INTEGER PRIMARY KEY," +
                           $"{nameof(Comment.CreationDateTime)} TEXT NOT NULL," +
                           $"{nameof(Comment.Uploaded)} BOOLEAN NOT NULL," +
@@ -53,27 +53,33 @@
             private set { commentList = value; }
         }
 
-        private string DataSourceSyntax => $"Data Source={dbFileName}.sqlite";
+        private string DataSourceSyntax => $"Data Source={dbfileName}.sqlite";
 
-        public void createDatabase()
+        public void CreateDatabase()
         {
-            using (var conn = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite"))
+            using (var conn = new SQLiteConnection("Data Source=" + dbfileName + ".sqlite"))
             {
                 conn.Open();
                 conn.Close();
             }
         }
 
-        public void createTable(string tableName, string[] columnDatas)
+        public void CreateTable(string tableName, string[] columnDatas)
         {
-            using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite"))
+            using (var connection = new SQLiteConnection("Data Source=" + dbfileName + ".sqlite"))
             {
                 connection.Open();
                 var sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (";
                 for (int i = 0; i < columnDatas.Length; i++)
                 {
-                    if (i != columnDatas.Length - 1) sql += columnDatas[i] + ", ";
-                    else sql += columnDatas[i] + ")";
+                    if (i != columnDatas.Length - 1)
+                    {
+                        sql += columnDatas[i] + ", ";
+                    }
+                    else
+                    {
+                        sql += columnDatas[i] + ")";
+                    }
                 }
 
                 var command = new SQLiteCommand(sql, connection);
@@ -81,36 +87,49 @@
             }
         }
 
-        public void insertData(string tableName, string[] columnNames, string[] values)
+        public void InsertData(string tableName, string[] columnNames, string[] values)
         {
-            using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite"))
+            using (var connection = new SQLiteConnection("Data Source=" + dbfileName + ".sqlite"))
             {
                 connection.Open();
                 var sql = "INSERT INTO " + tableName + " (";
                 for (int i = 0; i < columnNames.Length; i++)
                 {
-                    if (i == columnNames.Length - 1) sql += columnNames[i] + ")";
-                    else sql += columnNames[i] + ", ";
+                    if (i == columnNames.Length - 1)
+                    {
+                        sql += columnNames[i] + ")";
+                    }
+                    else
+                    {
+                        sql += columnNames[i] + ", ";
+                    }
                 }
 
                 sql += " values (";
 
                 for (int i = 0; i < values.Length; i++)
                 {
-                    if (i == values.Length - 1) sql += "'" + values[i] + "'" + ");";
-                    else sql += values[i] + ", ";
+                    if (i == values.Length - 1)
+                    {
+                        sql += "'" + values[i] + "'" + ");";
+                    }
+                    else
+                    {
+                        sql += values[i] + ", ";
+                    }
                 }
+
                 var command = new SQLiteCommand(sql, connection);
                 command.ExecuteNonQuery();
             }
         }
 
-        public void select()
+        public void Select()
         {
-            using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite"))
+            using (var connection = new SQLiteConnection("Data Source=" + dbfileName + ".sqlite"))
             {
                 connection.Open();
-                string sql = "select * from " + DATABASE_TABLE_NAME;
+                string sql = "select * from " + DatabaesTableName;
 
                 SQLiteCommand com = new SQLiteCommand(sql, connection);
                 SQLiteDataReader sdr = com.ExecuteReader();
@@ -126,14 +145,15 @@
                     {
                         comment.CreationDateTime = resultD;
                     }
+
                     CommentList.Add(comment);
                 }
             }
         }
 
-        public void update(Comment comment)
+        public void Update(Comment comment)
         {
-            var sql = $"UPDATE {DATABASE_TABLE_NAME} " +
+            var sql = $"UPDATE {DatabaesTableName} " +
                       $"SET " +
                       $"{nameof(Comment.Uploaded)} = '{comment.Uploaded}'," +
                       $"{nameof(Comment.TextContent)} = '{comment.TextContent}'," +
@@ -142,12 +162,12 @@
                       $"WHERE " +
                       $"{nameof(Comment.ID)} = {comment.ID}";
 
-            executeNonQuery(sql);
+            ExecuteNonQuery(sql);
         }
 
-        public void getLastUpdateRow()
+        public void GetLastUpdateRow()
         {
-            using (var connection = new SQLiteConnection("Data Source=" + dbFileName + ".sqlite"))
+            using (var connection = new SQLiteConnection("Data Source=" + dbfileName + ".sqlite"))
             {
                 connection.Open();
 
@@ -160,10 +180,10 @@
 
                 if (sdr.Read())
                 {
-                    comment.TextContent = (string)sdr[DATABASE_COLUMN_NAME_TEXT];
+                    comment.TextContent = (string)sdr[DabataseColumnNameText];
                     DateTime resultD;
 
-                    if (DateTime.TryParseExact(sdr[DATABASE_COLUMN_NAME_DATE].ToString(), "yyyyMMddHHmmssff", null, DateTimeStyles.AllowWhiteSpaces, out resultD))
+                    if (DateTime.TryParseExact(sdr[DatabaseColumnNameDate].ToString(), "yyyyMMddHHmmssff", null, DateTimeStyles.AllowWhiteSpaces, out resultD))
                     {
                         comment.CreationDateTime = resultD;
                     }
@@ -175,32 +195,32 @@
             }
         }
 
-        public List<Comment> loadComments()
+        public List<Comment> LoadComments()
         {
-            var sql = $"SELECT * FROM {DATABASE_TABLE_NAME} ORDER BY {nameof(Comment.CreationDateTime)} DESC;";
-            var hashs = select(sql);
+            var sql = $"SELECT * FROM {DatabaesTableName} ORDER BY {nameof(Comment.CreationDateTime)} DESC;";
+            var hashs = Select(sql);
 
             var commentList = new List<Comment>();
 
             hashs.ForEach(h =>
             {
-                var c = Comment.toComment(h);
+                var c = Comment.ToComment(h);
                 commentList.Add(c);
             });
 
             return commentList;
         }
 
-        public void insertComment(Comment comment)
+        public void InsertComment(Comment comment)
         {
             long nextID = 0;
 
-            if (getRecordCount() != 0)
+            if (GetRecordCount() != 0)
             {
-                nextID = getMAXID() + 1;
+                nextID = GetMAXID() + 1;
             }
 
-            var tableName = DATABASE_TABLE_NAME;
+            var tableName = DatabaesTableName;
             var sql = $"INSERT INTO {tableName} (" +
                       $"{nameof(Comment.ID)}, " +
                       $"{nameof(Comment.CreationDateTime)}," +
@@ -215,21 +235,21 @@
                       $"'{comment.Uploaded}'" +
                       $");";
 
-            executeNonQuery(sql);
+            ExecuteNonQuery(sql);
         }
 
-        public long getMaxRemoteID()
+        public long GetMaxRemoteID()
         {
-            if (getRecordCount() == 0)
+            if (GetRecordCount() == 0)
             {
                 return -1;
             }
 
-            var sql = $"SELECT MAX({nameof(Comment.RemoteID)}) AS MAX FROM {DATABASE_TABLE_NAME};";
-            return (long)select(sql).First()["MAX"];
+            var sql = $"SELECT MAX({nameof(Comment.RemoteID)}) AS MAX FROM {DatabaesTableName};";
+            return (long)Select(sql).First()["MAX"];
         }
 
-        public void executeNonQuery(string sql)
+        public void ExecuteNonQuery(string sql)
         {
             using (var con = new SQLiteConnection(DataSourceSyntax))
             {
@@ -238,7 +258,7 @@
             }
         }
 
-        public List<Hashtable> select(string sql)
+        public List<Hashtable> Select(string sql)
         {
             using (var con = new SQLiteConnection(DataSourceSyntax))
             {
@@ -253,6 +273,7 @@
                     {
                         hashTable[sdr.GetName(i)] = sdr.GetValue(i);
                     }
+
                     resultList.Add(hashTable);
                 }
 
@@ -261,17 +282,17 @@
             }
         }
 
-        private long getMAXID()
+        private long GetMAXID()
         {
-            var sql = $"SELECT MAX({nameof(Comment.ID)}) AS MAX FROM {DATABASE_TABLE_NAME};)";
-            return (long)select(sql).First()["MAX"];
+            var sql = $"SELECT MAX({nameof(Comment.ID)}) AS MAX FROM {DatabaesTableName};)";
+            return (long)Select(sql).First()["MAX"];
         }
 
-        private long getRecordCount()
+        private long GetRecordCount()
         {
-            var sql = $"SELECT COUNT(*) AS COUNT FROM {DATABASE_TABLE_NAME};";
-            var h = select(sql).First();
-            return (long)select(sql).First()["COUNT"];
+            var sql = $"SELECT COUNT(*) AS COUNT FROM {DatabaesTableName};";
+            var h = Select(sql).First();
+            return (long)Select(sql).First()["COUNT"];
         }
     }
 }

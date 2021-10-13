@@ -58,24 +58,28 @@
             var settings = Settings.Default;
 
             // 左
-            if (settings.WindowLeft >= 0 &&
-                (settings.WindowLeft + settings.WindowWidth) < SystemParameters.VirtualScreenWidth)
-            { Left = settings.WindowLeft; }
+            if (settings.WindowLeft >= 0 && (settings.WindowLeft + settings.WindowWidth) < SystemParameters.VirtualScreenWidth)
+            {
+                Left = settings.WindowLeft;
+            }
 
             // 上
-            if (settings.WindowTop >= 0 &&
-                (settings.WindowTop + settings.WindowHeight) < SystemParameters.VirtualScreenHeight)
-            { Top = settings.WindowTop; }
+            if (settings.WindowTop >= 0 && (settings.WindowTop + settings.WindowHeight) < SystemParameters.VirtualScreenHeight)
+            {
+                Top = settings.WindowTop;
+            }
 
             // 幅
-            if (settings.WindowWidth > 0 &&
-                settings.WindowWidth <= SystemParameters.WorkArea.Width)
-            { Width = settings.WindowWidth; }
+            if (settings.WindowWidth > 0 && settings.WindowWidth <= SystemParameters.WorkArea.Width)
+            {
+                Width = settings.WindowWidth;
+            }
 
             // 高さ
-            if (settings.WindowHeight > 0 &&
-                settings.WindowHeight <= SystemParameters.WorkArea.Height)
-            { Height = settings.WindowHeight; }
+            if (settings.WindowHeight > 0 && settings.WindowHeight <= SystemParameters.WorkArea.Height)
+            {
+                Height = settings.WindowHeight;
+            }
 
             // 最大化
             if (settings.WindowMaximized)
@@ -96,7 +100,7 @@
         public MainWindowViewModel()
         {
             this.keyCommands.MainWindowViewModel = this;
-            textLoader.loadInNewOrder(20);
+            textLoader.LoadInNewOrder(20);
             PostedComments = textLoader.CommentList;
         }
 

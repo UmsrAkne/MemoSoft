@@ -1,5 +1,4 @@
-﻿
-namespace MemoSoft.ViewModels
+﻿namespace MemoSoft.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace MemoSoft.ViewModels
     {
         private DelegateCommand syncCommand;
         private string enteringComment = string.Empty;
-        private IDBHelper dbHelper;
+        private IDBHelper dbhelper;
 
         private string systemMessage = "system message";
         private List<Comment> comments = new List<Comment>();
@@ -21,7 +20,6 @@ namespace MemoSoft.ViewModels
         private DelegateCommand<object> switchDBCommand;
         private long recordCount;
         private DelegateCommand<string> insertCommentCommand;
-
 
         public MainWindowViewModel()
         {
@@ -36,13 +34,13 @@ namespace MemoSoft.ViewModels
 
             LoadCommand.Execute();
 
-            UIColors.changeTheme((ColorTheme)Enum.ToObject(typeof(ColorTheme), Properties.Settings.Default.ColorTheme));
+            UIColors.ChangeTheme((ColorTheme)Enum.ToObject(typeof(ColorTheme), Properties.Settings.Default.ColorTheme));
         }
 
         public IDBHelper DBHelper
         {
-            get => dbHelper;
-            private set => SetProperty(ref dbHelper, value);
+            get => dbhelper;
+            private set => SetProperty(ref dbhelper, value);
         }
 
         public UIColors UIColors { get; private set; } = new UIColors();
@@ -59,13 +57,11 @@ namespace MemoSoft.ViewModels
             set => SetProperty(ref enteringComment, value);
         }
 
-
         public string SystemMessage
         {
             get => systemMessage;
             set => SetProperty(ref systemMessage, value);
         }
-
 
         public long RecordCount
         {
@@ -77,13 +73,13 @@ namespace MemoSoft.ViewModels
         {
             get => insertCommentCommand ?? (insertCommentCommand = new DelegateCommand<string>((text) =>
             {
-                DBHelper.insertComment(new Comment()
+                DBHelper.InsertComment(new Comment()
                 {
                     TextContent = text,
                     CreationDateTime = DateTime.Now
                 });
 
-                Comments = DBHelper.loadComments();
+                Comments = DBHelper.LoadComments();
                 RecordCount = DBHelper.Count;
                 EnteringComment = string.Empty;
             }));
@@ -93,12 +89,12 @@ namespace MemoSoft.ViewModels
         {
             get => changeThemeCommand ?? (changeThemeCommand = new DelegateCommand<object>((object theme) =>
             {
-                // ジェネリクスが object 型になっているが、列挙型は nullable ではないらしく、
-                // nullable でない型をパラメーターで指定するとエラーになるため。
-                // xaml の方で直接生成してパラメーターに渡すので、null になることも間違った値が入ることもないけど……。
+                //// ジェネリクスが object 型になっているが、列挙型は nullable ではないらしく、
+                //// nullable でない型をパラメーターで指定するとエラーになるため。
+                //// xaml の方で直接生成してパラメーターに渡すので、null になることも間違った値が入ることもないけど……。
 
                 ColorTheme destTheme = (ColorTheme)theme;
-                UIColors.changeTheme(destTheme);
+                UIColors.ChangeTheme(destTheme);
                 Properties.Settings.Default.ColorTheme = (int)theme;
                 Properties.Settings.Default.Save();
             }));
@@ -108,7 +104,7 @@ namespace MemoSoft.ViewModels
         {
             get => loadCommand ?? (loadCommand = new DelegateCommand(() =>
             {
-                Comments = DBHelper.loadComments();
+                Comments = DBHelper.LoadComments();
                 RecordCount = DBHelper.Count;
                 SystemMessage = DBHelper.SystemMessage;
             }));
@@ -118,7 +114,6 @@ namespace MemoSoft.ViewModels
         {
             get => switchDBCommand ?? (switchDBCommand = new DelegateCommand<object>((object dbType) =>
             {
-
                 DBType type = (DBType)dbType;
 
                 if (type == DBType.Local)
@@ -131,8 +126,7 @@ namespace MemoSoft.ViewModels
                     DBHelper = helper.Connected ? helper : new DatabaseHelper("Diarydb");
                 }
 
-                Comments = DBHelper.loadComments();
-
+                Comments = DBHelper.LoadComments();
             }));
         }
 
@@ -146,7 +140,7 @@ namespace MemoSoft.ViewModels
                 if (remoteDB.Connected && localDB.Connected)
                 {
                     DBSynchronizer = new DBSynchronizer(remoteDB, localDB);
-                    DBSynchronizer.upload();
+                    DBSynchronizer.Upload();
                 }
             }));
         }

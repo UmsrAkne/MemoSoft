@@ -10,7 +10,6 @@
     {
         public NpgsqlExecuter()
         {
-
             string basePath =
                 Environment.GetEnvironmentVariable("HOMEDRIVE") +
                 Environment.GetEnvironmentVariable("HOMEPATH") + @"\ec2db\";
@@ -35,9 +34,10 @@
         }
 
         private NpgsqlConnectionStringBuilder ConnectionBuilder { get; set; }
+
         private NpgsqlConnection Connection { get => new NpgsqlConnection(ConnectionBuilder.ConnectionString); }
 
-        public void executeNonQuery(string sql, List<NpgsqlParameter> parameters)
+        public void ExecuteNonQuery(string sql, List<NpgsqlParameter> parameters)
         {
             using (var conn = Connection)
             {
@@ -48,7 +48,7 @@
             }
         }
 
-        public List<Hashtable> select(string sql, List<NpgsqlParameter> parameters)
+        public List<Hashtable> Select(string sql, List<NpgsqlParameter> parameters)
         {
             using (var con = Connection)
             {
@@ -65,6 +65,7 @@
                     {
                         hashtable[dataReader.GetName(i)] = dataReader.GetValue(i);
                     }
+
                     resultList.Add(hashtable);
                 }
 

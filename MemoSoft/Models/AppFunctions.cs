@@ -4,7 +4,7 @@
 
     public class AppFunctions
     {
-        public void exitApplication()
+        public void ExitApplication()
         {
             Application.Current.Shutdown();
         }

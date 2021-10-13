@@ -39,7 +39,7 @@
         /// </summary>
         /// <param name="h"></param>
         /// <returns></returns>
-        public static Comment toComment(Hashtable h)
+        public static Comment ToComment(Hashtable h)
         {
             Comment c = new Comment();
 

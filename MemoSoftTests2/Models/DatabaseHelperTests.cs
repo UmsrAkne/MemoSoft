@@ -9,16 +9,16 @@
     public class DatabaseHelperTests
     {
         [TestMethod]
-        public void executeNonQueryTest()
+        public void ExecuteNonQueryTest()
         {
-            var dbHelper = new DatabaseHelper("testDB");
+            var dbhelper = new DatabaseHelper("testDB");
 
             var comment = new Comment();
             comment.TextContent = "testText";
 
             var nextID = 2;
 
-            var sql = $"INSERT INTO {DatabaseHelper.DATABASE_TABLE_NAME} (" +
+            var sql = $"INSERT INTO {DatabaseHelper.DatabaesTableName} (" +
                       $"{nameof(Comment.ID)}, " +
                       $"{nameof(Comment.CreationDateTime)}," +
                       $"{nameof(Comment.TextContent)}, " +
@@ -32,37 +32,37 @@
                       $"'{comment.Uploaded}'" +
                       $");";
 
-            dbHelper.executeNonQuery(sql);
+            dbhelper.ExecuteNonQuery(sql);
         }
 
         [TestMethod]
-        public void selectTest()
+        public void SelectTest()
         {
-            var dbHelper = new DatabaseHelper("testDB");
+            var dbhelper = new DatabaseHelper("testDB");
 
-            var sql = $"select count(*) as count from {DatabaseHelper.DATABASE_TABLE_NAME};";
-            var hashs = dbHelper.select(sql);
+            var sql = $"select count(*) as count from {DatabaseHelper.DatabaesTableName};";
+            var hashs = dbhelper.Select(sql);
             System.Diagnostics.Debug.WriteLine(hashs);
         }
 
         [TestMethod]
-        public void insertCommentTest()
+        public void InsertCommentTest()
         {
-            var dbHelper = new DatabaseHelper("testDB");
-            dbHelper.insertComment(new Comment());
+            var dbhelper = new DatabaseHelper("testDB");
+            dbhelper.InsertComment(new Comment());
         }
 
         [TestMethod]
-        public void updateTest()
+        public void UpdateTest()
         {
-            var dbHelper = new DatabaseHelper("testDB");
+            var dbhelper = new DatabaseHelper("testDB");
             var comment = new Comment();
 
-            dbHelper.insertComment(comment);
+            dbhelper.InsertComment(comment);
 
             comment.CreationDateTime = DateTime.Now;
             comment.TextContent = "updateTest";
-            dbHelper.update(comment);
+            dbhelper.Update(comment);
         }
     }
 }

@@ -23,9 +23,9 @@
                     () =>
                     {
                         this.textSaver.Text = mainWindowViewModel.InputString;
-                        this.textSaver.saveText();
+                        this.textSaver.SaveText();
                         MainWindowViewModel.InputString = string.Empty;
-                        textLoader.loadLastComment();
+                        textLoader.LoadLastComment();
                         MainWindowViewModel.PostedComments.Insert(0, textLoader.CommentList[0]);
 
                         if (MainWindowViewModel.PostedComments.Count > 20)

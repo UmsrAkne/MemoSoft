@@ -1,5 +1,4 @@
-﻿
-namespace MemoSoft.Models
+﻿namespace MemoSoft.Models
 {
     using System;
 
@@ -9,25 +8,25 @@ namespace MemoSoft.Models
     /// </summary>
     public class TextSaver
     {
-        private DatabaseHelper dbHelper;
+        private DatabaseHelper dbhelper;
 
         public TextSaver()
         {
-            dbHelper = new DatabaseHelper(DatabaseHelper.DATABASE_NAME_EACH_PC);
-            dbHelper.createDatabase();
+            dbhelper = new DatabaseHelper(DatabaseHelper.DatabaseNameEachPC);
+            dbhelper.CreateDatabase();
 
-            dbHelper.createTable(
-                DatabaseHelper.DATABASE_TABLE_NAME,
-                new string[] { DatabaseHelper.DATABASE_COLUMN_NAME_DATE, DatabaseHelper.DATABASE_COLUMN_NAME_TEXT });
+            dbhelper.CreateTable(
+                DatabaseHelper.DatabaesTableName,
+                new string[] { DatabaseHelper.DatabaseColumnNameDate, DatabaseHelper.DabataseColumnNameText });
         }
 
         public string Text { get; set; }
 
-        public void saveText()
+        public void SaveText()
         {
-            dbHelper.insertData(
-                DatabaseHelper.DATABASE_TABLE_NAME,
-                new string[] { DatabaseHelper.DATABASE_COLUMN_NAME_DATE, DatabaseHelper.DATABASE_COLUMN_NAME_TEXT },
+            dbhelper.InsertData(
+                DatabaseHelper.DatabaesTableName,
+                new string[] { DatabaseHelper.DatabaseColumnNameDate, DatabaseHelper.DabataseColumnNameText },
                 new string[] { DateTime.Now.ToString("yyyyMMddHHmmssff"), Text });
         }
     }

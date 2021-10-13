@@ -17,7 +17,7 @@
         {
             try
             {
-                loadComments();
+                LoadComments();
                 Connected = true;
                 SystemMessage = "DBサーバーへ接続しました";
             }
@@ -39,7 +39,7 @@
             {
                 try
                 {
-                    loadComments();
+                    LoadComments();
                     SystemMessage = $"{DateTime.Now.ToString() } コメントをリロードしました ";
                 }
                 catch (TimeoutException)
@@ -59,7 +59,7 @@
         {
             get
             {
-                var value = select($"SELECT COUNT(*) FROM {CommentTableName};");
+                var value = Select($"SELECT COUNT(*) FROM {CommentTableName};");
                 return (long)value[0]["count"];
             }
         }
@@ -68,15 +68,15 @@
 
         private string CommentTableName => "comments";
 
-        public List<Hashtable> select(string sql)
+        public List<Hashtable> Select(string sql)
         {
-            return Executer.select(sql, new List<NpgsqlParameter>());
+            return Executer.Select(sql, new List<NpgsqlParameter>());
         }
 
-        public List<Comment> loadComments()
+        public List<Comment> LoadComments()
         {
             var sql = $"SELECT * FROM comments ORDER BY {nameof(Comment.CreationDateTime)} DESC LIMIT 200;";
-            var commentHashTables = Executer.select(sql, new List<Npgsql.NpgsqlParameter>());
+            var commentHashTables = Executer.Select(sql, new List<Npgsql.NpgsqlParameter>());
 
             var commentList = new List<Comment>();
 
@@ -85,7 +85,7 @@
 
             commentHashTables.ForEach(h =>
             {
-                var c = Comment.toComment(h);
+                var c = Comment.ToComment(h);
 
                 // 同じ日付のコメントには同じ背景色をつけるため、日付毎で linePaint の値が入れ替わるようにする。
                 if (lastElementCreationDate != c.CreationDateTime.Day)
@@ -108,10 +108,9 @@
         /// 挿入の際、引数に渡された commentオブジェクトの RemoteID を、DB上のIDの値で上書きします。
         /// </summary>
         /// <param name="comment"></param>
-        public void insertComment(Comment comment)
+        public void InsertComment(Comment comment)
         {
-
-            int nextID = getMaxID() + 1;
+            int nextID = GetMaxID() + 1;
             comment.RemoteID = nextID;
 
             var ps = new List<NpgsqlParameter>();
@@ -124,7 +123,7 @@
             };
             ps.Add(textParameter);
 
-            Executer.executeNonQuery(
+            Executer.ExecuteNonQuery(
                 $"INSERT INTO {CommentTableName} (" +
                 $"{nameof(Comment.ID)}, " +
                 $"{nameof(Comment.CreationDateTime)}," +
@@ -141,10 +140,10 @@
         /// id列の最大値を取得します。
         /// </summary>
         /// <returns></returns>
-        private int getMaxID()
+        private int GetMaxID()
         {
             var sql = $"SELECT MAX ({nameof(Comment.ID)}) FROM {CommentTableName};";
-            return (int)Executer.select(sql, new List<NpgsqlParameter>())[0]["max"];
+            return (int)Executer.Select(sql, new List<NpgsqlParameter>())[0]["max"];
         }
     }
 }

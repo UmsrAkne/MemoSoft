@@ -3,7 +3,10 @@
     using System.Windows.Media;
     using Prism.Mvvm;
 
-    public enum ColorTheme { Light, Dark }
+    public enum ColorTheme
+    {
+        Light, Dark
+    }
 
     public class UIColors : BindableBase
     {
@@ -13,12 +16,12 @@
 
         public UIColors()
         {
-            changeTheme(ColorTheme.Light);
+            ChangeTheme(ColorTheme.Light);
         }
 
         public UIColors(ColorTheme theme)
         {
-            changeTheme(theme);
+            ChangeTheme(theme);
         }
 
         public SolidColorBrush BackgroundBrush
@@ -39,7 +42,7 @@
             set => SetProperty(ref foregroundBrush, value);
         }
 
-        public void changeTheme(ColorTheme theme)
+        public void ChangeTheme(ColorTheme theme)
         {
             if (theme == ColorTheme.Light)
             {
